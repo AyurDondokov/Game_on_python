@@ -9,7 +9,7 @@ class Game:
         pygame.init()
         pygame.display.set_caption("The best game ever")
         self.game_over = False
-        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.clock = pygame.time.Clock()
         self.level = Level()
 

@@ -8,7 +8,7 @@ from game_object import GameObject
 class Player(GameObject):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group):
         super().__init__(position, sprite_group,
-                         "./sprites/main_character/", DEFAULT_CHARACTER_SPEED, True,
+                         "./sprites/main_character/", LAYERS['player'], DEFAULT_CHARACTER_SPEED, True,
                          DEFAULT_CHARACTER_ANIM_SPEED, STANDARD_CHARACTER_ANIM_PACK)
 
     def _input(self):

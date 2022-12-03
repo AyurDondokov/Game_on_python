@@ -1,6 +1,6 @@
 """Модуль с константами"""
-WIDTH = 1080
-HEIGHT = 720
+SCREEN_WIDTH = 1080
+SCREEN_HEIGHT = 720
 FPS = 60
 TILE_SIZE = 32
 
@@ -20,6 +20,12 @@ STANDARD_CHARACTER_ANIM_PACK = {
 # Player values
 SPEED_MULTYPLIER = 1.5
 
+LAYERS = {
+    'ground': 0,
+    'decor': 1,
+    'main': 2,
+    'player': 3
+}
 
 MAP = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],

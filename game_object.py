@@ -5,7 +5,7 @@ from support import *
 
 
 class GameObject(pygame.sprite.Sprite):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str,
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, layer: int,
                  movement_speed: float = 0,
                  is_animated: bool = False,
                  anim_speed: float = DEFAULT_CHARACTER_ANIM_SPEED,
@@ -23,6 +23,7 @@ class GameObject(pygame.sprite.Sprite):
 
         # Основные настройки
         self.rect = self.image.get_rect(center=position)
+        self.z = layer
 
         # Настройки передвижения
         self.direction = pygame.math.Vector2()
