@@ -17,6 +17,7 @@ class Level:
         self.setup()
 
     def setup(self):
+        """Загрузка важных объектов на уровне"""
         self.player = Player((600, 300), self.visible_sprites)
 
     def create_map(self):
