@@ -18,7 +18,11 @@ STANDARD_CHARACTER_ANIM_PACK = {
 }
 
 # Player values
-SPEED_MULTYPLIER = 1.5
+PLAYER_HITBOX_SIZE = ()
+LEVELS_PROPERTIES = {
+    1: {'max_health': 100, 'armor': 3, 'max_damage': 20},
+    2: {'max_health': 120, 'armor': 5, 'max_damage': 30}
+}
 
 LAYERS = {
     'ground': 0,
