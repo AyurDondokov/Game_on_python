@@ -11,5 +11,5 @@ def import_folder(path: str) -> list:
             full_path = path + '/' + image
             image_surface = pygame.image.load(full_path).convert_alpha()
             surface_list.append(image_surface)
-    print(surface_list)
+    # print(surface_list)
     return surface_list
