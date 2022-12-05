@@ -2,19 +2,20 @@ import pygame
 from properties import *
 from tile import Tile
 from player import Player
-
+import logging
+log = logging.getLogger(__name__)
 """Отрисовка спрайтов на уровне"""
 
 
 class Level:
     def __init__(self):
+        log.info('Level class intialization')
         self.display_surface = pygame.display.get_surface()
 
         self.all_sprites = CameraGroup()
         self.create_map()
 
         self.setup()
-
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
@@ -50,4 +51,3 @@ class CameraGroup(pygame.sprite.Group):
                     offset_rect = sprite.rect.copy()
                     offset_rect.center -= self.offset
                     self.display_surf.blit(sprite.image, offset_rect)
-
