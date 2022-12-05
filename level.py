@@ -13,13 +13,14 @@ class Level:
         self.display_surface = pygame.display.get_surface()
 
         self.all_sprites = CameraGroup()
+        self.collision_sprites = pygame.sprite.Group()
         self.create_map()
 
         self.setup()
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
-        self.player = Player((600, 300), self.all_sprites)
+        self.player = Player((600, 300), self.all_sprites, ((20, 20), (0, 0)), self.collision_sprites)
 
     def create_map(self):
         for row_index, row in enumerate(MAP):
@@ -27,7 +28,7 @@ class Level:
                 x = col_index * TILE_SIZE
                 y = row_index * TILE_SIZE
                 if col == 'x':
-                    Tile((x, y), self.all_sprites)
+                    Tile((x, y), [self.all_sprites, self.collision_sprites])
 
     def run(self, dt):
         self.all_sprites.custom_draw(self.player)

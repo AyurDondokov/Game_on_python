@@ -5,7 +5,7 @@ from support import *
 
 
 class GameObject(pygame.sprite.Sprite):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, layer: int,
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, z: int,
                  movement_speed: float = 0,
                  is_animated: bool = False,
                  anim_speed: float = DEFAULT_CHARACTER_ANIM_SPEED,
@@ -23,7 +23,8 @@ class GameObject(pygame.sprite.Sprite):
 
         # Основные настройки
         self.rect = self.image.get_rect(center=position)
-        self.z = layer
+        self.hitbox = self.rect.copy()
+        self.z = z
 
         # Настройки передвижения
         self.direction = pygame.math.Vector2()
@@ -45,12 +46,22 @@ class GameObject(pygame.sprite.Sprite):
         """Приём нажатия клавишь"""
         pass
 
+    def _collision(self, direction):
+        pass
+
     def _move(self, dt):
         if self.direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
             self.direction = self.direction.normalize()
 
-        self.pos += self.direction * self.speed * dt
-        self.rect.center = self.pos
+        self.pos.x += self.direction.x * self.speed * dt
+        self.hitbox.centerx = round(self.pos.x)
+        self.rect.centerx = self.hitbox.centerx
+        self._collision('horizontal')
+
+        self.pos.y += self.direction.y * self.speed * dt
+        self.hitbox.centery = round(self.pos.y)
+        self.rect.centery = self.hitbox.centery
+        self._collision('vertical')
 
     def _animate(self, dt):
         self.anim_frame_index += 1 / self.anim_speed * dt

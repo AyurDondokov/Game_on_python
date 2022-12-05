@@ -20,8 +20,7 @@ class Game:
             self.screen.fill('black')
             self.events_update()
 
-            # delta time - время между кадрами, нужно для правильной работы движения
-            dt = self.clock.tick(FPS) / 1000
+            dt = self.clock.tick(FPS) / 1000  # delta time - время между кадрами, нужно для правильной работы движения
             self.level.run(dt)
             pygame.display.update()
 
