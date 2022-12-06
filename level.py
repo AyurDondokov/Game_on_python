@@ -3,6 +3,7 @@ from properties import *
 from tile import Tile
 from player import Player
 import logging
+from character import NPC
 log = logging.getLogger(__name__)
 """Отрисовка спрайтов на уровне"""
 
@@ -20,7 +21,10 @@ class Level:
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
-        self.player = Player((600, 300), self.all_sprites, ((20, 20), (0, 0)), self.collision_sprites)
+        self.test_npc = NPC(
+            (500, 600), [self.all_sprites, self.collision_sprites], ((20, 20), (0, 0)))
+        self.player = Player((600, 300), self.all_sprites,
+                             ((20, 20), (0, 0)), self.collision_sprites)
 
     def create_map(self):
         for row_index, row in enumerate(MAP):

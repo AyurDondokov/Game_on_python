@@ -28,7 +28,8 @@ LAYERS = {
     'ground': 0,
     'decor': 1,
     'main': 2,
-    'player': 3
+    'npc': 3,
+    'player': 4
 }
 
 MAP = [

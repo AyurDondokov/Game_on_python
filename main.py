@@ -20,7 +20,8 @@ class Game:
             self.screen.fill('black')
             self.events_update()
 
-            dt = self.clock.tick(FPS) / 1000  # delta time - время между кадрами, нужно для правильной работы движения
+            # delta time - время между кадрами, нужно для правильной работы движения
+            dt = self.clock.tick(FPS) / 1000
             self.level.run(dt)
             pygame.display.update()
 
@@ -32,7 +33,7 @@ class Game:
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(level=logging.DEBUG,
                         filename="py_log.log", filemode="w", format='%(levelname)s:%(filename)s:%(funcName)s:Line %(lineno)d:%(message)s')
     logging.info("Game starting...")
     game = Game()
