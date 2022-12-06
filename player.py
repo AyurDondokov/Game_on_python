@@ -3,6 +3,7 @@ import pygame
 from properties import *
 from support import *
 from game_object import GameObject
+import logging as log
 
 
 class Player(GameObject):
@@ -40,16 +41,19 @@ class Player(GameObject):
         # Вертикальное движение
         if keys[pygame.K_w] and not keys[pygame.K_s]:
             self.direction.y = -1
+            self.anim_status = list(self.animations.keys())[1]
         elif keys[pygame.K_s] and not keys[pygame.K_w]:
             self.direction.y = 1
+            self.anim_status = list(self.animations.keys())[0]
         else:
             self.direction.y = 0
 
         # Горизонтальное движение
         if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.direction.x = -1
+            self.anim_status = list(self.animations.keys())[3]
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.direction.x = 1
+            self.anim_status = list(self.animations.keys())[2]
         else:
             self.direction.x = 0
-

@@ -16,8 +16,8 @@ class GameObject(pygame.sprite.Sprite):
 
         # Настройки анимации
         self._is_animated = is_animated
-        self.__animations = deepcopy(animations_pack)
-        self.anim_status = list(self.__animations.keys())[0]  # Статус анимации
+        self.animations = deepcopy(animations_pack)
+        self.anim_status = list(self.animations.keys())[0]  # Статус анимации
         self.anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
         self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
@@ -36,10 +36,10 @@ class GameObject(pygame.sprite.Sprite):
     def _import_assets(self, path):
         """Функция для добавления всех анимаций персонажу"""
         if self._is_animated:
-            for animation in self.__animations.keys():
+            for animation in self.animations.keys():
                 full_path = path + animation
-                self.__animations[animation] = import_folder(full_path)
-            self.image = self.__animations[self.anim_status][self.anim_frame_index]
+                self.animations[animation] = import_folder(full_path)
+            self.image = self.animations[self.anim_status][self.anim_frame_index]
         else:
             self.image = pygame.image.load(path).convert_alpha()
 
@@ -66,9 +66,9 @@ class GameObject(pygame.sprite.Sprite):
 
     def _animate(self, dt):
         self.anim_frame_index += 1 / self.anim_speed * dt
-        if self.anim_frame_index >= len(self.__animations[self.anim_status]):
+        if self.anim_frame_index >= len(self.animations[self.anim_status]):
             self.anim_frame_index = 0
-        self.image = self.__animations[self.anim_status][int(
+        self.image = self.animations[self.anim_status][int(
             self.anim_frame_index)]
 
     def update(self, dt):
