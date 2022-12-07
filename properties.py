@@ -11,14 +11,14 @@ STANDARD_OBJ_ANIM_PACK = {
 
 # Characters values
 DEFAULT_CHARACTER_SPEED = 220
-DEFAULT_CHARACTER_ANIM_SPEED = 0.75
+DEFAULT_CHARACTER_ANIM_SPEED = 0.2
 STANDARD_CHARACTER_ANIM_PACK = {
     'idle_down': [], 'idle_up': [], 'idle_right': [], 'idle_left': [],
-    'walk_up': [], 'walk_down': [], 'walk_right': [], 'walk_left': []
+    'move_up': [], 'move_down': [], 'move_right': [], 'move_left': []
 }
 
 # Player values
-PLAYER_HITBOX_SIZE = ()
+PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
     1: {'max_health': 100, 'armor': 3, 'max_damage': 20},
     2: {'max_health': 120, 'armor': 5, 'max_damage': 30}

@@ -22,6 +22,8 @@ class GameObject(pygame.sprite.Sprite):
         self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
         self._import_assets(sprite_path)
+        print(self.animations)
+
 
         # Основные настройки
         self.rect = self.image.get_rect(center=position)
@@ -64,12 +66,14 @@ class GameObject(pygame.sprite.Sprite):
         self.rect.centery = self.hitbox.centery
         self._collision('vertical')
 
+    def _change_anim_status(self, new_state: str):
+        self.anim_status = new_state
+
     def _animate(self, dt):
         self.anim_frame_index += 1 / self.anim_speed * dt
         if self.anim_frame_index >= len(self.animations[self.anim_status]):
             self.anim_frame_index = 0
-        self.image = self.animations[self.anim_status][int(
-            self.anim_frame_index)]
+        self.image = self.animations[self.anim_status][int(self.anim_frame_index)]
 
     def update(self, dt):
         self._input()
