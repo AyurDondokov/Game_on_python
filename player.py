@@ -44,20 +44,20 @@ class Player(GameObject):
         # Вертикальное движение
         if keys[pygame.K_w] and not keys[pygame.K_s]:
             self.direction.y = -1
-            self._change_anim_status("move_up")
+            self._change_anim_status("walk_up")
         elif keys[pygame.K_s] and not keys[pygame.K_w]:
             self.direction.y = 1
-            self._change_anim_status("move_down")
+            self._change_anim_status("walk_down")
         else:
             self.direction.y = 0
 
         # Горизонтальное движение
         if keys[pygame.K_a] and not keys[pygame.K_d]:
             self.direction.x = -1
-            self._change_anim_status("move_left")
+            self._change_anim_status("walk_left")
         elif keys[pygame.K_d] and not keys[pygame.K_a]:
             self.direction.x = 1
-            self._change_anim_status("move_right")
+            self._change_anim_status("walk_right")
         else:
             self.direction.x = 0
 

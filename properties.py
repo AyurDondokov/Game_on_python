@@ -14,7 +14,7 @@ DEFAULT_CHARACTER_SPEED = 220
 DEFAULT_CHARACTER_ANIM_SPEED = 0.2
 STANDARD_CHARACTER_ANIM_PACK = {
     'idle_down': [], 'idle_up': [], 'idle_right': [], 'idle_left': [],
-    'move_up': [], 'move_down': [], 'move_right': [], 'move_left': []
+    'walk_up': [], 'walk_down': [], 'walk_right': [], 'walk_left': []
 }
 
 # Player values
