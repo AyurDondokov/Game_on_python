@@ -11,7 +11,8 @@ STANDARD_OBJ_ANIM_PACK = {
 
 # Characters values
 DEFAULT_CHARACTER_SPEED = 220
-DEFAULT_CHARACTER_ANIM_SPEED = 0.2
+DEFAULT_CHARACTER_ANIM_SPEED = {'idle': 0.8,
+                                'walk': 0.2}
 STANDARD_CHARACTER_ANIM_PACK = {
     'idle_down': [], 'idle_up': [], 'idle_right': [], 'idle_left': [],
     'walk_up': [], 'walk_down': [], 'walk_right': [], 'walk_left': []
