@@ -28,7 +28,6 @@ class NPC(GameObject):
     def _input(self):
         """Приём нажатия клавишь"""
         keys = pygame.key.get_pressed()
-        events = pygame.event.get()
 
         if keys[pygame.K_SPACE]:
             self.make_dialog()
