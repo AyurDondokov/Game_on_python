@@ -7,7 +7,7 @@ import logging as log
 
 
 class NPC(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, hitbox):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group):
         super().__init__(position, sprite_group,
                          "./sprites/test_npc/", LAYERS['npc'], DEFAULT_CHARACTER_SPEED, True,
                          DEFAULT_CHARACTER_ANIM_SPEED, STANDARD_CHARACTER_ANIM_PACK)
@@ -15,4 +15,3 @@ class NPC(GameObject):
 
     def update(self, dt):
         self._animate(dt)
-        pass
