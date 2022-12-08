@@ -6,7 +6,7 @@ class Menu():
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - 100
-        self.BACKGROUND_MENU = pygame.image.load('menu.jpg')
+        self.BACKGROUND_MENU = pygame.image.load('./images/menu/menu.jpg')
     def draw_cursor(self):
         self.game.draw_text('->', 30, self.cursor_rect.x, self.cursor_rect.y)
     def blit_screen(self):
@@ -64,8 +64,8 @@ class MainMenu(Menu):
             elif self.state == 'EXIT':
                 pass
             self.run_display = False
-class OptionsMenu(Menu):
-    def __init__(self, game):
-        Menu.__init__(self, game)
-        self.state = "Volume"
-        self.volx, self.voly = self.mid_w, self.mid_h + 20
+# class OptionsMenu(Menu):
+#     def __init__(self, game):
+#         Menu.__init__(self, game)
+#         self.state = "Volume"
+#         self.volx, self.voly = self.mid_w, self.mid_h + 20
