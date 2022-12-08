@@ -15,14 +15,22 @@ class Dialog(pygame.sprite.Group):
 
 
 class NPC(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, hitbox, name):
-        super().__init__(position, sprite_group,
-                         "./sprites/test_npc/", LAYERS['npc'], DEFAULT_CHARACTER_SPEED, True,
-                         DEFAULT_CHARACTER_ANIM_SPEED, STANDARD_CHARACTER_ANIM_PACK)
-        self.hitbox = self.rect.copy()
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name: str):
+        super().__init__(position,
+                         sprite_group,
+                         sprite_path="./sprites/test_npc/",
+                         z=LAYERS['npc'],
+                         hitbox_offset=(0, 0.25),
+                         movement_speed=DEFAULT_CHARACTER_SPEED,
+                         is_animated=True,
+                         anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
+                         animations_pack=STANDARD_CHARACTER_ANIM_PACK
+                         )
+        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
         self.name = name
 
     def make_dialog(self):
+        print(f"dialog with {self.name}")
         pass
 
     def _input(self):

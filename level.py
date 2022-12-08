@@ -22,7 +22,9 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            (500, 600), [self.all_sprites, self.collision_sprites], ((20, 20), (0, 0)), name="Ayur")
+            position=(500, 600),
+            sprite_group=[self.all_sprites, self.collision_sprites],
+            name="Ayur")
         self.player = Player((600, 300), self.all_sprites, self.collision_sprites)
 
     def create_map(self):

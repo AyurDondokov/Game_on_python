@@ -8,6 +8,7 @@ from copy import deepcopy
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, z: int,
+                 hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
                  is_animated: bool = False,
                  anim_speed: float = DEFAULT_CHARACTER_ANIM_SPEED,
@@ -27,6 +28,7 @@ class GameObject(pygame.sprite.Sprite):
         # Основные настройки
         self.rect = self.image.get_rect(center=position)
         self.hitbox = self.rect.copy()
+        self.hitbox_offset = hitbox_offset
         self.z = z
 
         # Настройки передвижения
@@ -49,7 +51,8 @@ class GameObject(pygame.sprite.Sprite):
         pass
 
     def _collision(self, direction):
-        pass
+        self.hitbox.centerx = self.rect.centerx + self.rect.width * self.hitbox_offset[0]
+        self.hitbox.centery = self.rect.centery + self.rect.height * self.hitbox_offset[1]
 
     def _move(self, dt):
         if self.direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
