@@ -8,8 +8,8 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = 1280, 720
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        self.BACKGROUND = pygame.image.load('back.png').convert()
-        self.font_name = 'MonospaceRegular.ttf'
+        self.BACKGROUND = pygame.image.load('./images/menu/test_game.png').convert()
+        self.font_name = './addons/monospace.ttf'
         self.WHITE = (255, 255, 255)
         self.curr_menu = MainMenu(self)
     def game_loop(self):
