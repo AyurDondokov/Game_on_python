@@ -11,12 +11,13 @@ class Player(GameObject):
                  sprite_group: pygame.sprite.Group,
                  collision_sprites: pygame.sprite.Group):
         super().__init__(position, sprite_group,
-                         "./sprites/main_character/", LAYERS['player'], DEFAULT_CHARACTER_SPEED, True,
+                         "./sprites/main_character/", LAYERS['player'], (0, 0.25), DEFAULT_CHARACTER_SPEED, True,
                          DEFAULT_CHARACTER_ANIM_SPEED, STANDARD_CHARACTER_ANIM_PACK)
-        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.9)
+        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
         self.collision_sprites = collision_sprites
 
     def _collision(self, direction):
+        self.hitbox.centery = self.rect.centery + self.rect.height/4
         for sprite in self.collision_sprites:
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
@@ -26,7 +27,7 @@ class Player(GameObject):
                         if self.direction.x < 0:
                             self.hitbox.left = sprite.hitbox.right
 
-                        self.rect.centerx = self.hitbox.centerx
+                        self.rect.centerx = self.hitbox.centerx - self.rect.height * self.hitbox_offset[1]
                         self.pos.x = self.hitbox.centerx
                     if direction == 'vertical':
                         if self.direction.y > 0:
@@ -34,8 +35,8 @@ class Player(GameObject):
                         if self.direction.y < 0:
                             self.hitbox.top = sprite.hitbox.bottom
 
-                        self.rect.centery = self.hitbox.centery
-                        self.pos.y = self.hitbox.centery
+                        self.rect.centery = self.hitbox.centery - self.rect.height * self.hitbox_offset[1]
+                        self.pos.y = self.hitbox.centery - self.rect.height * self.hitbox_offset[1]
 
     def _input(self):
         """Приём нажатия клавишь"""
