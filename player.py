@@ -17,7 +17,7 @@ class Player(GameObject):
         self.collision_sprites = collision_sprites
 
     def _collision(self, direction):
-        self.hitbox.centery = self.rect.centery + self.rect.height/4
+        super(Player, self)._collision(direction)
         for sprite in self.collision_sprites:
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
@@ -27,8 +27,9 @@ class Player(GameObject):
                         if self.direction.x < 0:
                             self.hitbox.left = sprite.hitbox.right
 
-                        self.rect.centerx = self.hitbox.centerx - self.rect.height * self.hitbox_offset[1]
-                        self.pos.x = self.hitbox.centerx
+                        self.rect.centerx = self.hitbox.centerx - self.rect.width * self.hitbox_offset[0]
+                        self.pos.x = self.hitbox.centerx - self.rect.width * self.hitbox_offset[0]
+
                     if direction == 'vertical':
                         if self.direction.y > 0:
                             self.hitbox.bottom = sprite.hitbox.top

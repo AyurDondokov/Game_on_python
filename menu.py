@@ -1,18 +1,23 @@
 import pygame
-class Menu():
+from properties import *
+
+class Menu:
     def __init__(self, game):
         self.game = game
-        self.mid_w, self.mid_h = game.SCREEN_WIDTH / 2, game.SCREEN_HEIGHT / 2
+        self.mid_w, self.mid_h = SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - 100
         self.BACKGROUND_MENU = pygame.image.load('./images/menu/menu.jpg')
+
     def draw_cursor(self):
         self.game.draw_text('->', 30, self.cursor_rect.x, self.cursor_rect.y)
+
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
         pygame.display.update()
         self.game.reset_keys()
+
 
 class MainMenu(Menu):
     def __init__(self, game):
@@ -22,6 +27,7 @@ class MainMenu(Menu):
         self.optionsx, self.optionsy = self.mid_w, self.mid_h + 100
         self.exitx, self.exity = self.mid_w, self.mid_h + 170
         self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
+
     def display_menu(self):
         self.run_display = True
         while self.run_display:
@@ -34,6 +40,7 @@ class MainMenu(Menu):
             self.game.draw_text("EXIT", 40, self.exitx, self.exity)
             self.draw_cursor()
             self.blit_screen()
+
     def move_cursor(self):
         if self.game.DOWN_KEY or self.game.K_s:
             if self.state == "START":
@@ -55,6 +62,7 @@ class MainMenu(Menu):
             elif self.state == "EXIT":
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy)
                 self.state = "OPTIONS"
+
     def check_input(self):
         self.move_cursor()
         if self.game.START_KEY:
@@ -65,6 +73,8 @@ class MainMenu(Menu):
             elif self.state == 'EXIT':
                 pass
             self.run_display = False
+
+
 class OptionsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
@@ -72,6 +82,7 @@ class OptionsMenu(Menu):
         self.volx, self.voly = self.mid_w, self.mid_h + 20
         self.controlsx, self.controlsy = self.mid_w, self.mid_h + 40
         self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
+
     def display_menu(self):
         self.run_display = True
         while self.run_display:
@@ -82,6 +93,7 @@ class OptionsMenu(Menu):
             self.game.draw_text("Controls", 15, self.controlsx, self.controlsy)
             self.draw_cursor()
             self.blit_screen()
+
     def check_input(self):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
