@@ -89,13 +89,33 @@ class OptionsMenu(Menu):
             self.game.display.fill('black')
             self.game.draw_text("OPRIONS", 20, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 2)
             self.game.draw_text("Volume", 15, self.volx, self.voly)
-            self.game.draw_text("Controls", 15, self.controlsx, self.controlsy)
+            self.game.draw_text("Window", 15, self.controlsx, self.controlsy)
             self.draw_cursor()
             self.blit_screen()
     def check_input(self):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
+        elif self.game.UP_KEY or self.game.DOWN_KEY:
+            if self.state == 'Volume':
+                self.state = 'Window'
+                self.cursor_rect.midtop = (self.controlsx, self.offset, self.controlsy)
+            elif self.state == 'Window':
+                self.state = 'Volume'
+                self.cursor_rect = (self.volx + self.offset, self.voly)
+        elif self.game.START_KEY:
+            pass
 
 class CreditsMenu(Menu):
-    pass
+    def __init__(self, game):
+        Menu.__init__(self, game)
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.events_update()
+            if self.game.START_KEY or self.game.BACK_KEY:
+                self.game.curr_menu = self.game.main_menu
+                self.run_display = False
+            self.game.display.fill(self.game.BLACK)
+            self.game.draw_text("CREDITS", 20, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 - 20)
+            self.blit_screen()
