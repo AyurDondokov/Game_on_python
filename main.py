@@ -12,6 +12,8 @@ class Game():
         # Добавил menu_game
         self.game_over, self.menu_game = False, True
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
+        self.K_w, self.K_s = False, False
+
         # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1080, 720
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
@@ -26,7 +28,7 @@ class Game():
         while not self.game_over:
             self.events_update()
             if self.START_KEY:
-                self.game_over = True
+                self.game_over = False
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
@@ -48,8 +50,13 @@ class Game():
                     self.DOWN_KEY = True
                 if event.key == pygame.K_UP:
                     self.UP_KEY = True
+                if event.key == pygame.K_s:
+                    self.K_s = True
+                if event.key == pygame.K_w:
+                    self.K_w = True
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
+        self.K_s, self.K_w = False, False
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
