@@ -4,13 +4,12 @@ import sys
 from properties import *
 from level import Level
 import logging
-from menu import MainMenu
+from menu import *
 class Game():
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("The best game ever")
-        # Добавил menu_game
-        self.game_over, self.menu_game = False, True
+        self.game_over = False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.K_w, self.K_s = False, False
 
@@ -23,13 +22,15 @@ class Game():
         self.clock = pygame.time.Clock()
         self.level = Level()
         self.main_menu = MainMenu(self)
+        self.options = OptionsMenu(self)
+        self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
 
     def run(self):
-        while not self.game_over:
+        while self.game_over:
             self.events_update()
             if self.START_KEY:
-                self.game_over = False
+                self.game_over = True
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
@@ -45,7 +46,7 @@ class Game():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.START_KEY = True
-                if event.key == pygame.K_BACKSPACE:
+                if event.key == pygame.K_BACKSPACE or pygame.K_ESCAPE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
                     self.DOWN_KEY = True
