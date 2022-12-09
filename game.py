@@ -1,32 +1,44 @@
 import pygame
+import sys
+from properties import *
+from level import Level
+import logging
 from menu import MainMenu
 class Game():
     def __init__(self):
         pygame.init()
-        self.running, self.playing = True, False
+        self.game_over, self.menu_game = False, True
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 1280, 720
-        self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
-        self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        self.BACKGROUND = pygame.image.load('./images/menu/test_game.png').convert()
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1280, 720
+        self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.font_name = './addons/monospace.ttf'
         self.WHITE = (255, 255, 255)
+        self.clock = pygame.time.Clock()
+        self.level = Level()
         self.curr_menu = MainMenu(self)
-    def game_loop(self):
-        while self.playing:
-            self.check_events()
+
+        # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        # self.clock = pygame.time.Clock()
+        # self.level = Level()
+    def run(self):
+        while not self.game_over:
+            self.events_update()
             if self.START_KEY:
-                self.playing = False
-            self.display.blit(self.BACKGROUND, (0, 0))
-            self.draw_text('Тут игра короч', 20, self.DISPLAY_W/2, self.DISPLAY_H/2)
-            self.window.blit(self.display, (0, 0))
+                self.game_over = True
+            self.window.fill('black')
+            dt = self.clock.tick(FPS) / 1000
+            self.level.run(dt)
             pygame.display.update()
             self.reset_keys()
-    def check_events(self):
+
+    def events_update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
                 self.curr_menu.run_display = False
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
                     self.START_KEY = True
@@ -44,3 +56,11 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         self.display.blit(text_surface, text_rect)
+# class Big_game:
+#     if __name__ == '__main__':
+#         logging.basicConfig(level=logging.DEBUG,
+#                             filename="py_log.log", filemode="w",
+#                             format='%(levelname)s:%(filename)s:%(funcName)s:Line %(lineno)d:%(message)s')
+#         logging.info("Game starting...")
+#         game = Game()
+#         game.run()
