@@ -10,6 +10,7 @@ STANDARD_OBJ_ANIM_PACK = {
 }
 
 # Characters values
+DISTANCE_FOR_DIALOG = 100
 DEFAULT_CHARACTER_SPEED = 220
 DEFAULT_CHARACTER_ANIM_SPEED = {'idle': 0.8,
                                 'walk': 0.2}

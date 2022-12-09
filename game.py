@@ -1,9 +1,9 @@
 
 import pygame
-from menu import MainMenu
+import menu
 
 
-class Game():
+class Game:
     def __init__(self):
         pygame.init()
         self.running, self.playing = True, False
@@ -14,7 +14,7 @@ class Game():
         self.BACKGROUND = pygame.image.load('./images/menu/test_game.png').convert()
         self.font_name = './addons/monospace.ttf'
         self.WHITE = (255, 255, 255)
-        self.curr_menu = MainMenu(self)
+        self.curr_menu = menu.MainMenu(self)
     def game_loop(self):
         while True:
             self.check_events()
@@ -48,5 +48,8 @@ class Game():
         text_rect.center = (x, y)
         self.display.blit(text_surface, text_rect)
 
+
 game = Game()
-game.game_loop()
+m = menu.Menu(game)
+mainmenu = menu.MainMenu(m)
+mainmenu.display_menu()

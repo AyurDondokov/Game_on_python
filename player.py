@@ -65,3 +65,12 @@ class Player(GameObject):
 
         if self.direction.magnitude() == 0:
             self._change_anim_status("idle_" + self.anim_status.split('_')[1])
+
+    def check_npc_distance(self):
+        for sprite in self.collision_sprites:
+            if hasattr(sprite, 'is_dialog_able'):
+                sprite.is_dialog_able = self.pos.distance_to(sprite.pos) < DISTANCE_FOR_DIALOG
+
+    def update(self, dt):
+        super().update(dt)
+        self.check_npc_distance()

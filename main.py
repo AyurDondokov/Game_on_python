@@ -5,7 +5,9 @@ from properties import *
 from level import Level
 import logging
 from menu import MainMenu
-class Game():
+
+
+class Game:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption("The best game ever")
