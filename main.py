@@ -13,7 +13,7 @@ class Game():
         self.game_over, self.menu_game = False, True
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1280, 720
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1080, 720
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.font_name = './addons/monospace.ttf'
