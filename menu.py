@@ -1,4 +1,5 @@
 import pygame
+import sys
 class Menu():
     def __init__(self, game):
         self.game = game
@@ -73,7 +74,8 @@ class MainMenu(Menu):
             elif self.state == 'CREDITS':
                 self.game.curr_menu = self.game.credits
             elif self.state == 'EXIT':
-                pass
+                pygame.quit()
+                sys.exit()
             self.run_display = False
 class OptionsMenu(Menu):
     def __init__(self, game):
@@ -102,7 +104,7 @@ class OptionsMenu(Menu):
                 self.cursor_rect.midtop = (self.controlsx, self.offset, self.controlsy)
             elif self.state == 'Window':
                 self.state = 'Volume'
-                self.cursor_rect = (self.volx + self.offset, self.voly)
+                self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
         elif self.game.START_KEY:
             pass
 
