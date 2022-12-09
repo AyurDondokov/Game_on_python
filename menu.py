@@ -42,7 +42,7 @@ class MainMenu(Menu):
             elif self.state == "OPTIONS":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
                 self.state = "EXIT"
-            elif self.state == "OPTIONS":
+            elif self.state == "EXIT":
                 self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
                 self.state = "START"
         if self.game.UP_KEY or self.game.K_w:
@@ -65,8 +65,24 @@ class MainMenu(Menu):
             elif self.state == 'EXIT':
                 pass
             self.run_display = False
-# class OptionsMenu(Menu):
-#     def __init__(self, game):
-#         Menu.__init__(self, game)
-#         self.state = "Volume"
-#         self.volx, self.voly = self.mid_w, self.mid_h + 20
+class OptionsMenu(Menu):
+    def __init__(self, game):
+        Menu.__init__(self, game)
+        self.state = "Volume"
+        self.volx, self.voly = self.mid_w, self.mid_h + 20
+        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 40
+        self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
+    def display_menu(self):
+        self.run_display = True
+        while self.run_display:
+            self.game.events_update()
+            self.game.display.fill('black')
+            self.game.draw_text("OPRIONS", 20, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 2)
+            self.game.draw_text("Volume", 15, self.volx, self.voly)
+            self.game.draw_text("Controls", 15, self.controlsx, self.controlsy)
+            self.draw_cursor()
+            self.blit_screen()
+    def check_input(self):
+        if self.game.BACK_KEY:
+            self.game.curr_menu = self.game.main_menu
+            self.run_display = False
