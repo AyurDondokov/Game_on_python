@@ -2,7 +2,7 @@ import pygame
 class Menu():
     def __init__(self, game):
         self.game = game
-        self.mid_w, self.mid_h = self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2
+        self.mid_w, self.mid_h = game.SCREEN_WIDTH / 2, game.SCREEN_HEIGHT / 2
         self.run_display = True
         self.cursor_rect = pygame.Rect(0, 0, 20, 20)
         self.offset = - 100
@@ -13,6 +13,7 @@ class Menu():
         self.game.window.blit(self.game.display, (0, 0))
         pygame.display.update()
         self.game.reset_keys()
+
 class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
@@ -24,10 +25,10 @@ class MainMenu(Menu):
     def display_menu(self):
         self.run_display = True
         while self.run_display:
-            self.game.check_events()
+            self.game.events_update()
             self.check_input()
             self.game.display.blit(self.BACKGROUND_MENU, (0, 0))
-            self.game.draw_text("Игра короч", 100, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 4)
+            self.game.draw_text("Игра короч", 100, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4)
             self.game.draw_text("START", 40, self.startx, self.starty)
             self.game.draw_text("OPTIONS", 40, self.optionsx, self.optionsy)
             self.game.draw_text("EXIT", 40, self.exitx, self.exity)
@@ -58,7 +59,7 @@ class MainMenu(Menu):
         self.move_cursor()
         if self.game.START_KEY:
             if self.state == 'START':
-                self.game.playing = True
+                self.game.game_over = False
             elif self.state == 'OPTIONS':
                 pass
             elif self.state == 'EXIT':
