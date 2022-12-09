@@ -59,7 +59,7 @@ class MainMenu(Menu):
         self.move_cursor()
         if self.game.START_KEY:
             if self.state == 'START':
-                self.game.game_over = False
+                self.game.game_over = True
             elif self.state == 'OPTIONS':
                 pass
             elif self.state == 'EXIT':
@@ -86,3 +86,6 @@ class OptionsMenu(Menu):
         if self.game.BACK_KEY:
             self.game.curr_menu = self.game.main_menu
             self.run_display = False
+
+class CreditsMenu(Menu):
+    pass
