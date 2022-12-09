@@ -35,7 +35,7 @@ class MainMenu(Menu):
             self.draw_cursor()
             self.blit_screen()
     def move_cursor(self):
-        if self.game.DOWN_KEY:
+        if self.game.DOWN_KEY or self.game.K_s:
             if self.state == "START":
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy)
                 self.state = "OPTIONS"
@@ -45,7 +45,7 @@ class MainMenu(Menu):
             elif self.state == "OPTIONS":
                 self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
                 self.state = "START"
-        if self.game.UP_KEY:
+        if self.game.UP_KEY or self.game.K_w:
             if self.state == "START":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
                 self.state = "EXIT"
