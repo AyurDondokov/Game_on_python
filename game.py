@@ -56,11 +56,11 @@ class Game():
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         self.display.blit(text_surface, text_rect)
-# class Big_game:
-#     if __name__ == '__main__':
-#         logging.basicConfig(level=logging.DEBUG,
-#                             filename="py_log.log", filemode="w",
-#                             format='%(levelname)s:%(filename)s:%(funcName)s:Line %(lineno)d:%(message)s')
-#         logging.info("Game starting...")
-#         game = Game()
-#         game.run()
+class Big_game:
+    if __name__ == '__main__':
+        logging.basicConfig(level=logging.DEBUG,
+                            filename="py_log.log", filemode="w",
+                            format='%(levelname)s:%(filename)s:%(funcName)s:Line %(lineno)d:%(message)s')
+        logging.info("Game starting...")
+        game = Game()
+        game.run()
