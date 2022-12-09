@@ -69,9 +69,9 @@ class MainMenu(Menu):
             if self.state == 'START':
                 self.game.game_over = True
             elif self.state == 'OPTIONS':
-                pass
+                self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
-                pass
+                self.game.curr_menu = self.game.credits
             elif self.state == 'EXIT':
                 pass
             self.run_display = False
@@ -116,6 +116,6 @@ class CreditsMenu(Menu):
             if self.game.START_KEY or self.game.BACK_KEY:
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
-            self.game.display.fill(self.game.BLACK)
+            self.game.display.fill('black')
             self.game.draw_text("CREDITS", 20, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 - 20)
             self.blit_screen()
