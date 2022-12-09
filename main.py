@@ -57,6 +57,7 @@ class Game:
                     self.K_s = True
                 if event.key == pygame.K_w:
                     self.K_w = True
+
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.K_s, self.K_w = False, False
