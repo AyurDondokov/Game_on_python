@@ -22,7 +22,8 @@ class Game():
         self.WHITE = (255, 255, 255)
         self.clock = pygame.time.Clock()
         self.level = Level()
-        self.curr_menu = MainMenu(self)
+        self.main_menu = MainMenu(self)
+        self.curr_menu = self.main_menu
 
     def run(self):
         while not self.game_over:
