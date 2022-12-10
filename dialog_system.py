@@ -45,7 +45,6 @@ class Dialog(pygame.sprite.Group):
         self.npc_profile.image = pygame.image.load('./sprites/dialog_person_test.png')
         self.npc_profile.rect = self.npc_profile.image.get_rect(bottomleft=self.window.rect.bottomleft)
 
-        self.time_for_click_again = 1
         self.replicas = npc.dialog_replicas
         self.replica_index = 0
         self.text_replica = Text(screen=self.display_surf,
@@ -54,31 +53,22 @@ class Dialog(pygame.sprite.Group):
                                  size=40,
                                  color=(0, 0, 0, 255))
 
+    def next_replica(self):
+        if not self.is_open:
+            self.is_open = True
+        if self.replica_index < len(self.replicas):
+            self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
+            self.replica_index += 1
+        else:
+            self.is_open = False
+            self.replica_index = 0
+
     def custom_draw(self):
         if self.is_open:
             self.display_surf.blit(self.window.image, self.window.rect)
             self.display_surf.blit(self.npc_profile.image, self.npc_profile.rect)
             self.text_replica.out()
 
-    def input(self, dt):
-        keys = pygame.key.get_pressed()
-
-        if self.time_for_click_again > 0:
-            self.time_for_click_again -= dt
-
-        if keys[pygame.K_SPACE] and self.time_for_click_again <= 0:
-            if self.is_open:
-                self.time_for_click_again = 1
-                if self.replica_index < len(self.replicas):
-                    self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
-                    self.replica_index += 1
-                else:
-                    self.is_open = False
-                    self.replica_index = 0
-            else:
-                self.is_open = True
-
     def update(self, dt):
-        self.input(dt)
         self.custom_draw()
 

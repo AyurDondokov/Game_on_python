@@ -15,6 +15,7 @@ class Level:
 
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
+        self.interactable_sprites = pygame.sprite.Group()
         self.create_map()
 
         self.setup()
@@ -23,10 +24,10 @@ class Level:
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
             position=(500, 600),
-            sprite_group=[self.all_sprites, self.collision_sprites],
+            sprite_group=[self.all_sprites, self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
-        self.player = Player((600, 300), self.all_sprites, self.collision_sprites)
+        self.player = Player((600, 300), self.all_sprites, self.collision_sprites, self.interactable_sprites)
 
     def create_map(self):
         for row_index, row in enumerate(MAP):
@@ -34,7 +35,7 @@ class Level:
                 x = col_index * TILE_SIZE
                 y = row_index * TILE_SIZE
                 if col == 'x':
-                    Tile((x, y), [self.all_sprites, self.collision_sprites])
+                    Tile((x, y), self.all_sprites)
 
     def run(self, dt):
         self.all_sprites.custom_draw(self.player)
@@ -54,6 +55,11 @@ class CameraGroup(pygame.sprite.Group):
 
         for layer in LAYERS.values():
             for sprite in self.sprites():
+                if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
+                    if sprite.rect.centery > player.rect.centery:
+                        sprite.z = LAYERS['forward_'+list(LAYERS.keys())[sprite.z].split('_')[1]]
+                    else:
+                        sprite.z = LAYERS['back_'+list(LAYERS.keys())[sprite.z].split('_')[1]]
                 if sprite.z == layer:
                     offset_rect = sprite.rect.copy()
                     offset_rect.center -= self.offset

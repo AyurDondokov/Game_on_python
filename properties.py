@@ -2,7 +2,7 @@
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 720
 FPS = 60
-TILE_SIZE = 32
+TILE_SIZE = 64
 
 
 STANDARD_OBJ_ANIM_PACK = {
@@ -10,7 +10,7 @@ STANDARD_OBJ_ANIM_PACK = {
 }
 
 # Characters values
-DISTANCE_FOR_DIALOG = 100
+DISTANCE_FOR_INTERACT = 100
 DEFAULT_CHARACTER_SPEED = 220
 DEFAULT_CHARACTER_ANIM_SPEED = {'idle': 0.8,
                                 'walk': 0.2}
@@ -23,6 +23,7 @@ STANDARD_CHARACTER_ANIM_PACK = {
 DIALOG_WINDOW_POSITION = (SCREEN_WIDTH/2, SCREEN_HEIGHT-128)
 
 # Player values
+TIME_BETWEEN_INTERACT = 0.5
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
     1: {'max_health': 100, 'armor': 3, 'max_damage': 20},
@@ -31,10 +32,14 @@ LEVELS_PROPERTIES = {
 
 LAYERS = {
     'ground': 0,
-    'decor': 1,
-    'main': 2,
-    'npc': 3,
-    'player': 4
+    'back_decor': 1,
+    'back_main': 2,
+    'back_npc': 3,
+    'player': 4,
+    'forward_decor': 5,
+    'forward_main': 6,
+    'forward_npc': 7,
+    'ux': 8
 }
 
 MAP = [
@@ -43,15 +48,15 @@ MAP = [
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', 'x', 'x'],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', '', ''],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', '', ''],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', '', ''],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', '', ''],
+    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', '', '', '', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-    ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
+    ['x', '', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
 ]

@@ -13,7 +13,7 @@ class NPC(GameObject):
         super().__init__(position,
                          sprite_group,
                          sprite_path="./sprites/test_npc/",
-                         z=LAYERS['npc'],
+                         z=LAYERS['forward_npc'],
                          hitbox_offset=(0, 0.25),
                          movement_speed=DEFAULT_CHARACTER_SPEED,
                          is_animated=True,
@@ -30,7 +30,7 @@ class NPC(GameObject):
             position=(self.rect.centerx + 40, self.rect.centery - 80),
             sprite_group=self.groups()[0],
             sprite_path='./sprites/dialog_icon.png',
-            z=self.z
+            z=LAYERS['ux']
         )
         self.display_dialog_icon()
 
@@ -43,7 +43,6 @@ class NPC(GameObject):
     def update(self, dt):
         super().update(dt)
         self.display_dialog_icon()
-
 
         if self.is_dialog_able:
             self.dialog.update(dt)

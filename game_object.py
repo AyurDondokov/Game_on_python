@@ -46,7 +46,7 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load(path).convert_alpha()
 
-    def _input(self):
+    def _input(self, dt):
         """Приём нажатия клавишь"""
         pass
 
@@ -80,7 +80,7 @@ class GameObject(pygame.sprite.Sprite):
             self.anim_frame_index)]
 
     def update(self, dt):
-        self._input()
+        self._input(dt)
         self._move(dt)
         if self._is_animated:
             self._animate(dt)
