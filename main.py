@@ -4,7 +4,7 @@ import sys
 from properties import *
 from level import Level
 import logging
-from menu import MainMenu
+from menu import *
 
 
 class Game:
@@ -25,13 +25,15 @@ class Game:
         self.clock = pygame.time.Clock()
         self.level = Level()
         self.main_menu = MainMenu(self)
+        self.options = OptionsMenu(self)
+        self.credits = CreditsMenu(self)
         self.curr_menu = self.main_menu
 
     def run(self):
         while not self.game_over:
             self.events_update()
             if self.START_KEY:
-                self.game_over = False
+                self.game_over = True
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000

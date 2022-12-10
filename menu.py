@@ -79,7 +79,8 @@ class MainMenu(Menu):
             elif self.state == 'CREDITS':
                 self.game.curr_menu = self.game.credits
             elif self.state == 'EXIT':
-                pass
+                pygame.quit()
+                sys.exit()
             self.run_display = False
 
 
