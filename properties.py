@@ -19,6 +19,9 @@ STANDARD_CHARACTER_ANIM_PACK = {
     'walk_up': [], 'walk_down': [], 'walk_right': [], 'walk_left': []
 }
 
+# Dialog vales
+DIALOG_WINDOW_POSITION = (SCREEN_WIDTH/2, SCREEN_HEIGHT-128)
+
 # Player values
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {

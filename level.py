@@ -24,7 +24,8 @@ class Level:
         self.test_npc = NPC(
             position=(500, 600),
             sprite_group=[self.all_sprites, self.collision_sprites],
-            name="Ayur")
+            name='Ayur',
+            dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
         self.player = Player((600, 300), self.all_sprites, self.collision_sprites)
 
     def create_map(self):
