@@ -73,6 +73,9 @@ class MainMenu(Menu):
                 # На какую
                 self.state = "OPTIONS"
             elif self.state == "OPTIONS":
+                self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy)
+                self.state = "CREDITS"
+            elif self.state == "CREDITS":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
                 self.state = "EXIT"
             elif self.state == "EXIT":
@@ -101,7 +104,7 @@ class MainMenu(Menu):
             # Проверка какая
             if self.state == 'START':
                 # Действие
-                self.game.game_over = False
+                self.game.game_over = True
             elif self.state == 'OPTIONS':
                 self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
