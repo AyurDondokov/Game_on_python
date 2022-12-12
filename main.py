@@ -3,6 +3,7 @@ import pygame
 import sys
 from properties import *
 from level import Level
+from scene_manager import SceneManager
 import logging
 from menu import *
 
@@ -19,11 +20,13 @@ class Game:
         # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1080, 720
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.window = pygame.display.set_mode(
+            (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.font_name = './addons/monospace.ttf'
         self.WHITE = (255, 255, 255)
         self.clock = pygame.time.Clock()
-        self.level = Level()
+        # self.level = Level()
+        self.manager = SceneManager()
         self.main_menu = MainMenu(self)
         self.options = OptionsMenu(self)
         self.credits = CreditsMenu(self)
@@ -37,7 +40,8 @@ class Game:
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
-            self.level.run(dt)
+            # self.level.run(dt)
+            self.manager.run(dt)
             pygame.display.update()
             self.reset_keys()
 
@@ -70,6 +74,7 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
         self.display.blit(text_surface, text_rect)
+
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG,

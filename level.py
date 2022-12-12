@@ -9,10 +9,11 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self):
+    def __init__(self, level_map):
         log.info('Level class intialization')
         self.display_surface = pygame.display.get_surface()
 
+        self.map = level_map
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
         self.interactable_sprites = pygame.sprite.Group()
@@ -32,7 +33,8 @@ class Level:
                              self.collision_sprites, self.interactable_sprites)
 
     def create_map(self):
-        for row_index, row in enumerate(MAP):
+
+        for row_index, row in enumerate(self.map):
             for col_index, col in enumerate(row):
                 x = col_index * TILE_SIZE
                 y = row_index * TILE_SIZE
