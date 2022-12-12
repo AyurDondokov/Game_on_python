@@ -8,6 +8,7 @@ from copy import deepcopy
 
 class GameObject(pygame.sprite.Sprite):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, z: int,
+                 hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
                  is_animated: bool = False,
                  anim_speed: float = DEFAULT_CHARACTER_ANIM_SPEED,
@@ -22,12 +23,12 @@ class GameObject(pygame.sprite.Sprite):
         self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
         self._import_assets(sprite_path)
-        print(self.animations)
-
+        # print(self.animations)
 
         # Основные настройки
         self.rect = self.image.get_rect(center=position)
         self.hitbox = self.rect.copy()
+        self.hitbox_offset = hitbox_offset
         self.z = z
 
         # Настройки передвижения
@@ -45,12 +46,15 @@ class GameObject(pygame.sprite.Sprite):
         else:
             self.image = pygame.image.load(path).convert_alpha()
 
-    def _input(self):
+    def _input(self, dt):
         """Приём нажатия клавишь"""
         pass
 
     def _collision(self, direction):
-        pass
+        self.hitbox.centerx = self.rect.centerx + \
+            self.rect.width * self.hitbox_offset[0]
+        self.hitbox.centery = self.rect.centery + \
+            self.rect.height * self.hitbox_offset[1]
 
     def _move(self, dt):
         if self.direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
@@ -70,13 +74,15 @@ class GameObject(pygame.sprite.Sprite):
         self.anim_status = new_state
 
     def _animate(self, dt):
-        self.anim_frame_index += 1 / self.anim_speed * dt
+        self.anim_frame_index += 1 / \
+            self.anim_speed[self.anim_status.split("_", 1)[0]] * dt
         if self.anim_frame_index >= len(self.animations[self.anim_status]):
             self.anim_frame_index = 0
-        self.image = self.animations[self.anim_status][int(self.anim_frame_index)]
+        self.image = self.animations[self.anim_status][int(
+            self.anim_frame_index)]
 
     def update(self, dt):
-        self._input()
+        self._input(dt)
         self._move(dt)
         if self._is_animated:
             self._animate(dt)

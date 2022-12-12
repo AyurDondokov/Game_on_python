@@ -1,6 +1,6 @@
 import pygame
 from properties import *
-from tile import Tile
+from tile import Tile, Trigger
 from player import Player
 import logging
 from character import NPC
@@ -9,12 +9,18 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self):
-        log.info('Level class intialization')
+    def __init__(self, level_map, current_level, lvl_go_to):
+        log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
 
+        # для перемещения между уровнями
+        self.cur_lvl = current_level
+        self.lvl_to = lvl_go_to
+
+        self.map = level_map
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
+        self.interactable_sprites = pygame.sprite.Group()
         self.create_map()
 
         self.setup()
@@ -22,18 +28,34 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            (500, 600), [self.all_sprites, self.collision_sprites], ((20, 20), (0, 0)), name="Ayur")
-        self.player = Player((600, 300), self.all_sprites, self.collision_sprites)
+            position=(500, 600),
+            sprite_group=[self.all_sprites,
+                          self.collision_sprites, self.interactable_sprites],
+            name='Ayur',
+            dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
 
     def create_map(self):
-        for row_index, row in enumerate(MAP):
+
+        for row_index, row in enumerate(self.map):
             for col_index, col in enumerate(row):
                 x = col_index * TILE_SIZE
                 y = row_index * TILE_SIZE
                 if col == 'x':
-                    Tile((x, y), [self.all_sprites, self.collision_sprites])
+                    Tile((x, y), self.all_sprites, 'images/ground/sand.png')
+                if col == 's':
+                    Tile((x, y), self.all_sprites, 'images/ground/sand2.png')
+                if col == 't':
+                    Trigger((x, y), [self.all_sprites, self.collision_sprites],
+                            'images/ground/trigger.png', lambda: self.cur_lvl(self.lvl_to))
+                if col == "c":
+                    Tile(
+                        (x, y), [self.all_sprites, self.collision_sprites], 'images/ground/cactus.png')
+                if col == "p":
+                    self.player = Player((x, y), self.all_sprites,
+                                         self.collision_sprites, self.interactable_sprites)
 
     def run(self, dt):
+
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
 
@@ -51,6 +73,13 @@ class CameraGroup(pygame.sprite.Group):
 
         for layer in LAYERS.values():
             for sprite in self.sprites():
+                if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
+                    if sprite.rect.centery > player.rect.centery:
+                        sprite.z = LAYERS['forward_' +
+                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
+                    else:
+                        sprite.z = LAYERS['back_' +
+                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
                 if sprite.z == layer:
                     offset_rect = sprite.rect.copy()
                     offset_rect.center -= self.offset
