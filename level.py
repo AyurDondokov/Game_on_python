@@ -1,6 +1,6 @@
 import pygame
 from properties import *
-from tile import Tile
+from tile import Tile, Trigger
 from player import Player
 import logging
 from character import NPC
@@ -9,9 +9,13 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_map):
-        log.info('Level class intialization')
+    def __init__(self, level_map, current_level, lvl_go_to):
+        log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
+
+        # для перемещения между уровнями
+        self.cur_lvl = current_level
+        self.lvl_to = lvl_go_to
 
         self.map = level_map
         self.all_sprites = CameraGroup()
@@ -29,8 +33,6 @@ class Level:
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
-        self.player = Player((600, 300), self.all_sprites,
-                             self.collision_sprites, self.interactable_sprites)
 
     def create_map(self):
 
@@ -42,11 +44,18 @@ class Level:
                     Tile((x, y), self.all_sprites, 'images/ground/sand.png')
                 if col == 's':
                     Tile((x, y), self.all_sprites, 'images/ground/sand2.png')
+                if col == 't':
+                    Trigger((x, y), [self.all_sprites, self.collision_sprites],
+                            'images/ground/trigger.png', lambda: self.cur_lvl(self.lvl_to))
                 if col == "c":
                     Tile(
                         (x, y), [self.all_sprites, self.collision_sprites], 'images/ground/cactus.png')
+                if col == "p":
+                    self.player = Player((x, y), self.all_sprites,
+                                         self.collision_sprites, self.interactable_sprites)
 
     def run(self, dt):
+
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
 
