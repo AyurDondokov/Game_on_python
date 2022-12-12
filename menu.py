@@ -3,6 +3,7 @@ import sys
 
 
 class Menu:
+    # Конструктор меню
     def __init__(self, game):
         self.game = game
         self.mid_w, self.mid_h = game.SCREEN_WIDTH / 2, game.SCREEN_HEIGHT / 2
@@ -11,43 +12,65 @@ class Menu:
         self.offset = - 100
         self.BACKGROUND_MENU = pygame.image.load('./images/menu/menu.jpg')
 
+    # курсор для навигации
     def draw_cursor(self):
         self.game.draw_text('->', 30, self.cursor_rect.x, self.cursor_rect.y)
 
+    # Создание окна
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
         pygame.display.update()
         self.game.reset_keys()
 
-
+# Структура меню
 class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
+        # инициализация начального положения - на START
         self.state = "START"
+        # Рисуем кнопку START
         self.startx, self.starty = self.mid_w, self.mid_h + 30
+        # Рисуем кнопку OPTIONS
         self.optionsx, self.optionsy = self.mid_w, self.mid_h + 100
+        # Рисуем кнопку CREDITS
         self.creditsx, self.creditsy = self.mid_w, self.mid_h + 170
+        # Рисуем кнопку EXIT
         self.exitx, self.exity = self.mid_w, self.mid_h + 250
+        # Рисуем кнопку курсор
         self.cursor_rect.midtop = (self.startx + self.offset, self.starty)
 
     def display_menu(self):
         self.run_display = True
         while self.run_display:
+            # Проверяет события
             self.game.events_update()
+            # Проверяет, что выбрано
             self.check_input()
+            # задний фон
             self.game.display.blit(self.BACKGROUND_MENU, (0, 0))
+            # Название игры на экране
             self.game.draw_text("Игра короч", 100, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4)
+            # название 1 конпки
             self.game.draw_text("START", 40, self.startx, self.starty)
+            # название 2 конпки
             self.game.draw_text("OPTIONS", 40, self.optionsx, self.optionsy)
+            # название 3 конпки
             self.game.draw_text("CREDITS", 40, self.creditsx, self.creditsy)
+            # название 4 конпки
             self.game.draw_text("EXIT", 40, self.exitx, self.exity)
+            # Отрисовка курсора
             self.draw_cursor()
+            # Отрисовка экрана
             self.blit_screen()
 
+    # Движение курсора
     def move_cursor(self):
+        # Если кнопка (Стрелка вниз) или S
         if self.game.DOWN_KEY or self.game.K_s:
+            # С какой кнопки движение
             if self.state == "START":
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy)
+                # На какую
                 self.state = "OPTIONS"
             elif self.state == "OPTIONS":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
@@ -69,11 +92,16 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsx)
                 self.state = "CREDITS"
 
+    # Проверка кнопки
     def check_input(self):
+        # Движение курсора
         self.move_cursor()
+        # Если выбрана кнопка
         if self.game.START_KEY:
+            # Проверка какая
             if self.state == 'START':
-                self.game.game_over = True
+                # Действие
+                self.game.game_over = False
             elif self.state == 'OPTIONS':
                 self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
@@ -117,7 +145,7 @@ class OptionsMenu(Menu):
         elif self.game.START_KEY:
             pass
 
-
+# Конструктор окна Credits
 class CreditsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
