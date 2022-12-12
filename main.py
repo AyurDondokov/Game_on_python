@@ -33,6 +33,7 @@ class Game:
         self.options = OptionsMenu(self)
         # Окно кредитов (Список создателей)
         self.credits = CreditsMenu(self)
+        # Открывает окно, внутри меню, настройки или кредиты
         self.curr_menu = self.main_menu
 
     def run(self):
