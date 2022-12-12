@@ -145,7 +145,7 @@ class OptionsMenu(Menu):
         elif self.game.START_KEY:
             pass
 
-
+# Конструктор окна Credits
 class CreditsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
