@@ -6,15 +6,26 @@ from game_data import *
 
 
 class SceneManager:
+    """Класс управляющий отрисовкой уровней и меню"""
+
     def __init__(self):
-        self.levels_data = levels
-        self.current_level = 1
-        self.list_of_levels = []
-        self.levels_setup()
+        self.__levels_data = levels
+        self.__current_level = 1
+        self.__list_of_levels = []
+        self.__levels_setup()
 
     def run(self, dt):
-        self.list_of_levels[self.current_level].run(dt)
+        self.__list_of_levels[self.__current_level].run(dt)
 
-    def levels_setup(self):
-        for k in self.levels_data:
-            self.list_of_levels.append(Level(self.levels_data[k]["MAP"]))
+    def __levels_setup(self):
+        for k in self.__levels_data:
+            self.__list_of_levels.append(
+                Level(self.__levels_data[k]["MAP"], self.set_current_level, self.__levels_data[k]["move_to"]))
+
+    @property
+    def current_level(self):
+        return self.__current_level
+
+    # @current_level.setter
+    def set_current_level(self, value):
+        self.__current_level = value
