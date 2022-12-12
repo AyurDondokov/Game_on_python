@@ -37,8 +37,10 @@ class Game:
         self.curr_menu = self.main_menu
 
     def run(self):
-        while not self.game_over:
+        while self.game_over:
             self.events_update()
+            if self.START_KEY:
+                self.game_over = True
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
