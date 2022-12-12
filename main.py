@@ -27,9 +27,13 @@ class Game:
         self.clock = pygame.time.Clock()
         # self.level = Level()
         self.manager = SceneManager()
+        # Окно меню
         self.main_menu = MainMenu(self)
+        # Окно настроек
         self.options = OptionsMenu(self)
+        # Окно кредитов (Список создателей)
         self.credits = CreditsMenu(self)
+        # Открывает окно, внутри меню, настройки или кредиты
         self.curr_menu = self.main_menu
 
     def run(self):
