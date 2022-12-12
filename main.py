@@ -37,7 +37,7 @@ class Game:
         self.curr_menu = self.main_menu
 
     def run(self):
-        while self.game_over:
+        while not self.game_over:
             self.events_update()
             if self.START_KEY:
                 self.game_over = True
