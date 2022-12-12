@@ -65,9 +65,12 @@ class MainMenu(Menu):
 
     # Движение курсора
     def move_cursor(self):
+        # Если кнопка (Стрелка вниз) или S
         if self.game.DOWN_KEY or self.game.K_s:
+            # С какой кнопки движение
             if self.state == "START":
                 self.cursor_rect.midtop = (self.optionsx + self.offset, self.optionsy)
+                # На какую
                 self.state = "OPTIONS"
             elif self.state == "OPTIONS":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
@@ -89,11 +92,16 @@ class MainMenu(Menu):
                 self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsx)
                 self.state = "CREDITS"
 
+    # Проверка кнопки
     def check_input(self):
+        # Движение курсора
         self.move_cursor()
+        # Если выбрана кнопка
         if self.game.START_KEY:
+            # Проверка какая
             if self.state == 'START':
-                self.game.game_over = True
+                # Действие
+                self.game.game_over = False
             elif self.state == 'OPTIONS':
                 self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
