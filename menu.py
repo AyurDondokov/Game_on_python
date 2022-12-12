@@ -101,7 +101,7 @@ class MainMenu(Menu):
             # Проверка какая
             if self.state == 'START':
                 # Действие
-                self.game.game_over = True
+                self.game.game_over = False
             elif self.state == 'OPTIONS':
                 self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
