@@ -51,8 +51,10 @@ class GameObject(pygame.sprite.Sprite):
         pass
 
     def _collision(self, direction):
-        self.hitbox.centerx = self.rect.centerx + self.rect.width * self.hitbox_offset[0]
-        self.hitbox.centery = self.rect.centery + self.rect.height * self.hitbox_offset[1]
+        self.hitbox.centerx = self.rect.centerx + \
+            self.rect.width * self.hitbox_offset[0]
+        self.hitbox.centery = self.rect.centery + \
+            self.rect.height * self.hitbox_offset[1]
 
     def _move(self, dt):
         if self.direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
