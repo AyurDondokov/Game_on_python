@@ -18,9 +18,10 @@ class Game:
         self.K_w, self.K_s = False, False
         self.K_ESCAPE = False
         # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1080, 720
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = SCREEN_WIDTH, SCREEN_HEIGHT
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
-        self.window = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
+        self.window = pygame.display.set_mode(
+            (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.font_name = './addons/monospace.ttf'
         self.WHITE = (255, 255, 255)
         self.clock = pygame.time.Clock()
@@ -63,8 +64,10 @@ class Game:
                 self.K_ESCAPE = False
             self.window.blit(self.display, (0, 0))
             self.display.fill((0, 0, 0))
-            self.draw_text("PAUSED", 85, self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 4 - 130)
-            self.draw_text("Press SPACE for continue", 40, self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 4 + 150)
+            self.draw_text("PAUSED", 85, self.SCREEN_WIDTH /
+                           2, self.SCREEN_HEIGHT / 4 - 130)
+            self.draw_text("Press SPACE for continue", 40,
+                           self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 4 + 150)
             pygame.display.update()
 
     def events_update(self):
