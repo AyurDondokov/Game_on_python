@@ -73,6 +73,9 @@ class MainMenu(Menu):
                 # На какую
                 self.state = "OPTIONS"
             elif self.state == "OPTIONS":
+                self.cursor_rect.midtop = (self.creditsx + self.offset, self.creditsy)
+                self.state = "CREDITS"
+            elif self.state == "CREDITS":
                 self.cursor_rect.midtop = (self.exitx + self.offset, self.exity)
                 self.state = "EXIT"
             elif self.state == "EXIT":
@@ -101,7 +104,7 @@ class MainMenu(Menu):
             # Проверка какая
             if self.state == 'START':
                 # Действие
-                self.game.game_over = False
+                self.game.game_over = True
             elif self.state == 'OPTIONS':
                 self.game.curr_menu = self.game.options
             elif self.state == 'CREDITS':
@@ -157,5 +160,13 @@ class CreditsMenu(Menu):
                 self.game.curr_menu = self.game.main_menu
                 self.run_display = False
             self.game.display.fill('black')
-            self.game.draw_text("CREDITS", 20, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 - 20)
+            self.game.draw_text("CREDITS", 85, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 - 130)
+            self.game.draw_text("Game made by:", 40, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 - 70)
+            self.game.draw_text("Yuri Verbitsky - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 25)
+            self.game.draw_text("Aur Dondokov - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 60)
+            self.game.draw_text("Andry Gorohov - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 95)
+            self.game.draw_text("Darya Vasylchyk - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 130)
+            self.game.draw_text("Ksenya Zyranova - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 165)
+            self.game.draw_text("Sofia Shadarova - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 200)
+            self.game.draw_text("Konstantin Harytkin - job", 30, self.game.SCREEN_WIDTH / 2, self.game.SCREEN_HEIGHT / 4 + 235)
             self.blit_screen()
