@@ -23,7 +23,6 @@ class Level:
         self.collision_sprites = pygame.sprite.Group()
         self.interactable_sprites = pygame.sprite.Group()
         self.create_map()
-
         self.setup()
 
     def setup(self):
@@ -56,7 +55,10 @@ class Level:
                                          self.collision_sprites, self.interactable_sprites)
 
     def run(self, dt):
-        for event in pygame.event.get():
+        self.events_list = pygame.event.get()
+        # список событий передаётся компонентам для самостоятельной обработки
+        self.player.set_events_list(self.events_list)
+        for event in self.events_list:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()

@@ -4,6 +4,7 @@ from properties import *
 from support import *
 from game_object import GameObject
 import logging as log
+from tile import Trigger
 
 
 class Player(GameObject):
@@ -20,13 +21,14 @@ class Player(GameObject):
         self.collision_sprites = collision_sprites
         self.interactable_sprites = interactable_sprites
         self.time_for_click_again = TIME_BETWEEN_INTERACT
+        self.__event_list = []
 
     def _collision(self, direction):
         super(Player, self)._collision(direction)
         for sprite in self.collision_sprites:
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
-                    if hasattr(sprite, 'trigger'):
+                    if isinstance(sprite, Trigger):
                         # Проверка на тригер
                         sprite.check()
                     if direction == 'horizontal':
@@ -50,6 +52,9 @@ class Player(GameObject):
                             self.rect.height * self.hitbox_offset[1]
                         self.pos.y = self.hitbox.centery - \
                             self.rect.height * self.hitbox_offset[1]
+
+    def set_events_list(self, event_list):
+        self.__event_list = event_list
 
     def _input(self, dt):
         """Приём нажатия клавишь"""
@@ -78,15 +83,15 @@ class Player(GameObject):
         if self.direction.magnitude() == 0:
             self._change_anim_status("idle_" + self.anim_status.split('_')[1])
 
-        if self.time_for_click_again > 0:
-            self.time_for_click_again -= dt
-        else:
-            if keys[pygame.K_SPACE]:
-                for sprite in self.interactable_sprites:
-                    if hasattr(sprite, 'is_dialog_able'):
-                        if sprite.is_dialog_able:
-                            sprite.dialog.next_replica()
-                            self.time_for_click_again = TIME_BETWEEN_INTERACT
+        keys = self.__event_list
+        for event in keys:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    for sprite in self.interactable_sprites:
+                        if hasattr(sprite, 'is_dialog_able'):
+                            if sprite.is_dialog_able:
+                                sprite.dialog.next_replica()
+                                self.time_for_click_again = TIME_BETWEEN_INTERACT
 
     def check_npc_distance(self):
         for sprite in self.interactable_sprites:
