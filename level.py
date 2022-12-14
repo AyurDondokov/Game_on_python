@@ -68,16 +68,20 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
     def custom_draw(self, player):
+        """Отрисовка персонажа всегда в центре. Метод  камеры."""
         self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
         self.offset.y = player.rect.centery - SCREEN_HEIGHT / 2
 
         for layer in LAYERS.values():
             for sprite in self.sprites():
                 if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
+                    # нужно для правильного накладывания гг на обьект или за обьект
                     if sprite.rect.centery > player.rect.centery:
+                        # если Yцентр спрайта выше гг отрисовывать его перед гг
                         sprite.z = LAYERS['forward_' +
                                           list(LAYERS.keys())[sprite.z].split('_')[1]]
                     else:
+                        # наоборот рисовать сзади гг
                         sprite.z = LAYERS['back_' +
                                           list(LAYERS.keys())[sprite.z].split('_')[1]]
                 if sprite.z == layer:

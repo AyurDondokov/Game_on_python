@@ -13,12 +13,12 @@ class Game:
         pygame.init()
         pygame.display.set_caption("The best game ever")
         # Добавил menu_game
-        self.game_over, self.menu_game = False, True
+        self.game_over, self.pause_menu = False, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.K_w, self.K_s = False, False
-
+        self.K_ESCAPE = False
         # self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = 1080, 720
+        self.SCREEN_WIDTH, self.SCREEN_HEIGHT = SCREEN_WIDTH, SCREEN_HEIGHT
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
         self.window = pygame.display.set_mode(
             (self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
@@ -35,10 +35,13 @@ class Game:
         self.credits = CreditsMenu(self)
         # Открывает окно, внутри меню, настройки или кредиты
         self.curr_menu = self.main_menu
+        self.BACKGROUND_MENU = pygame.image.load('./images/menu/menu.jpg')
 
     def run(self):
         while not self.game_over:
             self.events_update()
+            if self.K_ESCAPE:
+                self.pause_def()
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
@@ -47,14 +50,32 @@ class Game:
             pygame.display.update()
             self.reset_keys()
 
+    def pause_def(self):
+        self.pause_menu = True
+        self.reset_keys()
+        while self.pause_menu:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                self.pause_menu = False
+                self.K_ESCAPE = False
+            self.window.blit(self.display, (0, 0))
+            self.display.fill((0, 0, 0))
+            self.draw_text("PAUSED", 85, self.SCREEN_WIDTH /
+                           2, self.SCREEN_HEIGHT / 4 - 130)
+            self.draw_text("Press SPACE for continue", 40,
+                           self.SCREEN_WIDTH / 2, self.SCREEN_HEIGHT / 4 + 150)
+            pygame.display.update()
+
     def events_update(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.START_KEY = True
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
@@ -65,10 +86,15 @@ class Game:
                     self.K_s = True
                 if event.key == pygame.K_w:
                     self.K_w = True
+                if event.key == pygame.K_ESCAPE:
+                    self.K_ESCAPE = True
+                if event.key == pygame.K_RETURN:
+                    self.START_KEY = True
 
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY, self.BACK_KEY = False, False, False, False
         self.K_s, self.K_w = False, False
+        self.K_ESCAPE = False
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)
