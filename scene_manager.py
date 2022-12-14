@@ -18,10 +18,13 @@ class SceneManager:
         self.__current_menu = "main"
         self.__list_of_levels = []
         self.__dict_of_menus = {}
+        # иницициализация меню и уровней
         self.__levels_setup()
         self.__menus_setup()
 
     def run(self, dt):
+        """Переключает уровни, меню в зависимости от
+         указателей  self.__current_level и  self.__current_menu"""
         if self.is_game_started == True:
             self.__list_of_levels[self.__current_level].run(dt)
         else:
@@ -33,6 +36,11 @@ class SceneManager:
                 Level(self.__levels_data[k]["MAP"], self.set_current_level, self.__levels_data[k]["move_to"]))
 
     def __menus_setup(self):
+        """
+        Создает словарь с экземплярами меню
+        Внутрь передаются функции меняющие указатель на текующее меню
+        Внутри экземпляров эти функции вызываются, при нажатии клавиши
+        """
         self.__dict_of_menus.update(
             {
                 "main": MainMenu(self.set_is_game_started, self.set_current_menu),
