@@ -1,34 +1,33 @@
 level_0 = {
-    "MAP": [
-        ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'p', 'x', 'x', 's', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 's', 's', 's', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 's', 'x', 's', 'x', 'x', 'x', 's', 's', '', 'x', ],
-        ['c', 'x', 's', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 's', 's', '', '', ],
-        ['c', 's', 's', 's', 'x', 'c', 'x', 'x', 'x', 'x', 's', '', '', ''],
-        ['c', 'x', 's', 'x', 'c', 'x', 's', 'x', 'x', 'x', 's', '', '', ''],
-        ['c', 'x', 'x', 'x', 'x', 'c', 's', 'x', 'x', 'x', 's', '', '', ''],
-        ['c', 'x', 'x', 'x', 't', 'x', 's', 's', 'x', 'x', 's', '', '', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 's', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c']
-    ],
+    "MAP": {
+        'character': 'levels_data/levels/0/level_0__layer_with_character.csv',
+        'portal components': 'levels_data/levels/0/level_0__layer_with_components_of_portal.csv',
+        'grass elements': 'levels_data/levels/0/level_0__layer_with_elements_of_grass.csv',
+        'island ends': 'levels_data/levels/0/level_0__layer_with_ends_of_the_island.csv',
+        'flowers': 'levels_data/levels/0/level_0__layer_with_flowers.csv',
+        'grass': 'levels_data/levels/0/level_0__layer_with_grass.csv',
+        'plants': 'levels_data/levels/0/level_0__layer_with_plants.csv',
+        'rocks': 'levels_data/levels/0/level_0__layer_with_rocks.csv',
+        'ruined portal': 'levels_data/levels/0/level_0__layer_with_ruined_portal.csv',
+        'sand': 'levels_data/levels/0/level_0__layer_with_sand.csv',
+        'sand hole': 'levels_data/levels/0/level_0__layer_with_sand_hole.csv',
+        'sky': 'levels_data/levels/0/level_0__layer_with_sky.csv',
+        'water': 'levels_data/levels/0/level_0__layer_with_water.csv',
+        'limiters': 'levels_data/levels/0/level_0__limiters.csv',
+        'crater': 'levels_data/levels/0/level_0__layer_with_crater.csv'},
     "move_to": 1
 }
-level_1 = {
-    "MAP": [
-        ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 't', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'p', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 'x', 's', 's', 'x', 'x', 'x', 'x', 'x', 'x'],
-        ['c', 'x', 'x', 'x', 'x', 's', 's', 's', 'x', 'x', 'x', 'x', 'x', 'x']
-    ],
-    "move_to": 0
-}
+# level_1 = {
+#     "MAP": {
+#         'ground': 'levels_data/levels/0/level_1__layer_with_ground.csv',
+#         'rocks': 'levels_data/levels/0/level_1__layer_with_rocks.csv',
+#         'water': 'levels_data/levels/0/level_1__layer_with_water.csv',
+#         'sky': 'levels_data/levels/0/level_1__layer_with_sky.csv'},
+#     "move_to": 0
+# }
 
-levels = {0: level_0,
-          1: level_1}
+levels = {0: level_0}
+          
+# levels = {0: level_0,
+#           1: level_1}
+          

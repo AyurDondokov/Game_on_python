@@ -14,8 +14,10 @@ class SceneManager:
         self.is_game_started = False
         # закрытые переменные
         self.__levels_data = levels
+
         self.__current_level = 1
         self.__current_menu = "main"
+
         self.__list_of_levels = []
         self.__dict_of_menus = {}
         # иницициализация меню и уровней
