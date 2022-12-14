@@ -3,7 +3,8 @@ SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 720
 FPS = 60
 TILE_SIZE = 64
-
+FONT_NAME = './addons/monospace.ttf'
+WHITE = (255, 255, 255)
 
 STANDARD_OBJ_ANIM_PACK = {
     'idle': []

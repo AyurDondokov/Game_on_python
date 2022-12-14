@@ -4,6 +4,7 @@ from tile import Tile, Trigger
 from player import Player
 import logging
 from character import NPC
+import sys
 log = logging.getLogger(__name__)
 """Отрисовка спрайтов на уровне"""
 
@@ -55,7 +56,10 @@ class Level:
                                          self.collision_sprites, self.interactable_sprites)
 
     def run(self, dt):
-
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
 
