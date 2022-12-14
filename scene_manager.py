@@ -10,7 +10,7 @@ class SceneManager:
 
     def __init__(self):
         self.__levels_data = levels
-        self.__current_level = 1
+        self.__current_level = 0
         self.__list_of_levels = []
         self.__levels_setup()
 

@@ -1,9 +1,12 @@
 import pygame
+from support import import_csv_layout, import_cut_graphics
 from properties import *
-from tile import Tile, Trigger
+from tile import Tile, Trigger, Portal_components, Rocks
 from player import Player
+from decoration import Clouds
 import logging
 from character import NPC
+
 log = logging.getLogger(__name__)
 """Отрисовка спрайтов на уровне"""
 
@@ -35,24 +38,165 @@ class Level:
             dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
 
     def create_map(self):
+        
+        # limiters
+        limiters_layout = import_csv_layout(self.map['limiters'])
+        self.limiters_sprites = self.create_tile_group(limiters_layout, 'limiters')
 
-        for row_index, row in enumerate(self.map):
-            for col_index, col in enumerate(row):
+        # sky
+        sky_layout = import_csv_layout(self.map['sky'])
+        self.sky_sprites = self.create_tile_group(sky_layout, 'sky')
+
+        # island ends
+        island_ends_layout = import_csv_layout(self.map['island ends'])
+        self.island_ends_sprites = self.create_tile_group(island_ends_layout, 'island ends')
+
+        # grass
+        grass_layout = import_csv_layout(self.map['grass'])
+        self.grass_sprites = self.create_tile_group(grass_layout, 'grass')
+
+        # grass elements
+        grass_elements_layout = import_csv_layout(self.map['grass elements'])
+        self.grass_elements_sprites = self.create_tile_group(grass_elements_layout, 'grass elements')
+
+        # sand
+        sand_layout = import_csv_layout(self.map['sand'])
+        self.sand_sprites = self.create_tile_group(sand_layout, 'sand')
+
+        # sand hole
+        sand_hole_layout = import_csv_layout(self.map['sand hole'])
+        self.sand_hole_sprites = self.create_tile_group(sand_hole_layout, 'sand hole')
+
+        # crater
+        crater_layout = import_csv_layout(self.map['crater'])
+        self.crater_sprites = self.create_tile_group(crater_layout, 'crater')
+
+        # portal components
+        portal_components_layout = import_csv_layout(self.map['portal components'])
+        self.portal_components_sprites = self.create_tile_group(portal_components_layout, 'portal components')
+
+        # plants
+        plants_layout = import_csv_layout(self.map['plants'])
+        self.plants_sprites = self.create_tile_group(plants_layout, 'plants')
+
+        # water
+        water_layout = import_csv_layout(self.map['water'])
+        self.water_sprites = self.create_tile_group(water_layout, 'water')
+
+        # rocks
+        rocks_layout = import_csv_layout(self.map['rocks'])
+        self.rocks_sprites = self.create_tile_group(rocks_layout, 'rocks')
+
+        # player(start point)
+        player_layout = import_csv_layout(self.map['character'])
+        self.player_setup(player_layout)
+
+        # ruined portal
+        ruined_portal_layout = import_csv_layout(self.map['ruined portal'])
+        self.ruined_portal_sprites = self.create_tile_group(ruined_portal_layout, 'ruined portal')
+
+        # flowers
+        flowers_layout = import_csv_layout(self.map['flowers'])
+        self.flowers_sprites = self.create_tile_group(flowers_layout, 'flowers')
+
+        # decoration
+        level_width = len(island_ends_layout[0]) * TILE_SIZE 
+        self.clouds = Clouds(SCREEN_HEIGHT*2,level_width,30, self.all_sprites)
+
+    def create_tile_group(self, layout, type):
+        for row_index, row in enumerate(layout):
+            for col_index, val in enumerate(row):
+                # если не пустая клетка
+                if val != '-1':
+                    x = col_index * TILE_SIZE
+                    y = row_index * TILE_SIZE
+
+                    if type == 'grass':
+                        grass_tile_list = import_cut_graphics('levels_data/graphics/decoration/grass/hub_grass.png')
+                        tile_surface = grass_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+
+                    if type == 'grass elements':
+                        grass_elements_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/grass/hub_grass_elements.png')
+                        tile_surface = grass_elements_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'sky':
+                        sky_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/sky/sky.png')
+                        tile_surface = sky_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'water':
+                        water_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/water/hub_water.png')
+                        tile_surface = water_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'sand':
+                        sand_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/sand/hub_sand.png')
+                        tile_surface = sand_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'sand hole':
+                        sand_hole_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/sand/water_hole.png')
+                        tile_surface = sand_hole_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'flowers':
+                        flowers_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/flowers/chamomiles.png')
+                        tile_surface = flowers_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'ruined portal':
+                        ruined_portal_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/ruined_portal/big_destroy_portal.png')
+                        tile_surface = ruined_portal_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'portal components':
+                        Portal_components((x, y), self.all_sprites)
+                    
+                    if type == 'rocks':
+                        if val == '0': sprite = Rocks((x, y), self.all_sprites, pygame.image.load('levels_data/graphics/decoration/rocks/rock1.png').convert_alpha())
+                        if val == '1': sprite = Rocks((x, y), self.all_sprites, pygame.image.load('levels_data/graphics/decoration/rocks/rock2.png').convert_alpha())
+
+                    if type == 'crater':
+                        crater_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/crater/hub_crater.png')
+                        tile_surface = crater_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'plants':
+                        plants_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/plants/plant.png')
+                        tile_surface = plants_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                    
+                    if type == 'island ends':
+                        island_ends_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/ends_of_island/ends_of_island.png')
+                        tile_surface = island_ends_tile_list[int(val)]
+                        Tile((x, y), self.all_sprites, tile_surface)
+                        
+                    if type == 'limiters':
+                        limiters_tile_list = import_cut_graphics(
+                            'levels_data/graphics/decoration/limiters/limiters.png')
+                        tile_surface = limiters_tile_list[int(val)]
+                        Tile((x, y), [self.all_sprites, self.collision_sprites], tile_surface)
+    
+    def player_setup(self,layout):
+        for row_index, row in enumerate(layout):
+            for col_index,val in enumerate(row):
                 x = col_index * TILE_SIZE
                 y = row_index * TILE_SIZE
-                if col == 'x':
-                    Tile((x, y), self.all_sprites, 'images/ground/sand.png')
-                if col == 's':
-                    Tile((x, y), self.all_sprites, 'images/ground/sand2.png')
-                if col == 't':
-                    Trigger((x, y), [self.all_sprites, self.collision_sprites],
-                            'images/ground/trigger.png', lambda: self.cur_lvl(self.lvl_to))
-                if col == "c":
-                    Tile(
-                        (x, y), [self.all_sprites, self.collision_sprites], 'images/ground/cactus.png')
-                if col == "p":
+                if val=='0':
                     self.player = Player((x, y), self.all_sprites,
-                                         self.collision_sprites, self.interactable_sprites)
+                                            self.collision_sprites, self.interactable_sprites)
 
     def run(self, dt):
 
