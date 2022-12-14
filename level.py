@@ -31,7 +31,7 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            position=(500, 600),
+            position=(700, 600),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',

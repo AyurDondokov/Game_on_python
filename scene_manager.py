@@ -15,7 +15,7 @@ class SceneManager:
         # закрытые переменные
         self.__levels_data = levels
 
-        self.__current_level = 1
+        self.__current_level = 0
         self.__current_menu = "main"
 
         self.__list_of_levels = []
