@@ -1,7 +1,8 @@
+import logging as log
 import pygame
 import sys
+
 from properties import *
-import logging as log
 
 
 class Menu:
@@ -222,17 +223,11 @@ class CreditsMenu(Menu):
             "CREDITS", 85, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 - 130)
         self.draw_text(
             "Game made by:", 40, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 - 70)
-        self.draw_text("Yuri Verbitsky - job", 30,
-                       SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 25)
-        self.draw_text(
-            "Aur Dondokov - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 60)
-        self.draw_text(
-            "Andry Gorohov - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 95)
-        self.draw_text("Darya Vasylchyk - job", 30,
-                       SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 130)
-        self.draw_text("Ksenya Zyranova - job", 30,
-                       SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 165)
-        self.draw_text("Sofia Shadarova - job", 30,
-                       SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 200)
-        self.draw_text("Konstantin Harytkin - job", 30,
-                       SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 235)
+        self.draw_text("Andrew Gorohov - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 25)
+        self.draw_text("Aur Dondokov - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 60)
+        self.draw_text("Darya Vasylchyk - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 95)
+        self.draw_text("Konstantin Harytkin - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 130)
+        self.draw_text("Ksenya Zyranova - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 165)
+        self.draw_text("Natalia Zueva - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 200)
+        self.draw_text("Sofia Shadarova - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 235)
+        self.draw_text("Yuri Verbitsky - job", 30, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4 + 270)
