@@ -6,6 +6,7 @@ from player import Player
 from decoration import Clouds
 import logging
 from character import NPC
+from replicas_data import test_npc
 import sys
 
 log = logging.getLogger(__name__)
@@ -36,7 +37,7 @@ class Level:
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
-            dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
+            dialog_replicas=test_npc)
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
