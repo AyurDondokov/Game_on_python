@@ -25,6 +25,7 @@ class Level:
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
         self.interactable_sprites = pygame.sprite.Group()
+        self.trigger_sprites = pygame.sprite.Group()
         self.create_map()
         self.setup()
 
@@ -36,6 +37,10 @@ class Level:
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
+        # Триггер для начала боя
+        # В будущем должен создаваться с помощью csv
+        Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
+                pygame.image.load("images/ground/trigger.png"), lambda: print("FIGHTING START"))
 
     def create_map(self):
 
@@ -211,7 +216,7 @@ class Level:
                 y = row_index * TILE_SIZE
                 if val == '0':
                     self.player = Player((x, y), self.all_sprites,
-                                         self.collision_sprites, self.interactable_sprites)
+                                         self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
 
     def run(self, dt):
         self.events_list = pygame.event.get()
