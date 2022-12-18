@@ -26,13 +26,14 @@ class SceneManager:
 
     def run(self, dt):
         """Переключает уровни, меню в зависимости от
-         указателей  self.__current_level и  self.__current_menu"""
+         указателей  self.__current_level и self.__current_menu"""
         if self.is_game_started == True:
             self.__list_of_levels[self.__current_level].run(dt)
         else:
             self.__dict_of_menus[self.__current_menu].display_menu()
 
     def __levels_setup(self):
+        """Создание массива с экземплярами уровней"""
         for k in self.__levels_data:
             self.__list_of_levels.append(
                 Level(self.__levels_data[k]["MAP"], self.set_current_level, self.__levels_data[k]["move_to"]))
@@ -46,8 +47,8 @@ class SceneManager:
         self.__dict_of_menus.update(
             {
                 "main": MainMenu(self.set_is_game_started, self.set_current_menu),
-                "options": OptionsMenu(lambda x="main": self.set_current_menu(x)),
-                "credits": CreditsMenu(lambda x="main": self.set_current_menu(x)),
+                "options": OptionsMenu(lambda main="main": self.set_current_menu(main)),
+                "credits": CreditsMenu(lambda main="main": self.set_current_menu(main)),
             })
 
     @property

@@ -7,6 +7,11 @@ from game_object import GameObject
 
 
 class Text:
+    """
+    Класс для отрисовки текста
+    на вход подаётся text
+    """
+
     def __init__(self, screen, text, position, size, color):
         self.__screen = screen
         self.__cord = position
@@ -35,14 +40,17 @@ class Dialog(pygame.sprite.Group):
         self.display_surf = pygame.display.get_surface()
         self.is_open = False
 
+        # подложка диалога
         self.window = pygame.sprite.Sprite(self)
         self.window.image = pygame.image.load('./sprites/dialog_window.png')
         self.window.rect = self.window.image.get_rect(center=position)
 
+        # аватарка говорящего
         self.npc_profile = pygame.sprite.Sprite(self)
         self.npc_profile.image = pygame.image.load('./sprites/dialog_person_test.png')
         self.npc_profile.rect = self.npc_profile.image.get_rect(bottomleft=self.window.rect.bottomleft)
 
+        # реплики персонажей
         self.replicas = dialog_replicas
         self.replica_index = 0
         self.text_replica = Text(screen=self.display_surf,
@@ -52,6 +60,7 @@ class Dialog(pygame.sprite.Group):
                                  color=(0, 0, 0, 255))
 
     def next_replica(self):
+        """Отображение следущей реплики, пока таковые остались в списке"""
         if not self.is_open:
             self.is_open = True
         if self.replica_index < len(self.replicas):

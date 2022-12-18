@@ -22,7 +22,7 @@ class NPC(GameObject):
                          )
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
 
-        # Dialog
+        # Инициализация диалога
         self.dialog_replicas = dialog_replicas
         self.dialog = Dialog(dialog_replicas)
         self.is_dialog_able = False

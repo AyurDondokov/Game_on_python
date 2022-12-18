@@ -26,6 +26,7 @@ class Player(GameObject):
         self.__event_list = []
 
     def _collision(self, direction):
+        """Проверка столкновений"""
         super(Player, self)._collision(direction)
         for sprite in self.collision_sprites:
             if hasattr(sprite, 'hitbox'):
@@ -52,6 +53,7 @@ class Player(GameObject):
                             self.rect.height * self.hitbox_offset[1]
                         self.pos.y = self.hitbox.centery - \
                             self.rect.height * self.hitbox_offset[1]
+        # запуск триггеров
         for sprite in self.trigger_sprites:
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
@@ -87,17 +89,20 @@ class Player(GameObject):
         if self.direction.magnitude() == 0:
             self._change_anim_status("idle_" + self.anim_status.split('_')[1])
 
+        # чтение событий pygame.event
         keys = self.__event_list
         for event in keys:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     for sprite in self.interactable_sprites:
+                        # переключение на следующую реплику в диалоге
                         if hasattr(sprite, 'is_dialog_able'):
                             if sprite.is_dialog_able:
                                 sprite.dialog.next_replica()
                                 self.time_for_click_again = TIME_BETWEEN_INTERACT
 
     def check_npc_distance(self):
+        """Если NPC близко отобразить иконку взаимодействия над NPC"""
         for sprite in self.interactable_sprites:
             if hasattr(sprite, 'is_dialog_able'):
                 sprite.is_dialog_able = self.pos.distance_to(

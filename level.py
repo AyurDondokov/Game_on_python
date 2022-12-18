@@ -10,10 +10,11 @@ from replicas_data import test_npc
 import sys
 
 log = logging.getLogger(__name__)
-"""Отрисовка спрайтов на уровне"""
 
 
 class Level:
+    """Отрисовка спрайтов на уровне"""
+
     def __init__(self, level_map, current_level, lvl_go_to):
         log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
@@ -220,13 +221,17 @@ class Level:
                                          self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
 
     def run(self, dt):
+        """Запусе отрисовки уровня"""
         self.events_list = pygame.event.get()
+
         # список событий передаётся компонентам для самостоятельной обработки
         self.player.set_events_list(self.events_list)
+        # выход из игры
         for event in self.events_list:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
 

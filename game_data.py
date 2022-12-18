@@ -1,3 +1,5 @@
+"""информация о уровнях"""
+
 level_0 = {
     "MAP": {
         'character': 'levels_data/levels/0/level_0__layer_with_character.csv',

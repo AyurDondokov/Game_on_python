@@ -9,6 +9,7 @@ from menu import *
 
 class Game:
     def __init__(self):
+        """Инициализация pygame"""
         pygame.init()
         pygame.display.set_caption("The best game ever")
         self.game_over, self.pause_menu = False, False
@@ -21,6 +22,7 @@ class Game:
         self.manager = SceneManager()
 
     def run(self):
+        """Основной цикл игры"""
         while not self.game_over:
             # запуск паузы
             # if self.K_ESCAPE:
@@ -53,9 +55,13 @@ class Game:
 
 
 if __name__ == '__main__':
+    """Запуск игры"""
+
+    # настройка логирования
     logging.basicConfig(level=logging.DEBUG,
                         filename="py_log.log", filemode="w",
                         format='%(levelname)s:%(filename)s:%(funcName)s:Line %(lineno)d:%(message)s')
     logging.info("Game starting...")
+
     game = Game()
     game.run()
