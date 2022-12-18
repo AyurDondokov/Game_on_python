@@ -231,9 +231,35 @@ class Level:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause_def()
 
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
+
+    def pause_def(self):
+
+        # TODO: сделать так чтобы при одновременном нажатии esc и удержании кнопки перемещения,
+        # перемещение не происходило
+
+        self.pause_menu = True
+        # цикл замараживает всю остальную часть кода
+        while self.pause_menu:
+            log.debug(f"pause active")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.pause_menu = False
+            self.all_sprites.custom_draw(self.player)
+            self.window = pygame.sprite.Sprite()
+            self.window.image = pygame.image.load('./sprites/pause_menu.png')
+            self.window.rect = self.window.image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+            self.display_surface.blit(self.window.image, self.window.rect)
+            pygame.display.update()
 
 
 class CameraGroup(pygame.sprite.Group):
