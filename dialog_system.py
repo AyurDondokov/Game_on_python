@@ -30,10 +30,8 @@ class Text:
 
 
 class Dialog(pygame.sprite.Group):
-    def __init__(self, npc,
-                 position: tuple = DIALOG_WINDOW_POSITION):
+    def __init__(self, dialog_replicas, position: tuple = DIALOG_WINDOW_POSITION):
         super().__init__()
-        self.character = npc
         self.display_surf = pygame.display.get_surface()
         self.is_open = False
 
@@ -45,7 +43,7 @@ class Dialog(pygame.sprite.Group):
         self.npc_profile.image = pygame.image.load('./sprites/dialog_person_test.png')
         self.npc_profile.rect = self.npc_profile.image.get_rect(bottomleft=self.window.rect.bottomleft)
 
-        self.replicas = npc.dialog_replicas
+        self.replicas = dialog_replicas
         self.replica_index = 0
         self.text_replica = Text(screen=self.display_surf,
                                  text=self.replicas[self.replica_index].split(':')[1],
@@ -71,4 +69,3 @@ class Dialog(pygame.sprite.Group):
 
     def update(self, dt):
         self.custom_draw()
-

@@ -24,7 +24,7 @@ class NPC(GameObject):
 
         # Dialog
         self.dialog_replicas = dialog_replicas
-        self.dialog = Dialog(self)
+        self.dialog = Dialog(dialog_replicas)
         self.is_dialog_able = False
         self.dialog_icon = GameObject(
             position=(self.rect.centerx + 40, self.rect.centery - 80),
