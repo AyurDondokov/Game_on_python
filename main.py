@@ -1,10 +1,8 @@
 """Основной скелет игры, класс Game"""
-import pygame
-from properties import *
-from level import Level
-from scene_manager import SceneManager
 import logging
+
 from menu import *
+from scene_manager import SceneManager
 
 
 class Game:
@@ -24,14 +22,11 @@ class Game:
     def run(self):
         """Основной цикл игры"""
         while not self.game_over:
-
-
             self.window.fill('black')
             # delta time - время между кадрами, нужно для правильной работы движения
             dt = self.clock.tick(FPS) / 1000
             self.manager.run(dt)
             pygame.display.update()
-
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
 import pygame
+
 from properties import *
-import logging as log
 
 
 class Tile(pygame.sprite.Sprite):
@@ -50,7 +50,7 @@ class Trigger(Tile):
         self.func = func
 
     def check(self):
-        log.debug(f"funtion is {self.func}")
+        # log.debug(f"funtion is {self.func}")
         if not self.triggered:
             self.func()
             self.triggered = True

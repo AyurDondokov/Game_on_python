@@ -7,7 +7,7 @@ from character import NPC
 from decoration import Clouds
 from player import Player
 from properties import *
-from replicas_data import test_npc
+from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, Portal_components, Rocks
 
@@ -36,11 +36,17 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            position=(700, 600),
+            position=(1000, 600),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=test_npc)
+        self.test_npc2 = NPC(
+            position=(1100, 600),
+            sprite_group=[self.all_sprites,
+                          self.collision_sprites, self.interactable_sprites],
+            name='Ayur',
+            dialog_replicas=test_npc2)
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
