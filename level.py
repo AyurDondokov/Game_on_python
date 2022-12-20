@@ -1,13 +1,15 @@
-import pygame
-from support import import_csv_layout, import_cut_graphics
-from properties import *
-from tile import Tile, Trigger, Portal_components, Rocks
-from player import Player
-from decoration import Clouds
 import logging
-from character import NPC
-from replicas_data import test_npc
 import sys
+
+import pygame
+
+from character import NPC
+from decoration import Clouds
+from player import Player
+from properties import *
+from replicas_data import test_npc
+from support import import_csv_layout, import_cut_graphics
+from tile import Tile, Trigger, Portal_components, Rocks
 
 log = logging.getLogger(__name__)
 
@@ -116,7 +118,7 @@ class Level:
 
         # decoration
         level_width = len(island_ends_layout[0]) * TILE_SIZE
-        self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
+        self.clouds = Clouds(SCREEN_HEIGHT * 2, level_width,
                              30, self.all_sprites)
 
     def create_tile_group(self, layout, type):
@@ -209,7 +211,7 @@ class Level:
                             'levels_data/graphics/decoration/limiters/limiters.png')
                         tile_surface = limiters_tile_list[int(val)]
                         Tile((x, y), [self.all_sprites,
-                             self.collision_sprites], tile_surface)
+                                      self.collision_sprites], tile_surface)
 
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):

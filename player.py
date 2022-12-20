@@ -99,7 +99,7 @@ class Player(GameObject):
                         if hasattr(sprite, 'is_dialog_able'):
                             if sprite.is_dialog_able:
                                 sprite.dialog.next_replica()
-                                self.time_for_click_again = TIME_BETWEEN_INTERACT
+                                # self.time_for_click_again = TIME_BETWEEN_INTERACT
 
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""

@@ -7,6 +7,7 @@ r_c = {
     "Ar": "Аюр:",
     "H": "Ты:"
 }
+
 test_npc = (f"{r_c['Ar']}Hello",
             f"{r_c['Ar']}My name is Ayur",
             f"{r_c['Ar']}Its first dialog in game",
