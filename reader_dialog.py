@@ -1,17 +1,33 @@
-import logging as log
-
-
 class ReadingLocations:
-    """"Класс для работы с диалогами из файла"""
+    """"Класс для работы с диалогами из файла
+
+        формат:
+        ===location=== (указатель на блок текста,локация)
+        основной блок текста
+        (выборка:)
+        + None: *текст* -> location (переход)
+        + None: *текст* -> location (переход)
+    """
 
     def __init__(self, title):
-        self.conversation, self.choice = [], []  # массивы: обычного диалога и выборки реплик
-        self.title = title
-        self.__dict_of_locations = {}  # словарь из локаций {локация: (start, end)} - индексы строк диалога
-        self.__dictionary_of_locations = []  # массив индексов локаций (=== loc ===)
+        """
+        self.conversation list содержит основной блок текста
+        self.choise list содержит блок выборки
+        self.title = содержит документ .txt
+        self.__dict_of_locations словарь из локаций {локация: (start, end)} - индексы строк диалога
+        self.__dict_of_locations_select словарь из выбора по локациямлокаций {выбор: локация}
+        self.__dictionary_of_locations list массив индексов строк локаций (=== loc ===)
         self.__listing_locations = []  # массив из локаций
+        """
+        self.conversation, self.choice = [], []
+        self.title = title
+        self.__dict_of_locations = {}
+        self.__dict_of_locations_select = {}
+        self.__dictionary_of_locations = []
+        self.__listing_locations = []
         self.dialog = None
         self.lines = ()
+        #чтение диалога
         self.reader()
 
     def reader(self):
@@ -20,9 +36,13 @@ class ReadingLocations:
             self.lines = file.readlines()
             for line in self.lines:
                 if line.startswith('==='):
-                    self.__dictionary_of_locations.append(self.lines.index(line))
-                    example = {line.rstrip()[4:-4]: None}
-                    self.__dict_of_locations.update(example)
+                    if not line.startswith('=== +'):
+                        self.__dictionary_of_locations.append(self.lines.index(line))
+                        example = {line.rstrip()[4:-4]: None}
+                        self.__dict_of_locations.update(example)
+                    # else:
+                    #     self.__dict_of_locations_select
+
             self.__dictionary_of_locations.append(len(self.lines))
             self.__listing_locations = list(self.__dict_of_locations)
             for i in range(len(self.__dict_of_locations)):
@@ -37,7 +57,7 @@ class ReadingLocations:
         for line in dialogue:
             self.dialog.append(line.rstrip())
         self.selection()
-        log.debug(f"convesation is{self.conversation}")
+        return self.conversation
 
     def selection(self):
         """Разделение обычного диалога и выбора сценария при наличии"""
@@ -52,6 +72,7 @@ class ReadingLocations:
             i += 1
         if self.dialog[i - 1][0:1] == '+':
             self.choice.append(self.dialog[len(self.dialog) - 1][2:])
+
         # self.checking_the_selection()
 
     # @property

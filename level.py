@@ -20,7 +20,7 @@ class Level:
     def __init__(self, level_map, current_level, lvl_go_to):
         log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
-
+        #reader = ReadingLocations('dialog/proba.txt')
         # для перемещения между уровнями
         self.cur_lvl = current_level
         self.lvl_to = lvl_go_to
@@ -46,7 +46,7 @@ class Level:
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
-            dialog_replicas=test_npc2)
+            # dialog_replicas=reader.getLocations("Caravan_leader"))
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],

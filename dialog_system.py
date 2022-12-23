@@ -1,6 +1,6 @@
 from properties import *
 from support import *
-
+import time
 
 class Text:
     """
@@ -13,7 +13,7 @@ class Text:
         self.__cord = position
         self.__color = color
         self.__font = pygame.font.Font(None, size)
-        self.__text = self.__font.render(text, False, color)
+        self.__text = self.__font.render(text, False, color) # -> Surface
 
     def out(self):
         self.__screen.blit(self.__text, self.__cord)
@@ -31,6 +31,8 @@ class Text:
 
 
 class Dialog(pygame.sprite.Group):
+    """Класс отрисовки диалогов, кнопок в диалогах и тп"""
+
     def __init__(self, dialog_replicas, position: tuple = DIALOG_WINDOW_POSITION):
         super().__init__()
         self.display_surf = pygame.display.get_surface()
@@ -61,12 +63,29 @@ class Dialog(pygame.sprite.Group):
                               size=40,
                               color=(0, 0, 0, 255))
 
+        # # выборка гг
+        # self.selection = dialog_replicas
+        # self.selection_index = 0
+        # self.text_selection = Text(screen=self.display_surf,
+        #                            text=self.selection[self.selection_index].split(':')[1],
+        #                            position=(self.npc_profile.rect.right, self.window.rect.centery),
+        #                            size=40,
+        #                            color=(0, 0, 0, 255))
+
     def next_replica(self):
         """Отображение следущей реплики, пока таковые остались в списке"""
         if not self.is_open:
             self.is_open = True
         if self.replica_index < len(self.replicas):
             self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
+            # s = ''
+            # for i in self.replicas[self.replica_index].split(':')[1]:
+            #     s += i
+            #     self.text_replica.text = s
+            #     time.sleep(0.03)
+            #     self.text_replica.out()
+            #     print(s)
+            # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
             self.text_name.text = self.replicas[self.replica_index].split(':')[0]
             self.replica_index += 1
         else:
@@ -82,3 +101,4 @@ class Dialog(pygame.sprite.Group):
 
     def update(self, dt):
         self.custom_draw()
+

@@ -7,12 +7,12 @@ r_c = {
     "H": "Ты:"
 }
 check = ReadingLocations('dialog/proba.txt')
-check.dia_loc('caravan_lider__1')
+test_npc=check.dia_loc('caravan_lider__1')
 
-test_npc = check.conversation
+# test_npc = check.conversation
 print(test_npc)
-check.dia_loc('caravan_lider__2')
-test_npc2 = check.conversation
+test_npc2=check.dia_loc('caravan_lider__2')
+# test_npc2 = check.conversation
 
 # test_npc = [f"{r_c['Ar']}Hello",
 #             f"{r_c['Ar']}My name is Ayur",

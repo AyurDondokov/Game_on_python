@@ -9,7 +9,7 @@
 Аюр: Пойдем ка со мной
 Ната: А?
 None: + *хвать* -> caravan_lider__3 
-None: + *хвать* -> caravan_lider__4 
+None: + *уть* -> caravan_lider__4 
 
 === caravan_lider__2 ===
 Ната: КУДА
