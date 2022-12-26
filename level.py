@@ -45,8 +45,8 @@ class Level:
             position=(1100, 600),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
-            name='Ayur',
-            # dialog_replicas=reader.getLocations("Caravan_leader"))
+            name='Ayur', dialog_replicas=test_npc2)
+        # dialog_replicas=reader.getLocations("Caravan_leader"))
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
