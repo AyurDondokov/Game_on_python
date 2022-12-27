@@ -85,6 +85,8 @@ class Level:
                     elif (type == 'ruined portal') or (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
                             self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
+                    else:
+                        Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
                         
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
