@@ -1,4 +1,4 @@
-"""Модуль, где описан класс игрового объекта"""
+
 import pygame
 from properties import *
 from support import *
@@ -7,6 +7,8 @@ from copy import deepcopy
 
 
 class GameObject(pygame.sprite.Sprite):
+    """Абстрактный класс для всех игровых обьектов, кроме Tile`ов"""
+
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, z: int,
                  hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
@@ -51,6 +53,7 @@ class GameObject(pygame.sprite.Sprite):
         pass
 
     def _collision(self, direction):
+        """Обработка столкновений"""
         self.hitbox.centerx = self.rect.centerx + \
             self.rect.width * self.hitbox_offset[0]
         self.hitbox.centery = self.rect.centery + \
@@ -74,6 +77,7 @@ class GameObject(pygame.sprite.Sprite):
         self.anim_status = new_state
 
     def _animate(self, dt):
+        """Смена кадров анимации"""
         self.anim_frame_index += 1 / \
             self.anim_speed[self.anim_status.split("_", 1)[0]] * dt
         if self.anim_frame_index >= len(self.animations[self.anim_status]):

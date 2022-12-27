@@ -11,7 +11,8 @@ class Player(GameObject):
     def __init__(self, position: tuple[float, float],
                  sprite_group: pygame.sprite.Group,
                  collision_sprites: pygame.sprite.Group,
-                 interactable_sprites: pygame.sprite.Group):
+                 interactable_sprites: pygame.sprite.Group,
+                 trigger_sprites: pygame.sprite.Group):
         super().__init__(position, sprite_group,
                          "./sprites/main_character/", LAYERS['player'], (
                              0, 0.25), DEFAULT_CHARACTER_SPEED, True,
@@ -20,17 +21,17 @@ class Player(GameObject):
                                                0.2, -self.rect.height * 0.5)
         self.collision_sprites = collision_sprites
         self.interactable_sprites = interactable_sprites
+        self.trigger_sprites = trigger_sprites
         self.time_for_click_again = TIME_BETWEEN_INTERACT
         self.__event_list = []
 
     def _collision(self, direction):
+        """Проверка столкновений"""
         super(Player, self)._collision(direction)
         for sprite in self.collision_sprites:
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
-                    if isinstance(sprite, Trigger):
-                        # Проверка на тригер
-                        sprite.check()
+
                     if direction == 'horizontal':
                         if self.direction.x > 0:
                             self.hitbox.right = sprite.hitbox.left
@@ -52,6 +53,11 @@ class Player(GameObject):
                             self.rect.height * self.hitbox_offset[1]
                         self.pos.y = self.hitbox.centery - \
                             self.rect.height * self.hitbox_offset[1]
+        # запуск триггеров
+        for sprite in self.trigger_sprites:
+            if hasattr(sprite, 'hitbox'):
+                if sprite.hitbox.colliderect(self.hitbox):
+                    sprite.check()
 
     def set_events_list(self, event_list):
         self.__event_list = event_list
@@ -83,17 +89,20 @@ class Player(GameObject):
         if self.direction.magnitude() == 0:
             self._change_anim_status("idle_" + self.anim_status.split('_')[1])
 
+        # чтение событий pygame.event
         keys = self.__event_list
         for event in keys:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     for sprite in self.interactable_sprites:
+                        # переключение на следующую реплику в диалоге
                         if hasattr(sprite, 'is_dialog_able'):
                             if sprite.is_dialog_able:
                                 sprite.dialog.next_replica()
-                                self.time_for_click_again = TIME_BETWEEN_INTERACT
+                                # self.time_for_click_again = TIME_BETWEEN_INTERACT
 
     def check_npc_distance(self):
+        """Если NPC близко отобразить иконку взаимодействия над NPC"""
         for sprite in self.interactable_sprites:
             if hasattr(sprite, 'is_dialog_able'):
                 sprite.is_dialog_able = self.pos.distance_to(

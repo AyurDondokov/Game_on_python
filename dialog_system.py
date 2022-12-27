@@ -1,12 +1,13 @@
-import pygame
-
-import character
 from properties import *
 from support import *
-from game_object import GameObject
 
 
 class Text:
+    """
+    Класс для отрисовки текста
+    на вход подаётся text
+    """
+
     def __init__(self, screen, text, position, size, color):
         self.__screen = screen
         self.__cord = position
@@ -30,34 +31,43 @@ class Text:
 
 
 class Dialog(pygame.sprite.Group):
-    def __init__(self, npc,
-                 position: tuple = DIALOG_WINDOW_POSITION):
+    def __init__(self, dialog_replicas, position: tuple = DIALOG_WINDOW_POSITION):
         super().__init__()
-        self.character = npc
         self.display_surf = pygame.display.get_surface()
         self.is_open = False
 
+        # подложка диалога
         self.window = pygame.sprite.Sprite(self)
         self.window.image = pygame.image.load('./sprites/dialog_window.png')
         self.window.rect = self.window.image.get_rect(center=position)
 
+        # аватарка говорящего
         self.npc_profile = pygame.sprite.Sprite(self)
         self.npc_profile.image = pygame.image.load('./sprites/dialog_person_test.png')
         self.npc_profile.rect = self.npc_profile.image.get_rect(bottomleft=self.window.rect.bottomleft)
 
-        self.replicas = npc.dialog_replicas
+        # реплики персонажей
+        self.replicas = dialog_replicas
         self.replica_index = 0
         self.text_replica = Text(screen=self.display_surf,
                                  text=self.replicas[self.replica_index].split(':')[1],
                                  position=(self.npc_profile.rect.right, self.window.rect.centery),
                                  size=40,
                                  color=(0, 0, 0, 255))
+        # имя говорящего
+        self.text_name = Text(screen=self.display_surf,
+                              text=self.replicas[self.replica_index].split(':')[0],
+                              position=(self.npc_profile.rect.right, self.window.rect.centery - 80),
+                              size=40,
+                              color=(0, 0, 0, 255))
 
     def next_replica(self):
+        """Отображение следущей реплики, пока таковые остались в списке"""
         if not self.is_open:
             self.is_open = True
         if self.replica_index < len(self.replicas):
             self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
+            self.text_name.text = self.replicas[self.replica_index].split(':')[0]
             self.replica_index += 1
         else:
             self.is_open = False
@@ -68,7 +78,7 @@ class Dialog(pygame.sprite.Group):
             self.display_surf.blit(self.window.image, self.window.rect)
             self.display_surf.blit(self.npc_profile.image, self.npc_profile.rect)
             self.text_replica.out()
+            self.text_name.out()
 
     def update(self, dt):
         self.custom_draw()
-

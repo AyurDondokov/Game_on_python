@@ -1,19 +1,36 @@
+import logging
+import sys
+
 import pygame
-from support import import_csv_layout, import_cut_graphics
+
+from character import NPC
+from decoration import Clouds
+from player import Player
 from properties import *
+<<<<<<< HEAD
 from tile import Tile, Trigger, NotTiledImage
 from player import Player
 from decoration import Clouds
 import logging
 from character import NPC
 import sys
+=======
+from replicas_data import test_npc, test_npc2
+from support import import_csv_layout, import_cut_graphics
+from tile import Tile, Trigger, Portal_components, Rocks
+>>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
 
 log = logging.getLogger(__name__)
-"""Отрисовка спрайтов на уровне"""
 
 
 class Level:
+<<<<<<< HEAD
     def __init__(self, level_map, level_tileset, current_level, lvl_go_to):
+=======
+    """Отрисовка спрайтов на уровне"""
+
+    def __init__(self, level_map, current_level, lvl_go_to):
+>>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
         log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
 
@@ -26,17 +43,28 @@ class Level:
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
         self.interactable_sprites = pygame.sprite.Group()
+        self.trigger_sprites = pygame.sprite.Group()
         self.create_map()
         self.setup()
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            position=(700, 600),
+            position=(1000, 600),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
-            dialog_replicas=('Ayur:Hello', 'Ayur:My name is Ayur', 'Ayur:Its first dialog in game'))
+            dialog_replicas=test_npc)
+        self.test_npc2 = NPC(
+            position=(1100, 600),
+            sprite_group=[self.all_sprites,
+                          self.collision_sprites, self.interactable_sprites],
+            name='Ayur',
+            dialog_replicas=test_npc2)
+        # Триггер для начала боя
+        # В будущем должен создаваться с помощью csv
+        Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
+                pygame.image.load("images/ground/trigger.png"), lambda: print("FIGHTING START"))
 
     def create_map(self):
         for key in self.map:
@@ -46,8 +74,13 @@ class Level:
                 self.player_setup(import_csv_layout(self.map[key]))
 
         # decoration
+<<<<<<< HEAD
         level_width = len(import_csv_layout(self.map['island ends'])[0]) * TILE_SIZE
         self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
+=======
+        level_width = len(island_ends_layout[0]) * TILE_SIZE
+        self.clouds = Clouds(SCREEN_HEIGHT * 2, level_width,
+>>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
                              30, self.all_sprites)
 
     def create_tile_group(self, layout, type):
@@ -68,9 +101,13 @@ class Level:
                             NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type][1]).convert_alpha())
                     elif (type == 'ruined portal') or (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
+<<<<<<< HEAD
                             self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
                     else:
                         Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
+=======
+                                      self.collision_sprites], tile_surface)
+>>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
 
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
@@ -79,18 +116,48 @@ class Level:
                 y = row_index * TILE_SIZE
                 if val == '0':
                     self.player = Player((x, y), self.all_sprites,
-                                         self.collision_sprites, self.interactable_sprites)
+                                         self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
 
     def run(self, dt):
+        """Запусе отрисовки уровня"""
         self.events_list = pygame.event.get()
+
         # список событий передаётся компонентам для самостоятельной обработки
         self.player.set_events_list(self.events_list)
+        # выход из игры
         for event in self.events_list:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.pause_def()
+
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)
+
+    def pause_def(self):
+
+        # TODO: сделать так чтобы при одновременном нажатии esc и удержании кнопки перемещения,
+        # перемещение не происходило
+
+        self.pause_menu = True
+        # цикл замараживает всю остальную часть кода
+        while self.pause_menu:
+            log.debug(f"pause active")
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        self.pause_menu = False
+            self.all_sprites.custom_draw(self.player)
+            self.window = pygame.sprite.Sprite()
+            self.window.image = pygame.image.load('./sprites/pause_menu.png')
+            self.window.rect = self.window.image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+            self.display_surface.blit(self.window.image, self.window.rect)
+            pygame.display.update()
 
 
 class CameraGroup(pygame.sprite.Group):

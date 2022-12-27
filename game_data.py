@@ -1,3 +1,5 @@
+"""информация о уровнях"""
+
 level_0 = {
     "MAP": {
         'limiters': 'levels_data/levels/0/level_0__limiters.csv',
@@ -42,7 +44,6 @@ level_0 = {
 # }
 
 levels = {0: level_0}
-          
+
 # levels = {0: level_0,
 #           1: level_1}
-          
