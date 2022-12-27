@@ -62,13 +62,8 @@ class Level:
                 self.player_setup(import_csv_layout(self.map[key]))
 
         # decoration
-<<<<<<< HEAD
         level_width = len(import_csv_layout(self.map['island ends'])[0]) * TILE_SIZE
         self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
-=======
-        level_width = len(island_ends_layout[0]) * TILE_SIZE
-        self.clouds = Clouds(SCREEN_HEIGHT * 2, level_width,
->>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
                              30, self.all_sprites)
 
     def create_tile_group(self, layout, type):
@@ -89,14 +84,8 @@ class Level:
                             NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type][1]).convert_alpha())
                     elif (type == 'ruined portal') or (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
-<<<<<<< HEAD
                             self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
-                    else:
-                        Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
-=======
-                                      self.collision_sprites], tile_surface)
->>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
-
+                        
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
