@@ -7,30 +7,18 @@ from character import NPC
 from decoration import Clouds
 from player import Player
 from properties import *
-<<<<<<< HEAD
-from tile import Tile, Trigger, NotTiledImage
-from player import Player
-from decoration import Clouds
-import logging
-from character import NPC
-import sys
-=======
 from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
-from tile import Tile, Trigger, Portal_components, Rocks
->>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
+from tile import Tile, Trigger, NotTiledImage
+
 
 log = logging.getLogger(__name__)
 
 
 class Level:
-<<<<<<< HEAD
     def __init__(self, level_map, level_tileset, current_level, lvl_go_to):
-=======
-    """Отрисовка спрайтов на уровне"""
+        """Отрисовка спрайтов на уровне"""
 
-    def __init__(self, level_map, current_level, lvl_go_to):
->>>>>>> 7818291b457d0c3576232c162368b979ba2f3400
         log.info(f'Level class intialization')
         self.display_surface = pygame.display.get_surface()
 
