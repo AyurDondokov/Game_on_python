@@ -15,7 +15,7 @@ def import_surfaces_from_folder(path: str) -> list:
             full_path = path + '/' + image
             image_surface = pygame.image.load(full_path).convert_alpha()
             if path=='levels_data/graphics/decoration/clouds':
-                image_surface.set_alpha(50)
+                image_surface.set_alpha(150)
             surface_list.append(image_surface)
     return surface_list
 

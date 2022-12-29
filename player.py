@@ -100,6 +100,9 @@ class Player(GameObject):
                             if sprite.is_dialog_able:
                                 sprite.dialog.next_replica()
                                 # self.time_for_click_again = TIME_BETWEEN_INTERACT
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pass
 
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""
