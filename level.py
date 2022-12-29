@@ -11,6 +11,8 @@ from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, NotTiledImage
 
+from scripts import TestScript
+
 
 log = logging.getLogger(__name__)
 
@@ -38,13 +40,13 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            position=(1000, 600),
+            position=(1220, 450),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=test_npc)
         self.test_npc2 = NPC(
-            position=(1100, 600),
+            position=(1320, 450),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
@@ -52,11 +54,11 @@ class Level:
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), lambda: print("FIGHTING START"))
+                pygame.image.load("images/ground/trigger.png"), TestScript(None))
 
     def create_map(self):
         for key in self.map:
-            if key!="character":
+            if key != "character":
                 self.create_tile_group(import_csv_layout(self.map[key]), key)
             else:
                 self.player_setup(import_csv_layout(self.map[key]))
@@ -74,20 +76,21 @@ class Level:
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
 
-                    
                     if type == 'portal components':
                         NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type]).convert_alpha())
                     elif type == 'rocks':
                         if val == '0':
-                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type][0]).convert_alpha())
+                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(
+                                self.tileset[type][0]).convert_alpha())
                         if val == '1':
-                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type][1]).convert_alpha())
+                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(
+                                self.tileset[type][1]).convert_alpha())
                     elif (type == 'ruined portal') or (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
-                            self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
+                                      self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
                     else:
                         Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
-                        
+
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):

@@ -27,21 +27,21 @@ class NotTiledImage(Tile):
 
 
 class Trigger(Tile):
-    """Tile c возможностью запуска func - функции"""
+    """Tile c возможностью запуска скриптов"""
 
     def __init__(self,
                  pos: tuple,
                  groups: pygame.sprite.Group,
                  surface,
-                 func,
+                 script,
                  z: int = LAYERS['ground']
                  ):
         super().__init__(pos, groups, surface, z)
         self.triggered = False
-        self.func = func
+        self.script = script
 
     def check(self):
         # log.debug(f"funtion is {self.func}")
         if not self.triggered:
-            self.func()
+            self.script.execute()
             self.triggered = True
