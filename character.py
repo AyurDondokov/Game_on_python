@@ -12,7 +12,7 @@ class NPC(GameObject):
                  dialog_replicas: tuple = None):
         super().__init__(position,
                          sprite_group,
-                         sprite_path="./sprites/test_npc/",
+                         image_path="./sprites/test_npc/",
                          z=LAYERS['forward_npc'],
                          hitbox_offset=(0, 0.25),
                          movement_speed=DEFAULT_CHARACTER_SPEED,
@@ -29,7 +29,7 @@ class NPC(GameObject):
         self.dialog_icon = GameObject(
             position=(self.rect.centerx + 40, self.rect.centery - 80),
             sprite_group=self.groups()[0],
-            sprite_path='./sprites/dialog_icon.png',
+            image_path='./sprites/dialog_icon.png',
             z=LAYERS['ux']
         )
         self.display_dialog_icon()

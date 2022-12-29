@@ -47,6 +47,8 @@ class Level:
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
             dialog_replicas=test_npc2)
+
+
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],

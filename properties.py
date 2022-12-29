@@ -2,7 +2,7 @@ import math
 """Модуль с константами"""
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 720
-FPS = 60
+FPS = 120
 TILE_SIZE = 64
 
 FONT_NAME = './addons/monospace.ttf'
@@ -32,8 +32,8 @@ DIALOG_WINDOW_POSITION = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 128)
 TIME_BETWEEN_INTERACT = 0.5
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
-    1: {'max_health': 100, 'armor': 3, 'max_damage': 20},
-    2: {'max_health': 120, 'armor': 5, 'max_damage': 30}
+    1: {'max_health': 100, 'defence': 3, 'max_damage': 20},
+    2: {'max_health': 120, 'defence': 5, 'max_damage': 30}
 }
 
 LAYERS = {
@@ -66,3 +66,13 @@ MAP = [
     ['c', 's', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
     ['c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c', 'c']
 ]
+
+# Battle system
+BATTLE_SHAKE_INTENSITY = 7
+BATTLE_SHAKE_SPEED = 7
+BATTLE_SHAKE_TIME = 7
+
+BATTLE_ENEMY_POS_X = SCREEN_WIDTH * 0.75
+BATTLE_PLAYER_POS = (SCREEN_WIDTH * 0.25, SCREEN_HEIGHT/2)
+
+DEFAULT_PLAYER_BATTLE_SPRITE = "./sprites/main_character/fighting/fighting_readiness.png"

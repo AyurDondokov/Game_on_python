@@ -1,12 +1,12 @@
 from properties import *
 import pygame
 from tile import Tile
-from support import import_folder
+from support import import_surfaces_from_folder
 from random import choice, randint
 
 class Clouds:
     def __init__(self, horizon, level_width, cloud_number, group):
-        cloud_surf_list = import_folder('levels_data/graphics/decoration/clouds')
+        cloud_surf_list = import_surfaces_from_folder('levels_data/graphics/decoration/clouds')
         min_x = -SCREEN_WIDTH
         max_x = level_width + SCREEN_WIDTH
         min_y = 0

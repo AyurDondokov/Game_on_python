@@ -1,11 +1,13 @@
 """Модуль с полезными функциями"""
 import pygame
+import level
+import json
 from os import walk
 from csv import reader
 from properties import TILE_SIZE
 
 
-def import_folder(path: str) -> list:
+def import_surfaces_from_folder(path: str) -> list:
     """Функция, которая читает все изображения в директории и создает из них surface'ы"""
     surface_list = []
     for _, _, img_files in walk(path):
