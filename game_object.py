@@ -9,7 +9,10 @@ from copy import deepcopy
 class GameObject(pygame.sprite.Sprite):
     """Абстрактный класс для всех игровых обьектов, кроме Tile`ов"""
 
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, sprite_path: str, z: int,
+    def __init__(self, position: tuple,
+                 sprite_group: pygame.sprite.Group,
+                 sprite_path: str,
+                 z: int,
                  hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
                  is_animated: bool = False,

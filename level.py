@@ -40,7 +40,7 @@ class Level:
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
-            position=(1220, 450),
+            position=(900, 450),
             sprite_group=[self.all_sprites,
                           self.collision_sprites, self.interactable_sprites],
             name='Ayur',
@@ -85,18 +85,21 @@ class Level:
                         if val == '1':
                             NotTiledImage((x, y), self.all_sprites,  pygame.image.load(
                                 self.tileset[type][1]).convert_alpha())
-                    elif (type == 'ruined portal') or (type == 'limiters'):
+                    elif (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
                                       self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
+                    elif (type == 'ruined portal'):
+                        self.portal = Tile((x, y), [self.all_sprites, self.collision_sprites],
+                                           import_cut_graphics(self.tileset[type])[int(val)])
                     else:
                         Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
 
     def player_setup(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
-                x = col_index * TILE_SIZE
-                y = row_index * TILE_SIZE
                 if val == '0':
+                    x = col_index * TILE_SIZE
+                    y = row_index * TILE_SIZE
                     self.player = Player((x, y), self.all_sprites,
                                          self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
 
@@ -114,6 +117,8 @@ class Level:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_def()
+                if event.key == pygame.K_1:
+                    self.cur_lvl(self.lvl_to)
 
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)

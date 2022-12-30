@@ -46,3 +46,18 @@ class NPC(GameObject):
 
         if self.is_dialog_able:
             self.dialog.update(dt)
+
+
+class Portal(GameObject):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group):
+        super().__init__(position,
+                         sprite_group,
+                         sprite_path="./levels_data/graphics/decoration/ruined_portal/big_destroy_portal.png",
+                         z=LAYERS['forward_npc'],
+                         hitbox_offset=(0, 0.25),
+                         movement_speed=DEFAULT_CHARACTER_SPEED,
+                         is_animated=False,
+                         anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
+                         animations_pack=STANDARD_CHARACTER_ANIM_PACK
+                         )
+        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
