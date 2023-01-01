@@ -1,6 +1,8 @@
 """Основной скелет игры, класс Game"""
 import logging
 
+import pygame.mixer
+
 from menu import *
 from scene_manager import SceneManager
 
@@ -8,6 +10,7 @@ from scene_manager import SceneManager
 class Game:
     def __init__(self):
         """Инициализация pygame"""
+        pygame.mixer.pre_init(44100, -16, 1, 512)
         pygame.init()
         pygame.display.set_caption("The best game ever")
         self.game_over, self.pause_menu = False, False
