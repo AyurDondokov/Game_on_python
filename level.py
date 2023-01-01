@@ -30,7 +30,9 @@ class Level:
         self.map = level_data["MAP"]
         self.tileset = level_data["TileSet"]
         self.tmx_data = load_pygame(level_data["TMXData"])
-        self.music_backgroud = pygame.mixer.Sound(level_data["music"])
+
+        self.music_path = level_data["music"]
+        self.music_backgroud = pygame.mixer.Sound(self.music_path)
         self.is_runned = False
 
         self.all_sprites = CameraGroup()
@@ -108,6 +110,7 @@ class Level:
         """Запусе отрисовки уровня"""
         if not self.is_runned:
             pygame.mixer.stop()
+            self.music_backgroud = pygame.mixer.Sound(self.music_path)
             self.music_backgroud.play(-1)
             self.is_runned = True
         self.events_list = pygame.event.get()

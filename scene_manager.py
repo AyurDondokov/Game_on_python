@@ -57,6 +57,8 @@ class SceneManager:
 
     # @current_level.setter
     def set_current_level(self, value):
+        self.__list_of_levels[self.current_level].is_runned = False
+
         self.__current_level = value
 
     def set_current_menu(self, value):
