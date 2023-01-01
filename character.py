@@ -27,7 +27,7 @@ class NPC(GameObject):
         self.dialog = Dialog(dialog_replicas)
         self.is_dialog_able = False
         self.dialog_icon = GameObject(
-            position=(self.rect.centerx + 40, self.rect.centery - 80),
+            position=(self.rect.centerx, self.rect.centery - 100),
             sprite_group=self.groups()[0],
             sprite_path='./sprites/dialog_icon.png',
             z=LAYERS['ux']
@@ -50,6 +50,7 @@ class NPC(GameObject):
 
 class Portal(GameObject):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group):
+        print("Portal initialized")
         super().__init__(position,
                          sprite_group,
                          sprite_path="./levels_data/graphics/decoration/ruined_portal/big_destroy_portal.png",
@@ -61,3 +62,20 @@ class Portal(GameObject):
                          animations_pack=STANDARD_CHARACTER_ANIM_PACK
                          )
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
+        self.is_use_able = False
+        self.use_icon = GameObject(
+            position=(self.rect.topright[0] + 40, self.rect.topright[1] - 80),
+            sprite_group=self.groups()[0],
+            sprite_path='./sprites/use_icon.png',
+            z=LAYERS['ux']
+        )
+
+    def display_dialog_icon(self):
+        if self.is_use_able:
+            self.use_icon.add(self.groups()[0])
+        else:
+            self.use_icon.remove(self.groups()[0])
+
+    def update(self, dt):
+        super().update(dt)
+        self.display_dialog_icon()

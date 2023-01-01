@@ -3,14 +3,14 @@ import sys
 
 import pygame
 
-from character import NPC
+from character import NPC, Portal
 from decoration import Clouds
 from player import Player
 from properties import *
 from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, NotTiledImage
-
+from pytmx.util_pygame import load_pygame
 from scripts import TestScript
 
 
@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_map, level_tileset, current_level, lvl_go_to):
+    def __init__(self, level_data, current_level):
         """Отрисовка спрайтов на уровне"""
 
         log.info(f'Level class intialization')
@@ -26,14 +26,16 @@ class Level:
 
         # для перемещения между уровнями
         self.cur_lvl = current_level
-        self.lvl_to = lvl_go_to
+        self.lvl_to = level_data["move_to"]
+        self.map = level_data["MAP"]
+        self.tileset = level_data["TileSet"]
+        self.tmx_data = load_pygame(level_data["TMXData"])
 
-        self.map = level_map
-        self.tileset = level_tileset
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
         self.interactable_sprites = pygame.sprite.Group()
         self.trigger_sprites = pygame.sprite.Group()
+
         self.create_map()
         self.setup()
 
@@ -53,8 +55,17 @@ class Level:
             dialog_replicas=test_npc2)
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
-        Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
+        Trigger((1200, 500), [self.all_sprites, self.trigger_sprites],
                 pygame.image.load("images/ground/trigger.png"), TestScript(None))
+
+        # загрузка обьектов из tmx файла
+        for layer in self.tmx_data.layernames.values():
+            for obj in layer:
+                groups = [self.all_sprites]
+                if obj.properties.get("collide"):
+                    # если объекту было назначаенно свойство в Tiled, то..
+                    groups.append(self.collision_sprites)
+                Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
 
     def create_map(self):
         for key in self.map:
@@ -76,21 +87,9 @@ class Level:
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
 
-                    if type == 'portal components':
-                        NotTiledImage((x, y), self.all_sprites,  pygame.image.load(self.tileset[type]).convert_alpha())
-                    elif type == 'rocks':
-                        if val == '0':
-                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(
-                                self.tileset[type][0]).convert_alpha())
-                        if val == '1':
-                            NotTiledImage((x, y), self.all_sprites,  pygame.image.load(
-                                self.tileset[type][1]).convert_alpha())
-                    elif (type == 'limiters'):
+                    if (type == 'limiters'):
                         Tile((x, y), [self.all_sprites,
                                       self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
-                    elif (type == 'ruined portal'):
-                        self.portal = Tile((x, y), [self.all_sprites, self.collision_sprites],
-                                           import_cut_graphics(self.tileset[type])[int(val)])
                     else:
                         Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
 

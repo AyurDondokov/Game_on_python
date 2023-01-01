@@ -22,16 +22,16 @@ class GameObject(pygame.sprite.Sprite):
 
         # Настройки анимации
         self._is_animated = is_animated
-        self.animations = deepcopy(animations_pack)
-        self.anim_status = list(self.animations.keys())[0]  # Статус анимации
-        self.anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
-        self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
+        if self._is_animated:
+            self.animations = deepcopy(animations_pack)
+            self.anim_status = list(self.animations.keys())[0]  # Статус анимации
+            self.anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
+            self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
         self._import_assets(sprite_path)
-        # print(self.animations)
 
         # Основные настройки
-        self.rect = self.image.get_rect(center=position)
+        self.rect = self.image.get_rect(topleft=position)
         self.hitbox = self.rect.copy()
         self.hitbox_offset = hitbox_offset
         self.z = z

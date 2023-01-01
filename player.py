@@ -14,9 +14,13 @@ class Player(GameObject):
                  interactable_sprites: pygame.sprite.Group,
                  trigger_sprites: pygame.sprite.Group):
         super().__init__(position, sprite_group,
-                         "./sprites/main_character/", LAYERS['player'], (
-                             0, 0.25), DEFAULT_CHARACTER_SPEED, True,
-                         DEFAULT_CHARACTER_ANIM_SPEED, STANDARD_CHARACTER_ANIM_PACK)
+                         "./sprites/main_character/",
+                         LAYERS['player'],
+                         (0, 0.25),
+                         DEFAULT_CHARACTER_SPEED,
+                         True,
+                         DEFAULT_CHARACTER_ANIM_SPEED,
+                         STANDARD_CHARACTER_ANIM_PACK)
         self.hitbox = self.rect.copy().inflate(-self.rect.width *
                                                0.2, -self.rect.height * 0.5)
         self.collision_sprites = collision_sprites
@@ -109,6 +113,9 @@ class Player(GameObject):
         for sprite in self.interactable_sprites:
             if hasattr(sprite, 'is_dialog_able'):
                 sprite.is_dialog_able = self.pos.distance_to(
+                    sprite.pos) < DISTANCE_FOR_INTERACT
+            if hasattr(sprite, 'is_use_able'):
+                sprite.is_use_able = self.pos.distance_to(
                     sprite.pos) < DISTANCE_FOR_INTERACT
 
     def update(self, dt):

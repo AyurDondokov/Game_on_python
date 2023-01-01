@@ -36,7 +36,7 @@ class SceneManager:
         """Создание массива с экземплярами уровней"""
         for k in self.__levels_data:
             self.__list_of_levels.append(
-                Level(self.__levels_data[k]["MAP"], self.__levels_data[k]["TileSet"], self.set_current_level, self.__levels_data[k]["move_to"]))
+                Level(self.__levels_data[k], self.set_current_level))
 
     def __menus_setup(self):
         """
