@@ -32,7 +32,6 @@ class Level:
         self.tmx_data = load_pygame(level_data["TMXData"])
 
         self.music_path = level_data["music"]
-        self.music_backgroud = pygame.mixer.Sound(self.music_path)
         self.is_runned = False
 
         self.all_sprites = CameraGroup()
@@ -109,10 +108,10 @@ class Level:
     def run(self, dt):
         """Запусе отрисовки уровня"""
         if not self.is_runned:
-            pygame.mixer.stop()
-            self.music_backgroud = pygame.mixer.Sound(self.music_path)
-            self.music_backgroud.play(-1)
+            pygame.mixer.music.load(self.music_path)
+            pygame.mixer.music.play(-1)
             self.is_runned = True
+
         self.events_list = pygame.event.get()
         # список событий передаётся компонентам для самостоятельной обработки
         self.player.set_events_list(self.events_list)
