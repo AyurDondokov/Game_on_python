@@ -121,3 +121,4 @@ class Player(GameObject):
     def update(self, dt):
         super().update(dt)
         self.check_npc_distance()
+

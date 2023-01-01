@@ -36,7 +36,8 @@ level_0 = {
         'crater': 'levels_data/graphics/decoration/crater/hub_crater.png'
     },
     "TMXData": "levels_data/levels/0/level_objects.tmx",
-    "move_to": 1
+    "move_to": 1,
+    "music": "path"
 }
 level_1 = {
     "MAP": {

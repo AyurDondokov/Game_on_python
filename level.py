@@ -30,6 +30,7 @@ class Level:
         self.map = level_data["MAP"]
         self.tileset = level_data["TileSet"]
         self.tmx_data = load_pygame(level_data["TMXData"])
+        self.music = level_data["music"]
 
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
@@ -105,7 +106,7 @@ class Level:
     def run(self, dt):
         """Запусе отрисовки уровня"""
         self.events_list = pygame.event.get()
-
+        self.music.play()
         # список событий передаётся компонентам для самостоятельной обработки
         self.player.set_events_list(self.events_list)
         # выход из игры
