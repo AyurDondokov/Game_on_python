@@ -117,7 +117,8 @@ class Level:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_def()
 
-        self.all_sprites.custom_draw(self.player)
+        self.all_sprites.centralize_on_obj(self.player)
+        self.all_sprites.custom_draw()
         self.all_sprites.update(dt)
 
     def pause_def(self):
@@ -151,11 +152,12 @@ class CameraGroup(pygame.sprite.Group):
         self.display_surf = pygame.display.get_surface()
         self.offset = pygame.math.Vector2()
 
-    def custom_draw(self, player):
-        """Отрисовка персонажа всегда в центре. Метод  камеры."""
-        self.offset.x = player.rect.centerx - SCREEN_WIDTH / 2
-        self.offset.y = player.rect.centery - SCREEN_HEIGHT / 2
+    def centralize_on_obj(self, obj):
+        """Отрисовка персонажа всегда в центре. Метод камеры."""
+        self.offset.x = obj.rect.centerx - SCREEN_WIDTH / 2
+        self.offset.y = obj.rect.centery - SCREEN_HEIGHT / 2
 
+    def custom_draw(self):
         for layer in LAYERS.values():
             for sprite in self.sprites():
                 if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
