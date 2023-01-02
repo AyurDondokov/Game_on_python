@@ -103,7 +103,10 @@ class Player(GameObject):
                         if hasattr(sprite, 'is_dialog_able'):
                             if sprite.is_dialog_able:
                                 sprite.dialog.next_replica()
-                                # self.time_for_click_again = TIME_BETWEEN_INTERACT
+                        if hasattr(sprite, 'is_use_able'):
+                            if sprite.is_use_able:
+                                sprite.execute()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
                     pass
@@ -121,4 +124,3 @@ class Player(GameObject):
     def update(self, dt):
         super().update(dt)
         self.check_npc_distance()
-

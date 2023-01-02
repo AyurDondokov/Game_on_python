@@ -44,18 +44,18 @@ class Level:
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_npc = NPC(
-            position=(900, 450),
-            sprite_group=[self.all_sprites,
-                          self.collision_sprites, self.interactable_sprites],
-            name='Ayur',
-            dialog_replicas=test_npc)
-        self.test_npc2 = NPC(
-            position=(1320, 450),
-            sprite_group=[self.all_sprites,
-                          self.collision_sprites, self.interactable_sprites],
-            name='Ayur',
-            dialog_replicas=test_npc2)
+        # self.test_npc = NPC(
+        #     position=(900, 450),
+        #     sprite_group=[self.all_sprites,
+        #                   self.collision_sprites, self.interactable_sprites],
+        #     name='test_npc',
+        #     dialog_replicas=test_npc)
+        # self.test_npc2 = NPC(
+        #     position=(1320, 450),
+        #     sprite_group=[self.all_sprites,
+        #                   self.collision_sprites, self.interactable_sprites],
+        #     name='test_npc',
+        #     dialog_replicas=test_npc2)
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((1200, 500), [self.all_sprites, self.trigger_sprites],
@@ -64,11 +64,28 @@ class Level:
         # загрузка обьектов из tmx файла
         for layer in self.tmx_data.layernames.values():
             for obj in layer:
+                # если объекту было назначаенно свойство в Tiled, то..
                 groups = [self.all_sprites]
                 if obj.properties.get("collide"):
-                    # если объекту было назначаенно свойство в Tiled, то..
                     groups.append(self.collision_sprites)
-                Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
+                if (obj.name) == "Portal":
+                    obj_image = obj.image.get_rect()
+                    # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
+                    pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
+                    Portal(pos,
+                           [self.all_sprites, self.interactable_sprites],
+                           self.cur_lvl,
+                           self.lvl_to)
+                    # отображение портала
+                    Tile((obj.x, obj.y), groups,  obj.image, LAYERS["back_decor"])
+
+                elif hasattr(obj, "class"):
+                    if getattr(obj, "class") == "npc":
+                        NPC((obj.x, obj.y),
+                            [self.all_sprites, self.collision_sprites, self.interactable_sprites],
+                            obj.name, dialog_replicas=test_npc2)
+                else:
+                    Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
 
     def create_map(self):
         for key in self.map:
@@ -77,10 +94,11 @@ class Level:
             else:
                 self.player_setup(import_csv_layout(self.map[key]))
 
+        # TODO: сделать совместимым с разными картами:
         # decoration
-        level_width = len(import_csv_layout(self.map['island ends'])[0]) * TILE_SIZE
-        self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
-                             30, self.all_sprites)
+        # level_width = len(import_csv_layout(self.map['island ends'])[0]) * TILE_SIZE
+        # self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
+        #                      30, self.all_sprites)
 
     def create_tile_group(self, layout, type):
         for row_index, row in enumerate(layout):
