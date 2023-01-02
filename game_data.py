@@ -59,7 +59,7 @@ level_1 = {
     },
     "TMXData": "levels_data/levels/1/level_1__objects.tmx",
     "move_to": 0,
-    "music": "music_and_sound/music/level/Raul Diaz Palomar - Abdalá (demo, bonus).mp3"
+    "music": "music_and_sound/music/level/Desert theme.mp3"
 
 }
 
