@@ -60,11 +60,11 @@ class Portal(GameObject):
                          anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
                          animations_pack=STANDARD_CHARACTER_ANIM_PACK
                          )
-        self.set_current_level = set_current_level
+        self.__set_current_level = set_current_level
         self.move_to = move_to
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0, -self.rect.height * 0)
         self.is_use_able = False
-        self.use_icon = GameObject(
+        self.__use_icon = GameObject(
             position=(self.rect.topright[0], self.rect.topright[1] - 80),
             sprite_group=self.groups()[0],
             sprite_path='./sprites/use_icon.png',
@@ -73,12 +73,12 @@ class Portal(GameObject):
 
     def display_dialog_icon(self):
         if self.is_use_able:
-            self.use_icon.add(self.groups()[0])
+            self.__use_icon.add(self.groups()[0])
         else:
-            self.use_icon.remove(self.groups()[0])
+            self.__use_icon.remove(self.groups()[0])
 
     def execute(self):
-        self.set_current_level(self.move_to)
+        self.__set_current_level(self.move_to)
 
     def update(self, dt):
         # super().update(dt)

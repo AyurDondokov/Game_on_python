@@ -20,48 +20,48 @@ log = logging.getLogger(__name__)
 class Level:
     def __init__(self, level_data, set_current_level):
         """Отрисовка спрайтов на уровне"""
-
         log.info(f'Level class intialization')
+
         self.is_runned = False
-        self.display_surface = pygame.display.get_surface()
+        self.__display_surface = pygame.display.get_surface()
         # для перемещения между уровнями
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
         # отрисовка
-        self.map = level_data["MAP"]
-        self.tileset = level_data["TileSet"]
-        self.tmx_data = load_pygame(level_data["TMXData"])
+        self.__map = level_data["MAP"]
+        self.__tileset = level_data["TileSet"]
+        self.__tmx_data = load_pygame(level_data["TMXData"])
 
-        self.music_path = level_data["music"]
+        self.__music_path = level_data["music"]
 
-        self.all_sprites = CameraGroup()
-        self.collision_sprites = pygame.sprite.Group()
-        self.interactable_sprites = pygame.sprite.Group()
-        self.trigger_sprites = pygame.sprite.Group()
+        self.__all_sprites = CameraGroup()
+        self.__collision_sprites = pygame.sprite.Group()
+        self.__interactable_sprites = pygame.sprite.Group()
+        self.__trigger_sprites = pygame.sprite.Group()
 
-        self.create_map()
-        self.setup()
+        self.__create_map()
+        self.__setup()
 
-    def setup(self):
+    def __setup(self):
         """Загрузка важных объектов на уровне"""
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
-        Trigger((1200, 500), [self.all_sprites, self.trigger_sprites],
+        Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites],
                 pygame.image.load("images/ground/trigger.png"), TestScript(None))
 
         # загрузка обьектов из tmx файла
-        for layer in self.tmx_data.layernames.values():
+        for layer in self.__tmx_data.layernames.values():
             for obj in layer:
                 # если объекту было назначаенно свойство в Tiled, то..
-                groups = [self.all_sprites]
+                groups = [self.__all_sprites]
                 if obj.properties.get("collide"):
-                    groups.append(self.collision_sprites)
+                    groups.append(self.__collision_sprites)
                 if (obj.name) == "Portal":
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
                     pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
                     Portal(pos,
-                           [self.all_sprites, self.interactable_sprites],
+                           [self.__all_sprites, self.__interactable_sprites],
                            self.set_current_level,
                            self.move_to)
                     # отображение портала
@@ -70,17 +70,18 @@ class Level:
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
-                            [self.all_sprites, self.collision_sprites, self.interactable_sprites],
+                            [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
+                        pass
                 else:
                     Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
 
-    def create_map(self):
-        for key in self.map:
+    def __create_map(self):
+        for key in self.__map:
             if key != "character":
-                self.create_tile_group(import_csv_layout(self.map[key]), key)
+                self.__create_tile_group(import_csv_layout(self.__map[key]), key)
             else:
-                self.player_setup(import_csv_layout(self.map[key]))
+                self.__player_setup(import_csv_layout(self.__map[key]))
 
         # TODO: сделать совместимым с разными картами:
         # decoration
@@ -88,7 +89,7 @@ class Level:
         # self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
         #                      30, self.all_sprites)
 
-    def create_tile_group(self, layout, type):
+    def __create_tile_group(self, layout, type):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 # если не пустая клетка
@@ -97,24 +98,24 @@ class Level:
                     y = row_index * TILE_SIZE
 
                     if (type == 'limiters'):
-                        Tile((x, y), [self.all_sprites,
-                                      self.collision_sprites], import_cut_graphics(self.tileset[type])[int(val)])
+                        Tile((x, y), [self.__all_sprites,
+                                      self.__collision_sprites], import_cut_graphics(self.__tileset[type])[int(val)])
                     else:
-                        Tile((x, y), self.all_sprites, import_cut_graphics(self.tileset[type])[int(val)])
+                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[type])[int(val)])
 
-    def player_setup(self, layout):
+    def __player_setup(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 if val == '0':
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
-                    self.player = Player((x, y), self.all_sprites,
-                                         self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
+                    self.player = Player((x, y), self.__all_sprites,
+                                         self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
     def run(self, dt):
         """Запусе отрисовки уровня"""
         if not self.is_runned:
-            pygame.mixer.music.load(self.music_path)
+            pygame.mixer.music.load(self.__music_path)
             pygame.mixer.music.play(-1)
             self.is_runned = True
 
@@ -132,8 +133,8 @@ class Level:
                 if event.key == pygame.K_1:
                     self.set_current_level(self.move_to)
 
-        self.all_sprites.custom_draw(self.player)
-        self.all_sprites.update(dt)
+        self.__all_sprites.custom_draw(self.player)
+        self.__all_sprites.update(dt)
 
     def pause_def(self):
 
@@ -151,11 +152,11 @@ class Level:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.pause_menu = False
-            self.all_sprites.custom_draw(self.player)
+            self.__all_sprites.custom_draw(self.player)
             self.window = pygame.sprite.Sprite()
             self.window.image = pygame.image.load('./sprites/pause_menu.png')
             self.window.rect = self.window.image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-            self.display_surface.blit(self.window.image, self.window.rect)
+            self.__display_surface.blit(self.window.image, self.window.rect)
             pygame.display.update()
 
 
