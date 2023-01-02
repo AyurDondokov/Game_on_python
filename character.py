@@ -8,8 +8,7 @@ import logging as log
 
 
 class NPC(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name,
-                 dialog_replicas: tuple = None):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name: str, dialog_replicas: tuple = None):
         super().__init__(position,
                          sprite_group,
                          sprite_path=f"./sprites/npc/{name}/",
@@ -35,6 +34,7 @@ class NPC(GameObject):
         self.display_dialog_icon()
 
     def display_dialog_icon(self):
+        """убирает иконку из группы спрайтов для отрисовки"""
         if self.dialog_replicas and self.is_dialog_able:
             self.dialog_icon.add(self.groups()[0])
         else:
@@ -49,7 +49,7 @@ class NPC(GameObject):
 
 
 class Portal(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, cur_lvl, lvl_to):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, set_current_level, move_to):
         super().__init__(position,
                          sprite_group,
                          sprite_path="./images/ground/trigger.png",
@@ -60,8 +60,8 @@ class Portal(GameObject):
                          anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
                          animations_pack=STANDARD_CHARACTER_ANIM_PACK
                          )
-        self.cur_lvl = cur_lvl
-        self.lvl_to = lvl_to
+        self.set_current_level = set_current_level
+        self.move_to = move_to
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0, -self.rect.height * 0)
         self.is_use_able = False
         self.use_icon = GameObject(
@@ -78,8 +78,8 @@ class Portal(GameObject):
             self.use_icon.remove(self.groups()[0])
 
     def execute(self):
-        self.cur_lvl(self.lvl_to)
+        self.set_current_level(self.move_to)
 
     def update(self, dt):
-        super().update(dt)
+        # super().update(dt)
         self.display_dialog_icon()

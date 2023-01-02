@@ -18,21 +18,21 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_data, current_level):
+    def __init__(self, level_data, set_current_level):
         """Отрисовка спрайтов на уровне"""
 
         log.info(f'Level class intialization')
+        self.is_runned = False
         self.display_surface = pygame.display.get_surface()
-
         # для перемещения между уровнями
-        self.cur_lvl = current_level
-        self.lvl_to = level_data["move_to"]
+        self.set_current_level = set_current_level
+        self.move_to = level_data["move_to"]
+        # отрисовка
         self.map = level_data["MAP"]
         self.tileset = level_data["TileSet"]
         self.tmx_data = load_pygame(level_data["TMXData"])
 
         self.music_path = level_data["music"]
-        self.is_runned = False
 
         self.all_sprites = CameraGroup()
         self.collision_sprites = pygame.sprite.Group()
@@ -44,18 +44,6 @@ class Level:
 
     def setup(self):
         """Загрузка важных объектов на уровне"""
-        # self.test_npc = NPC(
-        #     position=(900, 450),
-        #     sprite_group=[self.all_sprites,
-        #                   self.collision_sprites, self.interactable_sprites],
-        #     name='test_npc',
-        #     dialog_replicas=test_npc)
-        # self.test_npc2 = NPC(
-        #     position=(1320, 450),
-        #     sprite_group=[self.all_sprites,
-        #                   self.collision_sprites, self.interactable_sprites],
-        #     name='test_npc',
-        #     dialog_replicas=test_npc2)
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((1200, 500), [self.all_sprites, self.trigger_sprites],
@@ -74,8 +62,8 @@ class Level:
                     pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
                     Portal(pos,
                            [self.all_sprites, self.interactable_sprites],
-                           self.cur_lvl,
-                           self.lvl_to)
+                           self.set_current_level,
+                           self.move_to)
                     # отображение портала
                     Tile((obj.x, obj.y), groups,  obj.image, LAYERS["back_decor"])
 
@@ -142,7 +130,7 @@ class Level:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_def()
                 if event.key == pygame.K_1:
-                    self.cur_lvl(self.lvl_to)
+                    self.set_current_level(self.move_to)
 
         self.all_sprites.custom_draw(self.player)
         self.all_sprites.update(dt)

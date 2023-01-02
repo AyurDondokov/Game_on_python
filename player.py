@@ -26,7 +26,6 @@ class Player(GameObject):
         self.collision_sprites = collision_sprites
         self.interactable_sprites = interactable_sprites
         self.trigger_sprites = trigger_sprites
-        self.time_for_click_again = TIME_BETWEEN_INTERACT
         self.__event_list = []
 
     def _collision(self, direction):
