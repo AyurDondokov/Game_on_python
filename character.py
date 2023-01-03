@@ -43,7 +43,7 @@ class NPC(GameObject):
         # Инициализация диалога
         self.dialog_replicas = dialog_replicas
 
-        self.dialog = Dialog(self.dialog_replicas[0]["1"])
+        self.dialog = Dialog(self.dialog_replicas["1"])
         print()
         print(dialog_replicas)
         self.is_dialog_able = False
@@ -56,7 +56,7 @@ class NPC(GameObject):
         self.display_dialog_icon()
 
     def switch_dialog(self, loc):
-        self.dialog_replicas = self.dialog_replicas[int(loc)-1][loc]
+        self.dialog.replicas = self.dialog_replicas[loc]
         print(self.dialog_replicas)
 
     def display_dialog_icon(self):
