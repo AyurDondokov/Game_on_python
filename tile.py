@@ -19,15 +19,7 @@ class Tile(pygame.sprite.Sprite):
         return self.__hitbox
 
 
-class Portal_components(Tile):
-    def __init__(self, pos: tuple, groups: pygame.sprite.Group, z: int = LAYERS['ground']):
-        super().__init__(pos, groups, pygame.image.load(
-            'levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png').convert_alpha(), z)
-        offset_y = pos[1] + TILE_SIZE
-        self.rect = self.image.get_rect(bottomleft=(pos[0], offset_y))
-
-
-class Rocks(Tile):
+class NotTiledImage(Tile):
     def __init__(self, pos: tuple, groups: pygame.sprite.Group, surface, z: int = LAYERS['ground']):
         super().__init__(pos, groups,
                          surface, z)
@@ -36,21 +28,21 @@ class Rocks(Tile):
 
 
 class Trigger(Tile):
-    """Tile c возможностью запуска func - функции"""
+    """Tile c возможностью запуска скриптов"""
 
     def __init__(self,
                  pos: tuple,
                  groups: pygame.sprite.Group,
                  surface,
-                 func,
+                 script,
                  z: int = LAYERS['ground']
                  ):
         super().__init__(pos, groups, surface, z)
         self.triggered = False
-        self.func = func
+        self.script = script
 
     def check(self):
         # log.debug(f"funtion is {self.func}")
         if not self.triggered:
-            self.func()
+            self.script.execute()
             self.triggered = True

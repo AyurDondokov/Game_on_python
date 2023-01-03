@@ -3,131 +3,97 @@ import sys
 
 import pygame
 
-from character import NPC
+from character import NPC, Portal
 from decoration import Clouds
 from player import Player
 from properties import *
 from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
-from tile import Tile, Trigger, Portal_components, Rocks
+from tile import Tile, Trigger, NotTiledImage
+from pytmx.util_pygame import load_pygame
+from scripts import TestScript
+
 
 log = logging.getLogger(__name__)
 
 
 class Level:
-    """Отрисовка спрайтов на уровне"""
-
-    def __init__(self, level_map, current_level, lvl_go_to):
+    def __init__(self, level_data, set_current_level):
+        """Отрисовка спрайтов на уровне"""
         log.info(f'Level class intialization')
-        self.display_surface = pygame.display.get_surface()
+
         #reader = ReadingLocations('dialog/proba.txt')
+
+        self.is_runned = False
+        self.__display_surface = pygame.display.get_surface()
+
         # для перемещения между уровнями
-        self.cur_lvl = current_level
-        self.lvl_to = lvl_go_to
+        self.set_current_level = set_current_level
+        self.move_to = level_data["move_to"]
+        # отрисовка
+        self.__map = level_data["MAP"]
+        self.__tileset = level_data["TileSet"]
+        self.__tmx_data = load_pygame(level_data["TMXData"])
 
-        self.map = level_map
-        self.all_sprites = CameraGroup()
-        self.collision_sprites = pygame.sprite.Group()
-        self.interactable_sprites = pygame.sprite.Group()
-        self.trigger_sprites = pygame.sprite.Group()
-        self.create_map()
-        self.setup()
+        self.__music_path = level_data["music"]
 
-    def setup(self):
+        self.__all_sprites = CameraGroup()
+        self.__collision_sprites = pygame.sprite.Group()
+        self.__interactable_sprites = pygame.sprite.Group()
+        self.__trigger_sprites = pygame.sprite.Group()
+
+        self.__create_map()
+        self.__setup()
+
+    def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_npc = NPC(
-            position=(1000, 600),
-            sprite_group=[self.all_sprites,
-                          self.collision_sprites, self.interactable_sprites],
-            name='Ayur',
-            dialog_replicas=test_npc)
-        self.test_npc2 = NPC(
-            position=(1100, 600),
-            sprite_group=[self.all_sprites,
-                          self.collision_sprites, self.interactable_sprites],
-            name='Ayur', dialog_replicas=test_npc2)
-        # dialog_replicas=reader.getLocations("Caravan_leader"))
+
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
-        Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), lambda: print("FIGHTING START"))
+        Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites],
+                pygame.image.load("images/ground/trigger.png"), TestScript(None))
 
-    def create_map(self):
+        # загрузка обьектов из tmx файла
+        for layer in self.__tmx_data.layernames.values():
+            for obj in layer:
+                # если объекту было назначаенно свойство в Tiled, то..
+                groups = [self.__all_sprites]
+                if obj.properties.get("collide"):
+                    groups.append(self.__collision_sprites)
+                if (obj.name) == "Portal":
+                    obj_image = obj.image.get_rect()
+                    # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
+                    pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
+                    Portal(pos,
+                           [self.__all_sprites, self.__interactable_sprites],
+                           self.set_current_level,
+                           self.move_to)
+                    # отображение портала
+                    Tile((obj.x, obj.y), groups,  obj.image, LAYERS["back_decor"])
 
-        # limiters
-        limiters_layout = import_csv_layout(self.map['limiters'])
-        self.limiters_sprites = self.create_tile_group(
-            limiters_layout, 'limiters')
+                elif hasattr(obj, "class"):
+                    if getattr(obj, "class") == "npc":
+                        NPC((obj.x, obj.y),
+                            [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                            obj.name, dialog_replicas=test_npc2)
+                        pass
+                else:
+                    Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
 
-        # sky
-        sky_layout = import_csv_layout(self.map['sky'])
-        self.sky_sprites = self.create_tile_group(sky_layout, 'sky')
+    def __create_map(self):
+        for key in self.__map:
+            if key != "character":
+                self.__create_tile_group(import_csv_layout(self.__map[key]), key)
+            else:
+                self.__player_setup(import_csv_layout(self.__map[key]))
 
-        # island ends
-        island_ends_layout = import_csv_layout(self.map['island ends'])
-        self.island_ends_sprites = self.create_tile_group(
-            island_ends_layout, 'island ends')
-
-        # grass
-        grass_layout = import_csv_layout(self.map['grass'])
-        self.grass_sprites = self.create_tile_group(grass_layout, 'grass')
-
-        # grass elements
-        grass_elements_layout = import_csv_layout(self.map['grass elements'])
-        self.grass_elements_sprites = self.create_tile_group(
-            grass_elements_layout, 'grass elements')
-
-        # sand
-        sand_layout = import_csv_layout(self.map['sand'])
-        self.sand_sprites = self.create_tile_group(sand_layout, 'sand')
-
-        # sand hole
-        sand_hole_layout = import_csv_layout(self.map['sand hole'])
-        self.sand_hole_sprites = self.create_tile_group(
-            sand_hole_layout, 'sand hole')
-
-        # crater
-        crater_layout = import_csv_layout(self.map['crater'])
-        self.crater_sprites = self.create_tile_group(crater_layout, 'crater')
-
-        # portal components
-        portal_components_layout = import_csv_layout(
-            self.map['portal components'])
-        self.portal_components_sprites = self.create_tile_group(
-            portal_components_layout, 'portal components')
-
-        # plants
-        plants_layout = import_csv_layout(self.map['plants'])
-        self.plants_sprites = self.create_tile_group(plants_layout, 'plants')
-
-        # water
-        water_layout = import_csv_layout(self.map['water'])
-        self.water_sprites = self.create_tile_group(water_layout, 'water')
-
-        # rocks
-        rocks_layout = import_csv_layout(self.map['rocks'])
-        self.rocks_sprites = self.create_tile_group(rocks_layout, 'rocks')
-
-        # player(start point)
-        player_layout = import_csv_layout(self.map['character'])
-        self.player_setup(player_layout)
-
-        # ruined portal
-        ruined_portal_layout = import_csv_layout(self.map['ruined portal'])
-        self.ruined_portal_sprites = self.create_tile_group(
-            ruined_portal_layout, 'ruined portal')
-
-        # flowers
-        flowers_layout = import_csv_layout(self.map['flowers'])
-        self.flowers_sprites = self.create_tile_group(
-            flowers_layout, 'flowers')
-
+        # TODO: сделать совместимым с разными картами:
         # decoration
-        level_width = len(island_ends_layout[0]) * TILE_SIZE
-        self.clouds = Clouds(SCREEN_HEIGHT * 2, level_width,
-                             30, self.all_sprites)
+        # level_width = len(import_csv_layout(self.map['island ends'])[0]) * TILE_SIZE
+        # self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
+        #                      30, self.all_sprites)
 
-    def create_tile_group(self, layout, type):
+    def __create_tile_group(self, layout, type):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 # если не пустая клетка
@@ -135,103 +101,29 @@ class Level:
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
 
-                    if type == 'grass':
-                        grass_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/grass/hub_grass.png')
-                        tile_surface = grass_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
+                    if (type == 'limiters'):
+                        Tile((x, y), [self.__all_sprites,
+                                      self.__collision_sprites], import_cut_graphics(self.__tileset[type])[int(val)])
+                    else:
+                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[type])[int(val)])
 
-                    if type == 'grass elements':
-                        grass_elements_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/grass/hub_grass_elements.png')
-                        tile_surface = grass_elements_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'sky':
-                        sky_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/sky/sky.png')
-                        tile_surface = sky_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'water':
-                        water_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/water/hub_water.png')
-                        tile_surface = water_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'sand':
-                        sand_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/sand/hub_sand.png')
-                        tile_surface = sand_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'sand hole':
-                        sand_hole_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/sand/water_hole.png')
-                        tile_surface = sand_hole_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'flowers':
-                        flowers_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/flowers/chamomiles.png')
-                        tile_surface = flowers_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'ruined portal':
-                        ruined_portal_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/ruined_portal/big_destroy_portal.png')
-                        tile_surface = ruined_portal_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'portal components':
-                        Portal_components((x, y), self.all_sprites)
-
-                    if type == 'rocks':
-                        if val == '0':
-                            sprite = Rocks((x, y), self.all_sprites, pygame.image.load(
-                                'levels_data/graphics/decoration/rocks/rock1.png').convert_alpha())
-                        if val == '1':
-                            sprite = Rocks((x, y), self.all_sprites, pygame.image.load(
-                                'levels_data/graphics/decoration/rocks/rock2.png').convert_alpha())
-
-                    if type == 'crater':
-                        crater_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/crater/hub_crater.png')
-                        tile_surface = crater_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'plants':
-                        plants_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/plants/plant.png')
-                        tile_surface = plants_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'island ends':
-                        island_ends_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/ends_of_island/ends_of_island.png')
-                        tile_surface = island_ends_tile_list[int(val)]
-                        Tile((x, y), self.all_sprites, tile_surface)
-
-                    if type == 'limiters':
-                        limiters_tile_list = import_cut_graphics(
-                            'levels_data/graphics/decoration/limiters/limiters.png')
-                        tile_surface = limiters_tile_list[int(val)]
-                        Tile((x, y), [self.all_sprites,
-                                      self.collision_sprites], tile_surface)
-
-    def player_setup(self, layout):
+    def __player_setup(self, layout):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
-                x = col_index * TILE_SIZE
-                y = row_index * TILE_SIZE
                 if val == '0':
-                    self.player = Player((x, y), self.all_sprites,
-                                         self.collision_sprites, self.interactable_sprites, self.trigger_sprites)
+                    x = col_index * TILE_SIZE
+                    y = row_index * TILE_SIZE
+                    self.player = Player((x, y), self.__all_sprites,
+                                         self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
     def run(self, dt):
         """Запусе отрисовки уровня"""
-        self.events_list = pygame.event.get()
+        if not self.is_runned:
+            pygame.mixer.music.load(self.__music_path)
+            pygame.mixer.music.play(-1)
+            self.is_runned = True
 
+        self.events_list = pygame.event.get()
         # список событий передаётся компонентам для самостоятельной обработки
         self.player.set_events_list(self.events_list)
         # выход из игры
@@ -242,9 +134,11 @@ class Level:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_def()
+                if event.key == pygame.K_1:
+                    self.set_current_level(self.move_to)
 
-        self.all_sprites.custom_draw(self.player)
-        self.all_sprites.update(dt)
+        self.__all_sprites.custom_draw(self.player)
+        self.__all_sprites.update(dt)
 
     def pause_def(self):
 
@@ -262,11 +156,11 @@ class Level:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         self.pause_menu = False
-            self.all_sprites.custom_draw(self.player)
+            self.__all_sprites.custom_draw(self.player)
             self.window = pygame.sprite.Sprite()
             self.window.image = pygame.image.load('./sprites/pause_menu.png')
             self.window.rect = self.window.image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-            self.display_surface.blit(self.window.image, self.window.rect)
+            self.__display_surface.blit(self.window.image, self.window.rect)
             pygame.display.update()
 
 

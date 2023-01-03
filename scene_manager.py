@@ -2,7 +2,7 @@ import pygame
 from properties import *
 from level import Level
 import logging as log
-from game_data import *
+from levels_data import *
 from menu import *
 
 
@@ -36,7 +36,7 @@ class SceneManager:
         """Создание массива с экземплярами уровней"""
         for k in self.__levels_data:
             self.__list_of_levels.append(
-                Level(self.__levels_data[k]["MAP"], self.set_current_level, self.__levels_data[k]["move_to"]))
+                Level(self.__levels_data[k], self.set_current_level))
 
     def __menus_setup(self):
         """
@@ -52,16 +52,18 @@ class SceneManager:
             })
 
     @property
-    def current_level(self):
+    def current_level(self) -> int:
         return self.__current_level
 
     # @current_level.setter
-    def set_current_level(self, value):
+    def set_current_level(self, value: int):
+        self.__list_of_levels[self.current_level].is_runned = False
+
         self.__current_level = value
 
-    def set_current_menu(self, value):
+    def set_current_menu(self, value: str):
         log.debug(f"menu changed to {value}")
         self.__current_menu = value
 
-    def set_is_game_started(self, value):
+    def set_is_game_started(self, value: bool):
         self.is_game_started = value
