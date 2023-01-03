@@ -95,7 +95,7 @@ class MainMenu(Menu):
         self.display_surface.blit(self.BACKGROUND_MENU, (0, 0))
         # Название игры на экране
         self.draw_text(
-            "Игра короч", 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
+            " ", 100, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4)
         # название 1 конпки
         self.draw_text("START", 40, self.startx, self.starty)
         # название 2 конпки
