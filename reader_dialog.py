@@ -92,7 +92,7 @@ class ReadingLocations:
             self.dialog.append(line.rstrip())
         return self.dialog
 
-    def return_npc(self, npc):
+    def get_npc_replicas(self, npc):
         """Возвращение всех локаций определенного npc"""
         return self.__dict_npc_loc[npc]
 

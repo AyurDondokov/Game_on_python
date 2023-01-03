@@ -7,6 +7,25 @@ from game_object import GameObject
 import logging as log
 
 
+"""
+{a:[{},{}]} так не надо
+
+1,"ключ"
+
+{a:
+    {
+        "1":["45","56],
+        "2":["87","16],
+        "Babla":["87","16],
+        "Еще Babla":["87","16],
+    
+    
+    }
+}
+
+"""
+
+
 class NPC(GameObject):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name: str, dialog_replicas: tuple = None):
         super().__init__(position,
@@ -22,8 +41,11 @@ class NPC(GameObject):
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
 
         # Инициализация диалога
-        self.dialog_replicas = dialog_replicas
-        self.dialog = Dialog(dialog_replicas)
+        print()
+        print(dialog_replicas)
+        self.dialog_replicas = dialog_replicas[0]["1"]
+
+        self.dialog = Dialog(self.dialog_replicas)
         self.is_dialog_able = False
         self.dialog_icon = GameObject(
             position=(self.rect.centerx, self.rect.centery - 100),

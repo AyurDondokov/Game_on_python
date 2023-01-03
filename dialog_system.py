@@ -64,6 +64,10 @@ class Dialog(pygame.sprite.Group):
                               size=40,
                               color=(0, 0, 0, 255))
 
+    def next_npc_profile(self):
+        # +1
+        pass
+
     def next_replica(self):
         """Отображение следущей реплики, пока таковые остались в списке"""
         if not self.is_open:

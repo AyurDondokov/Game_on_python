@@ -2,7 +2,7 @@ import logging
 import sys
 
 import pygame
-
+from reader_dialog import ReadingLocations
 from character import NPC, Portal
 from decoration import Clouds
 from player import Player
@@ -18,11 +18,11 @@ log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_data, set_current_level):
+    def __init__(self, level_data, set_current_level, name):
         """Отрисовка спрайтов на уровне"""
         log.info(f'Level class intialization')
 
-        #reader = ReadingLocations('dialog/proba.txt')
+        self.reader = ReadingLocations(f'dialog/{name}.txt')
 
         self.is_runned = False
         self.__display_surface = pygame.display.get_surface()
@@ -75,8 +75,7 @@ class Level:
                     if getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                            obj.name, dialog_replicas=test_npc2)
-                        pass
+                            obj.name, dialog_replicas=self.reader.get_npc_replicas(obj.name))
                 else:
                     Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
 
