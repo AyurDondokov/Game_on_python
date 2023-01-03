@@ -107,10 +107,8 @@ class Level:
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 if val == '0':
-                    x = col_index * TILE_SIZE
-                    y = row_index * TILE_SIZE
-                    self.player = Player((x, y), self.__all_sprites,
-                                         self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
+                    self.__player_x = col_index * TILE_SIZE
+                    self.__player_y = row_index * TILE_SIZE
 
     def run(self, dt):
         """Запусе отрисовки уровня"""
@@ -118,6 +116,8 @@ class Level:
             pygame.mixer.music.load(self.__music_path)
             pygame.mixer.music.play(-1)
             self.is_runned = True
+            self.player = Player((self.__player_x, self.__player_y), self.__all_sprites,
+                                 self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
         self.events_list = pygame.event.get()
         # список событий передаётся компонентам для самостоятельной обработки

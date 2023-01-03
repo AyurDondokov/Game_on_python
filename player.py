@@ -8,6 +8,12 @@ from tile import Trigger
 
 
 class Player(GameObject):
+    def __new__(cls, *args, **kwargs):
+        """Реализация синглтона"""
+        if not hasattr(cls, 'instance'):
+            cls.instance = super(Player, cls).__new__(cls)
+        return cls.instance
+
     def __init__(self, position: tuple[float, float],
                  sprite_group: pygame.sprite.Group,
                  collision_sprites: pygame.sprite.Group,
