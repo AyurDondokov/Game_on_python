@@ -23,7 +23,7 @@ class ReadingLocations:
 
         дополнительно*
         elf.lines = () - чтение всех линий файла
-        self.mac = [] - массив из словарей [{loc1: [text]}, {loc2: [text]}]
+        self.mac = {} словарь {loc1: [text], loc2: [text]}
         self.dialog = [] - массив читорый сохраняет текст от начала до конца из {loc: (start, end)}
         """
         self.title = title
@@ -33,7 +33,7 @@ class ReadingLocations:
         self.__listing_locations = []
         self.__dict_of_locations = {}
         self.lines = ()
-        self.mac = []
+        self.mac = {}
         self.dialog = []
         # чтение диалогого файла
         self.reader()
@@ -75,12 +75,12 @@ class ReadingLocations:
         """
         for name in (*self.__dict_npc_loc,):
             self.__dict_of_locations_select = {}
-            self.mac = []
+            self.mac = {}
             for i in self.__listing_locations:
                 if i.startswith(name):
                     nut = i.split('__')[1]
                     example = {nut: self.dia_loc(i)}
-                    self.mac.append(example)
+                    self.mac.update(example)
             self.__dict_npc_loc.update({name: self.mac})
 
     def dia_loc(self, loc: str) -> list:
@@ -100,5 +100,7 @@ class ReadingLocations:
     def dict_npc_loc(self):
         return self.__dict_npc_loc
 
-
+#
 # check = ReadingLocations('proba.txt')
+# print(check.dict_npc_loc)
+# print(check.get_npc_replicas('a'))
