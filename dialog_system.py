@@ -104,5 +104,8 @@ class Dialog(pygame.sprite.Group):
             self.text_replica.out()
             self.text_name.out()
 
+    def update_loc(self, new_loc):
+        self.replicas = new_loc
+
     def update(self, dt):
         self.custom_draw()

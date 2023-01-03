@@ -25,7 +25,12 @@ class StartBatlleScript(Script):
         self._reseiver.start()
 
 
-class SwitchDialog(Script):
+class SwitchDialogScript(Script):
+    def __init__(self, receiver, loc) -> None:
+        super().__init__(receiver)
+        self.loc = loc
+
     def execute(self):
         """Включает следующую реплику у NPC"""
-        self._reseiver.nextDalog()
+        print("DialogSwitched")
+        self._reseiver.switch_dialog(self.loc)

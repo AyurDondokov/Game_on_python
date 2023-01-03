@@ -41,11 +41,11 @@ class NPC(GameObject):
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
 
         # Инициализация диалога
+        self.dialog_replicas = dialog_replicas
+
+        self.dialog = Dialog(self.dialog_replicas[0]["1"])
         print()
         print(dialog_replicas)
-        self.dialog_replicas = dialog_replicas[0]["1"]
-
-        self.dialog = Dialog(self.dialog_replicas)
         self.is_dialog_able = False
         self.dialog_icon = GameObject(
             position=(self.rect.centerx, self.rect.centery - 100),
@@ -54,6 +54,10 @@ class NPC(GameObject):
             z=LAYERS['ux']
         )
         self.display_dialog_icon()
+
+    def switch_dialog(self, loc):
+        self.dialog_replicas = self.dialog_replicas[int(loc)-1][loc]
+        print(self.dialog_replicas)
 
     def display_dialog_icon(self):
         """убирает иконку из группы спрайтов для отрисовки"""

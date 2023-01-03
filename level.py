@@ -11,7 +11,7 @@ from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, NotTiledImage
 from pytmx.util_pygame import load_pygame
-from scripts import TestScript
+from scripts import *
 
 
 log = logging.getLogger(__name__)
@@ -21,8 +21,8 @@ class Level:
     def __init__(self, level_data, set_current_level, name):
         """Отрисовка спрайтов на уровне"""
         log.info(f'Level class intialization')
-
-        self.reader = ReadingLocations(f'dialog/{name}.txt')
+        self.name = name
+        self.reader = ReadingLocations(f'dialog/{self.name}.txt')
 
         self.is_runned = False
         self.__display_surface = pygame.display.get_surface()
@@ -41,17 +41,13 @@ class Level:
         self.__collision_sprites = pygame.sprite.Group()
         self.__interactable_sprites = pygame.sprite.Group()
         self.__trigger_sprites = pygame.sprite.Group()
+        self.__npc_dict = {}
 
         self.__create_map()
         self.__setup()
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-
-        # Триггер для начала боя
-        # В будущем должен создаваться с помощью csv
-        Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), TestScript(None))
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
@@ -73,11 +69,22 @@ class Level:
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "npc":
-                        NPC((obj.x, obj.y),
-                            [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                            obj.name, dialog_replicas=self.reader.get_npc_replicas(obj.name))
+                        self.__npc_dict.update(
+                            {obj.name:
+                             NPC((obj.x, obj.y),
+                                 [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                                 obj.name, dialog_replicas=self.reader.get_npc_replicas(obj.name))}
+                        )
                 else:
                     Tile((obj.x, obj.y), groups,  obj.image, LAYERS["ground"])
+
+        # Триггер для начала боя
+        # В будущем должен создаваться с помощью tmx
+        print(self.name)
+        if self.name == 1:
+            Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites], pygame.image.load(
+                "images/ground/trigger.png"),
+                SwitchDialogScript(self.__npc_dict["test_npc"], "2"))
 
     def __create_map(self):
         for key in self.__map:
