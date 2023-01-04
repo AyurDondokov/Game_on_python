@@ -12,7 +12,7 @@ class Text:
         self.__screen = screen
         self.__cord = position
         self.__color = color
-        self.__font = pygame.font.Font('fonts/Roboto-Regular.ttf', size)
+        self.__font = pygame.font.Font('addons/Roboto-Regular.ttf', size)
         self.__text = self.__font.render(text, False, color)
 
     def out(self):
