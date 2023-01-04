@@ -11,11 +11,13 @@ class HealthBar(pygame.sprite.Sprite):
         # В LEVELS_PROPERTIES 1 словарь, где здоровье = 100
         # После прокачки level_health будет увеличен на единицу
         self.level_health = 1
-        # Здоровье = 100
+        # Уровни здоровья, брони и урона
         self.health = LEVELS_PROPERTIES[self.level_health]['max_health']
+        self.armor = LEVELS_PROPERTIES[self.level_health]['armor']
+        self.damage = LEVELS_PROPERTIES[self.level_health]['max_damage']
 
-    def takeDamage(self, damage):
-        LEVELS_PROPERTIES[self.level_health]['max_health'] -= damage
+    def takeDamage(self):
+        self.health -= (self.damage - self.armor)
         if self.health < 0:
             self.health = 0
 
