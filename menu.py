@@ -175,8 +175,8 @@ class OptionsMenu(Menu):
         Menu.__init__(self)
         self.set_current_menu = change_menu_f
         self.state = "Volume"
-        self.volx, self.voly = self.mid_w, self.mid_h + 20
-        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 40
+        self.volx, self.voly = self.mid_w, self.mid_h + 35
+        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 75
         self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
 
     def display_menu(self):
@@ -184,7 +184,7 @@ class OptionsMenu(Menu):
         self.events_update()
         self.display_surface.fill('black')
         self.draw_text(
-            "OPRIONS", 85, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 30)
+            "OPTIONS", 85, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 150)
         self.draw_text("Volume", 40, self.volx, self.voly)
         self.draw_text("Window", 40, self.controlsx, self.controlsy)
         self.draw_cursor()
