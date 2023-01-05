@@ -1,4 +1,6 @@
 import math
+from enum import Enum
+
 """Модуль с константами"""
 SCREEN_WIDTH = 1080
 SCREEN_HEIGHT = 720
@@ -7,9 +9,9 @@ TILE_SIZE = 64
 
 FONT_NAME = './addons/monospace.ttf'
 WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 VERTICAL_TILE_NUMBER = math.ceil(SCREEN_HEIGHT / TILE_SIZE)
-
 
 STANDARD_OBJ_ANIM_PACK = {
     'idle': []
@@ -32,8 +34,8 @@ DIALOG_WINDOW_POSITION = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 128)
 TIME_BETWEEN_INTERACT = 0.5
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
-    1: {'max_health': 100, 'defence': 3, 'max_damage': 20},
-    2: {'max_health': 120, 'defence': 5, 'max_damage': 30}
+    1: {'max_health': 100, 'defence': 30, 'max_damage': 20, 'heal': 25},
+    2: {'max_health': 120, 'defence': 50, 'max_damage': 30, 'heal': 30}
 }
 
 LAYERS = {
@@ -68,11 +70,37 @@ MAP = [
 ]
 
 # Battle system
+BATTLE_MOVES = Enum('BattleMoves', 'attack heal block run')
+BATTLE_STATES = Enum('BattleStates', 'choose_move stash_damage selecting_enemy waiting')
+
+BATTLE_PROG_BAR_SIZE = (220, 20)
+BATTLE_PROG_BAR_COLOR = (220, 0, 0)
+
 BATTLE_SHAKE_INTENSITY = 7
-BATTLE_SHAKE_SPEED = 7
-BATTLE_SHAKE_TIME = 7
+BATTLE_SHAKE_SPEED = 100
+BATTLE_SHAKE_TIME = 500
+BATTLE_ATTACK_TIME = 300
+
+BATTLE_RUN_CHANCE = 20
+BATTLE_MOVE_TIME = 600
 
 BATTLE_ENEMY_POS_X = SCREEN_WIDTH * 0.75
-BATTLE_PLAYER_POS = (SCREEN_WIDTH * 0.25, SCREEN_HEIGHT/2)
+BATTLE_PLAYER_POS = (SCREEN_WIDTH * 0.25, SCREEN_HEIGHT / 2)
 
 DEFAULT_PLAYER_BATTLE_SPRITE = "./sprites/main_character/fighting/fighting_readiness.png"
+
+BATTLE_ACTIONS_BAR_POS = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 100)
+BATTLE_BUTTONS_POS = ((SCREEN_WIDTH / 5, SCREEN_HEIGHT - 100), (SCREEN_WIDTH / 5 * 2, SCREEN_HEIGHT - 100),
+                      (SCREEN_WIDTH / 5 * 3, SCREEN_HEIGHT - 100), (SCREEN_WIDTH / 5 * 4, SCREEN_HEIGHT - 100))
+
+BATTLE_SLIDER_POS = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200)
+BATTLE_SLIDER_SPEED = 500
+
+TEST_ENEMY = {
+    "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "max-health": 100,
+    "heal": 10
+}

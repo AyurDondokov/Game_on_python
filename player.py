@@ -12,7 +12,9 @@ class Player(GameObject):
                  sprite_group: pygame.sprite.Group,
                  collision_sprites: pygame.sprite.Group,
                  interactable_sprites: pygame.sprite.Group,
-                 trigger_sprites: pygame.sprite.Group):
+                 trigger_sprites: pygame.sprite.Group,
+                 player_level: int = 1,
+                 health: int = LEVELS_PROPERTIES[1]["max_health"]):
         super().__init__(position, sprite_group,
                          "./sprites/main_character/", LAYERS['player'], (
                              0, 0.25), DEFAULT_CHARACTER_SPEED, True,
@@ -24,6 +26,8 @@ class Player(GameObject):
         self.trigger_sprites = trigger_sprites
         self.time_for_click_again = TIME_BETWEEN_INTERACT
         self.__event_list = []
+        self.level = player_level
+        self.health = health
 
     def _collision(self, direction):
         """Проверка столкновений"""

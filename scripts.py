@@ -18,7 +18,7 @@ class TestScript(Script):
         print("Script activated")
 
 
-class StartBatlleScript(Script):
+class StartBattleScript(Script):
 
     def execute(self):
         """Запускает бой"""

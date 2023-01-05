@@ -3,6 +3,7 @@ import sys
 
 import pygame
 
+from battle_system import Battle
 from character import NPC
 from decoration import Clouds
 from player import Player
@@ -11,14 +12,15 @@ from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, NotTiledImage
 
-from scripts import TestScript
+import scripts as scr
 
 
 log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_map, level_tileset, current_level, lvl_go_to):
+    def __init__(self, level_map, level_tileset, current_level, lvl_go_to,
+                 music=None):
         """Отрисовка спрайтов на уровне"""
 
         log.info(f'Level class intialization')
@@ -37,6 +39,9 @@ class Level:
         self.create_map()
         self.setup()
 
+        # Музыка
+        self.music = music
+
     def setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_npc = NPC(
@@ -52,11 +57,13 @@ class Level:
             name='Ayur',
             dialog_replicas=test_npc2)
 
+        self.test_battle = Battle(self.player, [TEST_ENEMY, TEST_ENEMY])
+
 
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
         Trigger((800, 500), [self.all_sprites, self.trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), TestScript(None))
+                pygame.image.load("images/ground/trigger.png"), scr.StartBattleScript(self.test_battle))
 
     def create_map(self):
         for key in self.map:
@@ -117,9 +124,14 @@ class Level:
                 if event.key == pygame.K_ESCAPE:
                     self.pause_def()
 
-        self.all_sprites.centralize_on_obj(self.player)
-        self.all_sprites.custom_draw()
-        self.all_sprites.update(dt)
+        if not self.test_battle.is_battle:
+            self.all_sprites.centralize_on_obj(self.player)
+            self.all_sprites.custom_draw(self.player)
+            self.all_sprites.update(dt)
+        else:
+            self.test_battle.update(dt)
+            self.test_battle.set_events_list(self.events_list)
+            self.test_battle.draw()
 
     def pause_def(self):
 
@@ -153,11 +165,10 @@ class CameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
     def centralize_on_obj(self, obj):
-        """Отрисовка персонажа всегда в центре. Метод камеры."""
         self.offset.x = obj.rect.centerx - SCREEN_WIDTH / 2
         self.offset.y = obj.rect.centery - SCREEN_HEIGHT / 2
 
-    def custom_draw(self):
+    def custom_draw(self, player):
         for layer in LAYERS.values():
             for sprite in self.sprites():
                 if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
