@@ -57,7 +57,7 @@ class Level:
             name='Ayur',
             dialog_replicas=test_npc2)
 
-        self.test_battle = Battle(self.player, [TEST_ENEMY, TEST_ENEMY])
+        self.test_battle = Battle(self.player, [TEST_ENEMY, TEST_ENEMY_2PHASE])
 
 
         # Триггер для начала боя

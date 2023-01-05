@@ -102,5 +102,16 @@ TEST_ENEMY = {
     "max_damage": 10,
     "defence": 20,
     "max-health": 100,
-    "heal": 10
+    "heal": 10,
+    "new_phase_enemies": ()
+}
+
+TEST_ENEMY_2PHASE = {
+    "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "max-health": 100,
+    "heal": 10,
+    "new_phase_enemies": (TEST_ENEMY, TEST_ENEMY)
 }

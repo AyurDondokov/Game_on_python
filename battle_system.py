@@ -84,18 +84,26 @@ class BattleObject(pygame.sprite.Sprite):
         self.on_die_func(self.args)
 
     def update(self, dt):
-        self._timers['attack'].update()
         if self._timers['shake'].active:
             self._timers['shake'].update()
             self._shake(BATTLE_SHAKE_INTENSITY, BATTLE_SHAKE_SPEED, dt)
         if self.attack_image:
             if self._timers['attack'].active:
+                self._timers['attack'].update()
                 self.image = self.attack_image
             else:
                 self.image = self.stay_image
 
     def make_move(self):
         pass
+
+    def set_pos(self, new_pos):
+        self.pos.x = new_pos[0]
+        self.pos.y = new_pos[1]
+        self.rect.centerx = round(self.pos.x)
+        self.rect.centery = round(self.pos.y)
+        self.health_bar = ui.ProgressBar(self.rect.topleft)
+        self.start_pos = self.pos.copy()
 
 
 class BattleEnemy(BattleObject):
@@ -113,7 +121,7 @@ class BattleEnemy(BattleObject):
                          args=args)
         self.battle_player = battle_player
         self.new_phase_enemies_data = new_phase_enemies_data
-
+        print(self.new_phase_enemies_data)
 
     def make_move(self):
         if self.health > self.max_health/2:
@@ -227,7 +235,7 @@ class Battle:
 
         self.bg_image = pygame.image.load(bg_image_path)
         self.bg_rect = self.bg_image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-
+        self.battle_menu = None
         self.battle_group = BattleGroup()
         self.set_battle_menu()
         self.battle_scale = ui.PowerScale()
@@ -239,18 +247,11 @@ class Battle:
         self.participants.append(self.battle_player)
 
         self.enemies = []
+
         for index, enemy_data in enumerate(enemies_data):
-            pos = (BATTLE_ENEMY_POS_X, (index + 1) * (SCREEN_HEIGHT / (len(enemies_data) + 1)))
-            self.enemies.append(BattleEnemy(
-                position=pos,
-                battle_group=self.battle_group,
-                data=enemy_data,
-                on_die_func=self.remove_enemy,
-                args=index,
-                battle_player=self.battle_player
-            ))
-            self.participants.append(self.enemies[index])
-            self.battle_group.add_progress_bar(self.enemies[index].health_bar)
+            self.add_enemy(enemy_data, index)
+
+        self.set_enemies_positions()
 
         self.select_sprite = pygame.image.load(select_sprite_path)
         self.select_rect = self.select_sprite.get_rect(center=self.enemies[0].pos)
@@ -268,31 +269,33 @@ class Battle:
 
     def remove_enemy(self, index):
         for enemy_data in self.enemies[index].new_phase_enemies_data:
-            self.add_enemy(enemy_data)
+            self.add_enemy(enemy_data, len(self.enemies))
         if len(self.enemies) != 1:
             self.selected_enemy = 0
             self.enemies.pop(index)
-            for index, enemy in enumerate(self.enemies):
-                pos = (BATTLE_ENEMY_POS_X, (index + 1) * (SCREEN_HEIGHT / (len(self.enemies) + 1)))
-                enemy.pos.x = pos[0]
-                enemy.pos.y = pos[1]
+            self.set_enemies_positions()
         else:
             self.end(True)
 
-    def add_enemy(self, new_enemy_data):
-        self.enemies.append(new_enemy_data)
+    def add_enemy(self, new_enemy_data, enemy_index):
         self.enemies.append(BattleEnemy(
             position=(0, 0),
             battle_group=self.battle_group,
             data=new_enemy_data,
             on_die_func=self.remove_enemy,
-            args=len(self.enemies) + 1,
-            battle_player=self.battle_player
+            args=enemy_index,
+            battle_player=self.battle_player,
+            new_phase_enemies_data=new_enemy_data["new_phase_enemies"]
         ))
+
+        self.participants.append(self.enemies[enemy_index])
+        self.battle_group.add_progress_bar(self.enemies[enemy_index].health_bar)
+
+    def set_enemies_positions(self):
         for index, enemy in enumerate(self.enemies):
             pos = (BATTLE_ENEMY_POS_X, (index + 1) * (SCREEN_HEIGHT / (len(self.enemies) + 1)))
-            enemy.pos.x = pos[0]
-            enemy.pos.y = pos[1]
+            enemy.set_pos(pos)
+            enemy.args = index
 
     def set_events_list(self, event_list):
         self.__event_list = event_list
@@ -352,9 +355,9 @@ class Battle:
                 pass
             else:
                 if self.turn < len(self.enemies):
+                    self.timers["make_move"].activate()
                     self.enemies[self.turn].make_move()
                     self.turn += 1
-                    self.timers["make_move"].activate()
                 else:
                     self.state_of_battle = BATTLE_STATES.choose_move
                     self.turn = 0
@@ -378,11 +381,11 @@ class Battle:
     def start(self):
         if not self.is_battle and not self.is_finished_battle:
             self.is_battle = True
-            print(f"Начался бой с \n {self.enemies}")
+            # print(f"Начался бой с \n {self.enemies}")
 
     def end(self, is_finished):
         if self.is_battle:
             self.is_finished_battle = is_finished
             self.is_battle = False
-            print(f"Бой закончен\n Победа: {self.is_finished_battle}")
+            # print(f"Бой закончен\n Победа: {self.is_finished_battle}")
 
