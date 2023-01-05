@@ -43,13 +43,6 @@ class Level:
         self.__interactable_sprites = pygame.sprite.Group()
         self.__trigger_sprites = pygame.sprite.Group()
 
-        # Музыка
-        self.music = music
-
-    def setup(self):
-        self.__create_map()
-        self.__setup()
-
     def __setup(self):
         """Загрузка важных объектов на уровне"""
         self.test_battle = Battle(self.player, [TEST_ENEMY, TEST_ENEMY_2PHASE])
@@ -66,7 +59,7 @@ class Level:
                 groups = [self.__all_sprites]
                 if obj.properties.get("collide"):
                     groups.append(self.__collision_sprites)
-                if (obj.name) == "Portal":
+                if obj.name == "Portal":
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
                     pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
