@@ -24,9 +24,9 @@ class Tile(pygame.sprite.Sprite):
 class NotTiledImage(Tile):
     def __init__(self, pos: tuple, groups: pygame.sprite.Group, surface, z: int = LAYERS['ground']):
         super().__init__(pos, groups,
-                 surface, z)
+                         surface, z)
         offset_y = pos[1] + TILE_SIZE
-        self.rect = self.image.get_rect(bottomleft = (pos[0],offset_y))
+        self.rect = self.image.get_rect(bottomleft=(pos[0], offset_y))
 
 
 class Trigger(Tile):

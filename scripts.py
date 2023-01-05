@@ -5,7 +5,7 @@ class Script(ABC):
     """Патерн команда для скриптов"""
 
     def __init__(self, receiver) -> None:
-        self.reseiver = receiver
+        self._reseiver = receiver
 
     @abstractmethod
     def execute(self):
@@ -22,10 +22,10 @@ class StartBattleScript(Script):
 
     def execute(self):
         """Запускает бой"""
-        self.reseiver.start()
+        self._reseiver.start()
 
 
 class SwitchDialog(Script):
     def execute(self):
         """Включает следующую реплику у NPC"""
-        self.reseiver.nextDalog()
+        self._reseiver.nextDalog()
