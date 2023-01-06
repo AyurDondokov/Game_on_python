@@ -12,7 +12,7 @@ class Text:
         self.__screen = screen
         self.__cord = position
         self.__color = color
-        self.__font = pygame.font.Font(None, size)
+        self.__font = pygame.font.Font('addons/Roboto-Regular.ttf', size)
         self.__text = self.__font.render(text, False, color)
 
     def out(self):
@@ -44,22 +44,24 @@ class Dialog(pygame.sprite.Group):
         # аватарка говорящего
         self.npc_profile = pygame.sprite.Sprite(self)
         self.npc_profile.image = pygame.image.load('./sprites/dialog_person_test.png')
-        self.npc_profile.rect = self.npc_profile.image.get_rect(bottomleft=self.window.rect.bottomleft)
+        self.npc_profile.rect = self.npc_profile.image.get_rect()
+        self.npc_profile.rect.centerx = self.window.rect.right
+        self.npc_profile.rect.bottom = self.display_surf.get_rect().bottom
 
         # реплики персонажей
         self.replicas = dialog_replicas
         self.replica_index = 0
         self.text_replica = Text(screen=self.display_surf,
                                  text=self.replicas[self.replica_index].split(':')[1],
-                                 position=(self.npc_profile.rect.right, self.window.rect.centery),
-                                 size=40,
-                                 color=(0, 0, 0, 255))
+                                 position=(self.window.rect.x + 15, self.window.rect.top + 60),
+                                 size=24,
+                                 color=(255, 255, 255, 255))
         # имя говорящего
         self.text_name = Text(screen=self.display_surf,
                               text=self.replicas[self.replica_index].split(':')[0],
-                              position=(self.npc_profile.rect.right, self.window.rect.centery - 80),
-                              size=40,
-                              color=(0, 0, 0, 255))
+                              position=(self.window.rect.x + 20, self.window.rect.top + 10),
+                              size=24,
+                              color=(255, 255, 255, 255))
 
     def next_replica(self):
         """Отображение следущей реплики, пока таковые остались в списке"""

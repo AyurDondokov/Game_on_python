@@ -8,8 +8,10 @@ from copy import deepcopy
 
 class GameObject(pygame.sprite.Sprite):
     """Абстрактный класс для всех игровых обьектов, кроме Tile`ов"""
-
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, image_path: str, z: int,
+    def __init__(self, position: tuple,
+                 sprite_group: pygame.sprite.Group,
+                 sprite_path: str,
+                 z: int,
                  hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
                  is_animated: bool = False,
@@ -19,32 +21,41 @@ class GameObject(pygame.sprite.Sprite):
 
         # Настройки анимации
         self._is_animated = is_animated
-        self.animations = deepcopy(animations_pack)
-        self.anim_status = list(self.animations.keys())[0]  # Статус анимации
-        self.anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
-        self.anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
+        if self._is_animated:
+            self._animations = deepcopy(animations_pack)
+            self._anim_status = list(self._animations.keys())[0]  # Статус анимации
+            self._anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
+            self._anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
-        self._import_assets(image_path)
-        # print(self.animations)
-
+        self._import_assets(sprite_path)
         # Основные настройки
-        self.rect = self.image.get_rect(center=position)
+        self.rect = self.image.get_rect(topleft=position)
         self.hitbox = self.rect.copy()
         self.hitbox_offset = hitbox_offset
         self.z = z
 
         # Настройки передвижения
-        self.direction = pygame.math.Vector2()
-        self.pos = pygame.math.Vector2(self.rect.center)
-        self.speed = movement_speed
+        self._direction = pygame.math.Vector2()
+        self._pos = pygame.math.Vector2(self.rect.center)
+        self._speed = movement_speed
+
+    @property
+    def speed(self):
+        return self._speed
+
+    @property
+    def pos(self):
+        return self._pos
 
     def _import_assets(self, path):
         """Функция для добавления всех анимаций персонажу"""
         if self._is_animated:
-            for animation in self.animations.keys():
+            for animation in self._animations.keys():
                 full_path = path + animation
                 self.animations[animation] = import_surfaces_from_folder(full_path)
             self.image = self.animations[self.anim_status][self.anim_frame_index]
+                self._animations[animation] = import_folder(full_path)
+            self.image = self._animations[self._anim_status][self._anim_frame_index]
         else:
             self.image = pygame.image.load(path).convert_alpha()
 
@@ -60,30 +71,30 @@ class GameObject(pygame.sprite.Sprite):
             self.rect.height * self.hitbox_offset[1]
 
     def _move(self, dt):
-        if self.direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
-            self.direction = self.direction.normalize()
+        if self._direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
+            self._direction = self._direction.normalize()
 
-        self.pos.x += self.direction.x * self.speed * dt
-        self.hitbox.centerx = round(self.pos.x)
+        self._pos.x += self._direction.x * self._speed * dt
+        self.hitbox.centerx = round(self._pos.x)
         self.rect.centerx = self.hitbox.centerx
         self._collision('horizontal')
 
-        self.pos.y += self.direction.y * self.speed * dt
-        self.hitbox.centery = round(self.pos.y)
+        self._pos.y += self._direction.y * self._speed * dt
+        self.hitbox.centery = round(self._pos.y)
         self.rect.centery = self.hitbox.centery
         self._collision('vertical')
 
     def _change_anim_status(self, new_state: str):
-        self.anim_status = new_state
+        self._anim_status = new_state
 
     def _animate(self, dt):
         """Смена кадров анимации"""
-        self.anim_frame_index += 1 / \
-            self.anim_speed[self.anim_status.split("_", 1)[0]] * dt
-        if self.anim_frame_index >= len(self.animations[self.anim_status]):
-            self.anim_frame_index = 0
-        self.image = self.animations[self.anim_status][int(
-            self.anim_frame_index)]
+        self._anim_frame_index += 1 / \
+            self._anim_speed[self._anim_status.split("_", 1)[0]] * dt
+        if self._anim_frame_index >= len(self._animations[self._anim_status]):
+            self._anim_frame_index = 0
+        self.image = self._animations[self._anim_status][int(
+            self._anim_frame_index)]
 
     def update(self, dt):
         self._input(dt)

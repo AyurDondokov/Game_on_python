@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="80" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="13" nextobjectid="48">
+ <tileset firstgid="1" source="../tilesets/desert_tileset.tsx"/>
+ <tileset firstgid="25" source="../tilesets/desert_water.tsx"/>
+ <tileset firstgid="50" source="../tilesets/hub_portal.tsx"/>
+ <tileset firstgid="52" source="../tilesets/start.tsx"/>
+ <tileset firstgid="53" source="../tilesets/tomb.tsx"/>
+ <tileset firstgid="56" source="../tilesets/limiters.tsx"/>
+ <objectgroup id="5" name="Veget2" offsetx="-1024" offsety="0">
+  <object id="20" gid="16" x="2775" y="360" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="29" gid="16" x="2323" y="339" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="31" gid="16" x="2075" y="433" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="32" gid="16" x="2661" y="985" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="33" gid="16" x="2365" y="1031" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="34" gid="16" x="2868" y="612" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="35" gid="16" x="2132" y="599" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="36" gid="16" x="2104" y="916" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="37" gid="16" x="2388" y="906" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="38" gid="16" x="2494" y="954" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="Veget" offsetx="-1024" offsety="0">
+  <object id="1" gid="18" x="2507" y="593" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="2" gid="23" x="2317" y="363" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="3" gid="23" x="2756" y="376" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="4" gid="23" x="2776" y="763" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="5" gid="23" x="2031" y="727" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="6" gid="23" x="2212" y="944" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="7" gid="23" x="2043" y="453" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="8" gid="23" x="2687" y="1003" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="9" gid="23" x="2539" y="319" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="7" name="NPC Leader" offsetx="-1024" offsety="0">
+  <object id="41" name="caravan_leader" class="npc" gid="22" x="1489" y="480" width="64" height="64">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="8" name="portal" offsetx="-1024" offsety="0">
+  <object id="42" name="Portal" gid="51" x="1216" y="960" width="204" height="256">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="tomb" offsetx="-1024" offsety="0">
+  <object id="43" gid="53" x="2560" y="1472" width="233" height="231"/>
+  <object id="44" gid="54" x="2880" y="1536" width="245" height="243"/>
+  <object id="45" gid="54" x="2688" y="1792" width="245" height="243"/>
+  <object id="46" gid="54" x="2176" y="1664" width="245" height="243"/>
+ </objectgroup>
+</map>
