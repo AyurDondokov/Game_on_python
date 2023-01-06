@@ -1,3 +1,5 @@
+import random
+
 import pygame
 
 from properties import *
@@ -35,14 +37,16 @@ class Trigger(Tile):
                  groups: pygame.sprite.Group,
                  surface,
                  script,
-                 z: int = LAYERS['ground']
+                 z: int = LAYERS['ground'],
+                 chance: int = 100
                  ):
         super().__init__(pos, groups, surface, z)
         self.triggered = False
         self.script = script
+        self.chance = chance
 
     def check(self):
-        # log.debug(f"funtion is {self.func}")
-        if not self.triggered:
+        # log.debug(f"function is {self.func}")
+        if not self.triggered and self.chance >= random.randint(0, 100):
             self.script.execute()
             self.triggered = True

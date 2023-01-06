@@ -8,6 +8,7 @@ from copy import deepcopy
 
 class GameObject(pygame.sprite.Sprite):
     """Абстрактный класс для всех игровых обьектов, кроме Tile`ов"""
+
     def __init__(self, position: tuple,
                  sprite_group: pygame.sprite.Group,
                  sprite_path: str,
@@ -28,6 +29,7 @@ class GameObject(pygame.sprite.Sprite):
             self._anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
         self._import_assets(sprite_path)
+
         # Основные настройки
         self.rect = self.image.get_rect(topleft=position)
         self.hitbox = self.rect.copy()
@@ -52,9 +54,7 @@ class GameObject(pygame.sprite.Sprite):
         if self._is_animated:
             for animation in self._animations.keys():
                 full_path = path + animation
-                self.animations[animation] = import_surfaces_from_folder(full_path)
-            self.image = self.animations[self.anim_status][self.anim_frame_index]
-                self._animations[animation] = import_folder(full_path)
+                self._animations[animation] = import_surfaces_from_folder(full_path)
             self.image = self._animations[self._anim_status][self._anim_frame_index]
         else:
             self.image = pygame.image.load(path).convert_alpha()

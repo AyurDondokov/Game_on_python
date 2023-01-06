@@ -28,7 +28,7 @@ class NPC(GameObject):
         self.dialog_icon = GameObject(
             position=(self.rect.centerx, self.rect.centery - 100),
             sprite_group=self.groups()[0],
-            image_path='./sprites/dialog_icon.png',
+            sprite_path='./sprites/dialog_icon.png',
             z=LAYERS['ux']
         )
         self.display_dialog_icon()
