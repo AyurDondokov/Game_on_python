@@ -103,7 +103,7 @@ class ProgressBar:
 
     @value.setter
     def value(self, new_value: float):
-        assert 0.0 <= new_value <= 1.0
+        assert 0.0 <= new_value <= 1.0, f"new_value: {new_value}"
         self.__value = new_value
         self.__rect[2] = self.__size[0] * (self.__value / self.__max_value)
 

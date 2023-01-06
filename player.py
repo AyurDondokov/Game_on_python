@@ -24,13 +24,13 @@ class Player(GameObject):
         super().__init__(position, sprite_group,
                          "./sprites/main_character/",
                          LAYERS['player'],
-                         (0, 0.25),
+                         (0, 0.375),
                          DEFAULT_CHARACTER_SPEED,
                          True,
                          DEFAULT_CHARACTER_ANIM_SPEED,
                          STANDARD_CHARACTER_ANIM_PACK)
         self.hitbox = self.rect.copy().inflate(-self.rect.width *
-                                               0.2, -self.rect.height * 0.5)
+                                               0.2, -self.rect.height * 0.75)
         self.__collision_sprites = collision_sprites
         self.__interactable_sprites = interactable_sprites
         self.__trigger_sprites = trigger_sprites

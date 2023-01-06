@@ -55,5 +55,5 @@ level_1 = {
 
 levels = {
     0: level_0,
-    1: level_1
+    1: level_1,
 }

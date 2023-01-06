@@ -1,5 +1,7 @@
 import random
+
 import pygame.sprite
+
 import player as pl
 import UI as ui
 from timer import Timer
@@ -73,7 +75,7 @@ class BattleObject(pygame.sprite.Sprite):
                 self.health -= damage
                 self._timers['shake'].activate()
             else:
-                self.health = 0
+                self.health = 0.0
                 self.die()
             self.health_bar.value = self.health / self.max_health
             self.is_defencing = False
@@ -115,7 +117,7 @@ class BattleEnemy(BattleObject):
                          max_health=data["max_health"],
                          max_damage=data["max_damage"],
                          defence=data["defence"],
-                         health=data["max-health"],
+                         health=data["max_health"],
                          heal=data["heal"],
                          on_die_func=on_die_func,
                          args=args)

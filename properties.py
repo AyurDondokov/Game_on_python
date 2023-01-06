@@ -103,15 +103,32 @@ TEST_ENEMY = {
     "defence": 20,
     "max-health": 100,
     "heal": 10,
-    "new_phase_enemies": ()
+    "new_phase_enemies": []
 }
 
-TEST_ENEMY_2PHASE = {
-    "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
+TEST_ENEMY_2 = {
+    "image_path": "./sprites/enemies/pig/pig_fighting.png",
     "max_health": 100,
     "max_damage": 10,
     "defence": 20,
-    "max-health": 100,
     "heal": 10,
-    "new_phase_enemies": (TEST_ENEMY, TEST_ENEMY)
+    "new_phase_enemies": []
+}
+
+KEANU_ENEMY = {
+    "image_path": "./sprites/enemies/tumbleweed/keanu.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": []
+}
+
+TUMBLEWEED_ENEMY = {
+    "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
+    "max_health": 25,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [KEANU_ENEMY]
 }

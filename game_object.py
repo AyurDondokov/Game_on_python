@@ -54,7 +54,7 @@ class GameObject(pygame.sprite.Sprite):
         if self._is_animated:
             for animation in self._animations.keys():
                 full_path = path + animation
-                self._animations[animation] = import_folder(full_path)
+                self._animations[animation] = import_surfaces_from_folder(full_path)
             self.image = self._animations[self._anim_status][self._anim_frame_index]
         else:
             self.image = pygame.image.load(path).convert_alpha()
