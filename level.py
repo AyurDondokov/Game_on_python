@@ -13,6 +13,7 @@ from replicas_data import test_npc, test_npc2
 from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger, NotTiledImage
 from pytmx.util_pygame import load_pygame
+from scripts import TestScript
 
 import scripts as scr
 
@@ -64,7 +65,7 @@ class Level:
                 if obj.name == "Portal":
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
-                    pos = (obj.x + obj_image.left, obj.y + obj_image.top)
+                    pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
                     Portal(pos,
                            [self.__all_sprites, self.__interactable_sprites],
                            self.set_current_level,
