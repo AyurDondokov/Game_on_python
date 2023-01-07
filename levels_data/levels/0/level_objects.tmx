@@ -139,9 +139,6 @@
   <object id="12" gid="213" x="576" y="896" width="256" height="152"/>
   <object id="15" gid="214" x="1344" y="896" width="256" height="152"/>
  </objectgroup>
- <objectgroup id="21" name="portal_component">
-  <object id="14" gid="215" x="1024" y="1024" width="108" height="44"/>
- </objectgroup>
  <objectgroup id="22" name="vegetashion_up">
   <object id="349" gid="209" x="1384.56" y="872.341" width="44" height="40"/>
   <object id="350" gid="209" x="1406.57" y="890.348" width="44" height="40"/>
@@ -159,10 +156,13 @@
   <object id="380" gid="209" x="542.151" y="906.792" width="44" height="40"/>
  </objectgroup>
  <objectgroup id="19" name="portal">
-  <object id="16" gid="212" x="987" y="577" width="204" height="256">
+  <object id="16" name="Portal" gid="212" x="987" y="577" width="204" height="256">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="21" name="portal_component">
+  <object id="14" name="component" gid="215" x="1024" y="1024" width="108" height="44"/>
  </objectgroup>
 </map>
