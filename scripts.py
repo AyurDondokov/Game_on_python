@@ -29,3 +29,18 @@ class SwitchDialog(Script):
     def execute(self):
         """Включает следующую реплику у NPC"""
         self._reseiver.nextDalog()
+
+
+class ActivatePortalScript(Script):
+    def execute(self):
+
+        self._reseiver.activate()
+
+    @property
+    def receiver(self):
+        return None
+
+    @receiver.setter
+    def receiver(self, receiver):
+        self._reseiver = receiver
+        print(self._reseiver)

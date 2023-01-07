@@ -3,7 +3,8 @@ import sys
 
 import pygame
 
-from character import NPC, Portal
+from scripts import ActivatePortalScript
+from character import NPC, Portal, Component
 from battle_system import Battle
 from character import NPC
 from decoration import Clouds
@@ -66,21 +67,24 @@ class Level:
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
                     pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
-                    Portal(pos,
-                           [self.__all_sprites, self.__interactable_sprites],
-                           self.set_current_level,
-                           self.move_to)
+                    portal = Portal(pos,
+                                    [self.__all_sprites, self.__interactable_sprites],
+                                    self.set_current_level,
+                                    self.move_to)
                     # отображение портала
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["back_decor"])
+                if obj.name == "component":
+                    script = ActivatePortalScript(None)
+                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
-                        pass
                 else:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
+        script.receiver = portal
 
     def __create_map(self):
         for key in self.__map:
