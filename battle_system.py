@@ -281,7 +281,7 @@ class Battle:
             self._enemies.pop(index)
             self._set_enemies_positions()
         else:
-            self.end(True)
+            self._end(True)
 
     def _add_enemy(self, new_enemy_data, enemy_index):
         self._enemies.append(BattleEnemy(
@@ -312,7 +312,7 @@ class Battle:
             self._state_of_battle = BATTLE_STATES.waiting
         elif move == BATTLE_MOVES.run:
             if random.randint(0, 100) < BATTLE_RUN_CHANCE:
-                self.end(False)
+                self._end(False)
             else:
                 self._state_of_battle = BATTLE_STATES.waiting
 
@@ -366,6 +366,11 @@ class Battle:
             self._battle_scale.update(dt)
             self._stashing_damage()
 
+    def _end(self, is_finished):
+        if self._is_battle:
+            self._is_finished_battle = is_finished
+            self._is_battle = False
+
     def set_events_list(self, event_list):
         self.__event_list = event_list
         self._battle_menu.set_events_list(event_list)
@@ -373,7 +378,7 @@ class Battle:
     def update(self, dt):
         # Игрок
         if self._battle_player.is_defeated:
-            self.end(False)
+            self._end(False)
         self._battle_player.update(dt)
 
         # Таймеры
@@ -401,12 +406,47 @@ class Battle:
     def start(self):
         if not self._is_battle and not self._is_finished_battle:
             self._is_battle = True
-
-    def end(self, is_finished):
-        if self._is_battle:
-            self._is_finished_battle = is_finished
-            self._is_battle = False
+            print("battle_started")
 
     @property
     def is_battle(self):
+        return self._is_battle
+
+
+class BattleManager:
+    def __init__(self, battles_data, player):
+        self._enemies = None
+        self._battles = []
+        self._player = player
+        for keys in battles_data.keys():
+            self._add_battle(battles_data[keys])
+        self._current_battle_index = 0
+        self._is_battle = False
+
+    def _add_battle(self, enemies_data: list):
+        enemies = []
+        for enemy_name in enemies_data:
+            enemies.append(BATTLE_ENEMIES[enemy_name])
+        self._enemies = enemies
+
+        self._battles.append(Battle(self._player, enemies))
+
+    def set_events_list(self, event_list):
+        self._battles[self._current_battle_index].set_events_list(event_list)
+
+    def update(self, dt):
+        current_battle = self._battles[self._current_battle_index]
+        if current_battle.is_battle:
+            current_battle.update(dt)
+            current_battle.draw()
+        else:
+            self._is_battle = False
+
+    def start(self, index: int):
+        self._current_battle_index = int(index)
+        self._battles[self._current_battle_index].start()
+        self._is_battle = self._battles[self._current_battle_index].is_battle
+
+    @property
+    def is_battle(self) -> bool:
         return self._is_battle

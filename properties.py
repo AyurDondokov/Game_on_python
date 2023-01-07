@@ -96,39 +96,52 @@ BATTLE_BUTTONS_POS = ((SCREEN_WIDTH / 5, SCREEN_HEIGHT - 100), (SCREEN_WIDTH / 5
 BATTLE_SLIDER_POS = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200)
 BATTLE_SLIDER_SPEED = 500
 
-TEST_ENEMY = {
-    "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
-    "max_health": 100,
-    "max_damage": 10,
-    "defence": 20,
-    "max-health": 100,
-    "heal": 10,
-    "new_phase_enemies": []
+BATTLE_ENEMIES = {
+    "mummy": {
+        "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
+        "max_health": 100,
+        "max_damage": 10,
+        "defence": 20,
+        "max-health": 100,
+        "heal": 10,
+        "new_phase_enemies": []
+    },
+    "pig": {
+        "image_path": "./sprites/enemies/pig/pig_fighting.png",
+        "max_health": 100,
+        "max_damage": 10,
+        "defence": 20,
+        "heal": 10,
+        "new_phase_enemies": []
+    },
+    "keanu": {
+        "image_path": "./sprites/enemies/tumbleweed/keanu.png",
+        "max_health": 100,
+        "max_damage": 10,
+        "defence": 20,
+        "heal": 10,
+        "new_phase_enemies": []
+    },
+    "tumbleweed": {
+        "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
+        "max_health": 25,
+        "max_damage": 10,
+        "defence": 20,
+        "heal": 10,
+        "new_phase_enemies": []
+    },
+    "varan": {
+        "image_path": "./sprites/enemies/varan/varan_fighting.png",
+        "max_health": 50,
+        "max_damage": 15,
+        "defence": 15,
+        "heal": 15,
+        "new_phase_enemies": []
+    }
 }
 
-TEST_ENEMY_2 = {
-    "image_path": "./sprites/enemies/pig/pig_fighting.png",
-    "max_health": 100,
-    "max_damage": 10,
-    "defence": 20,
-    "heal": 10,
-    "new_phase_enemies": []
-}
-
-KEANU_ENEMY = {
-    "image_path": "./sprites/enemies/tumbleweed/keanu.png",
-    "max_health": 100,
-    "max_damage": 10,
-    "defence": 20,
-    "heal": 10,
-    "new_phase_enemies": []
-}
-
-TUMBLEWEED_ENEMY = {
-    "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
-    "max_health": 25,
-    "max_damage": 10,
-    "defence": 20,
-    "heal": 10,
-    "new_phase_enemies": [KEANU_ENEMY]
+TEST_BATTLES_DATA = {
+    0: ["tumbleweed", "tumbleweed"],
+    1: ["varan"],
+    2: ["mummy", "mummy"]
 }

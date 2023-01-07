@@ -3,6 +3,7 @@ import sys
 
 import pygame
 
+import battle_system
 from character import Portal
 from battle_system import Battle
 from character import NPC
@@ -51,12 +52,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TUMBLEWEED_ENEMY])
-
-        # Триггер для начала боя
-        # В будущем должен создаваться с помощью csv
-        Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), scr.StartBattleScript(self.test_battle))
+        self.battle_manager = battle_system.BattleManager(TEST_BATTLES_DATA, self.player)
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
@@ -77,11 +73,18 @@ class Level:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["back_decor"])
 
                 elif hasattr(obj, "class"):
-                    if getattr(obj, "class") == "npc":
+                    if getattr(obj, "class") == "battle":
+                        Trigger(
+                            pos=(obj.x, obj.y),
+                            groups=[self.__all_sprites, self.__trigger_sprites],
+                            surface=pygame.image.load("images/ground/trigger.png"),
+                            script=scr.StartBattleScript(self.battle_manager, obj.properties.get("battle_index"))
+                        )
+                        print(obj.x, obj.y)
+                    elif getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
-                        pass
                 else:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
 
@@ -99,6 +102,7 @@ class Level:
         #                      30, self.all_sprites)
 
     def __create_tile_group(self, layout, tile_type):
+        cut_tileset = import_cut_graphics(self.__tileset[tile_type])
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 # если не пустая клетка
@@ -108,9 +112,9 @@ class Level:
 
                     if tile_type == 'limiters':
                         Tile((x, y), [self.__all_sprites,
-                                      self.__collision_sprites], import_cut_graphics(self.__tileset[tile_type])[int(val)])
+                                      self.__collision_sprites], cut_tileset[int(val)])
                     else:
-                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[tile_type])[int(val)])
+                        Tile((x, y), self.__all_sprites, cut_tileset[int(val)])
 
     def __player_setup(self, layout):
         for row_index, row in enumerate(layout):
@@ -147,14 +151,13 @@ class Level:
                 if event.key == pygame.K_1:
                     self.set_current_level(self.move_to)
 
-        if not self.test_battle.is_battle:
+        if not self.battle_manager.is_battle:
             self.__all_sprites.centralize_on_obj(self.player)
             self.__all_sprites.custom_draw(self.player)
             self.__all_sprites.update(dt)
         else:
-            self.test_battle.update(dt)
-            self.test_battle.set_events_list(self.events_list)
-            self.test_battle.draw()
+            self.battle_manager.update(dt)
+            self.battle_manager.set_events_list(self.events_list)
 
     def pause_def(self):
 
@@ -194,17 +197,19 @@ class CameraGroup(pygame.sprite.Group):
     def custom_draw(self, player):
         for layer in LAYERS.values():
             for sprite in self.sprites():
-                if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
-                    # нужно для правильного накладывания гг на обьект или за обьект
-                    if sprite.rect.centery > player.rect.centery:
-                        # если Yцентр спрайта выше гг отрисовывать его перед гг
-                        sprite.z = LAYERS['forward_' +
-                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
-                    else:
-                        # наоборот рисовать сзади гг
-                        sprite.z = LAYERS['back_' +
-                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
-                if sprite.z == layer:
-                    offset_rect = sprite.rect.copy()
-                    offset_rect.center -= self.offset
-                    self.display_surf.blit(sprite.image, offset_rect)
+                if abs(player.rect.x - sprite.rect.x) <= SCREEN_WIDTH*0.75 and \
+                        abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT*0.75:
+                    if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
+                        # нужно для правильного накладывания гг на обьект или за обьект
+                        if sprite.rect.centery > player.rect.centery:
+                            # если Yцентр спрайта выше гг отрисовывать его перед гг
+                            sprite.z = LAYERS['forward_' +
+                                              list(LAYERS.keys())[sprite.z].split('_')[1]]
+                        else:
+                            # наоборот рисовать сзади гг
+                            sprite.z = LAYERS['back_' +
+                                              list(LAYERS.keys())[sprite.z].split('_')[1]]
+                    if sprite.z == layer:
+                        offset_rect = sprite.rect.copy()
+                        offset_rect.center -= self.offset
+                        self.display_surf.blit(sprite.image, offset_rect)

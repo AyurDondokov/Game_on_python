@@ -42,9 +42,9 @@ level_1 = {
     },
 
     "TileSet": {
-        "rocks": "./levels_data/graphics/decoration2/SandLight.png",
-        "sand": "./levels_data/graphics/decoration2/SandLight.png",
-        'water': 'levels_data/graphics/decoration/water/hub_water.png',
+        "rocks": "./levels_data/graphics/desert_tileset/tileset.png",
+        "sand": "./levels_data/graphics/desert_tileset/tileset.png",
+        'water': 'levels_data/graphics/desert_tileset/tileset.png',
         'limiters': './levels_data/graphics/decoration2/SandLight.png',
     },
     "TMXData": "levels_data/levels/1/level_1__objects.tmx",

@@ -19,10 +19,13 @@ class TestScript(Script):
 
 
 class StartBattleScript(Script):
+    def __init__(self, receiver, battle_index):
+        super().__init__(receiver)
+        self._battle_index = battle_index
 
     def execute(self):
         """Запускает бой"""
-        self._reseiver.start()
+        self._reseiver.start(self._battle_index)
 
 
 class SwitchDialog(Script):
