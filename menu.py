@@ -24,6 +24,8 @@ class Menu:
         self.K_w = False
         self.K_ESCAPE = False
         self.START_KEY = False
+        self.sound_bt_hover = pygame.mixer.Sound('music_and_sound/sound/button/hover.mp3')
+        self.sound_bt_click = pygame.mixer.Sound('music_and_sound/sound/button/click.mp3')
 
     def events_update(self):
         for event in pygame.event.get():
@@ -34,16 +36,21 @@ class Menu:
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
+                    self.sound_bt_hover.play()
                     self.DOWN_KEY = True
                 if event.key == pygame.K_UP:
+                    self.sound_bt_hover.play()
                     self.UP_KEY = True
                 if event.key == pygame.K_s:
+                    self.sound_bt_hover.play()
                     self.K_s = True
                 if event.key == pygame.K_w:
+                    self.sound_bt_hover.play()
                     self.K_w = True
                 if event.key == pygame.K_ESCAPE:
                     self.K_ESCAPE = True
                 if event.key == pygame.K_RETURN:
+                    self.sound_bt_click.play()
                     self.START_KEY = True
 
     def draw_text(self, text, size, x, y):

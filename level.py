@@ -48,7 +48,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TEST_ENEMY_2])
+        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TEST_ENEMY_2], self.__music_path)
 
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv

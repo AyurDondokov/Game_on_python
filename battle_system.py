@@ -1,3 +1,4 @@
+import os
 import random
 
 import pygame.sprite
@@ -46,6 +47,11 @@ class BattleObject(pygame.sprite.Sprite):
         self.start_pos = self.pos.copy()
         self.x_direction = 1
 
+        self.sounds_punch = os.listdir('music_and_sound/sound/punch')
+        self.sound_heal = pygame.mixer.Sound('music_and_sound/sound/heal/healing_spell_mend_02_16_441.mp3')
+        self.sound_death = pygame.mixer.Sound('music_and_sound/sound/game/death.mp3')
+        self.sound_win = pygame.mixer.Sound('music_and_sound/sound/game/win.mp3')
+
     def _shake(self, intensity, speed, dt):
         if self.pos.x >= self.start_pos.x + intensity:
             self.x_direction = -1
@@ -62,6 +68,7 @@ class BattleObject(pygame.sprite.Sprite):
         return not self.is_defencing or not random.randint(0, 100) < self.defence
 
     def healing(self):
+        self.sound_heal.play()
         if self.health + self.heal <= self.max_health:
             self.health += self.heal
         else:
@@ -74,7 +81,10 @@ class BattleObject(pygame.sprite.Sprite):
             if self.health - damage > 0:
                 self.health -= damage
                 self._timers['shake'].activate()
+                self.s_punch = pygame.mixer.Sound("music_and_sound/sound/punch/" + random.choice(self.sounds_punch))
+                self.s_punch.play()
             else:
+                self.sound_death.play()
                 self.health = 0.0
                 self.die()
             self.health_bar.value = self.health / self.max_health
@@ -126,9 +136,9 @@ class BattleEnemy(BattleObject):
         print(self.new_phase_enemies_data)
 
     def make_move(self):
-        if self.health > self.max_health/2:
+        if self.health > self.max_health / 2:
             self.battle_player.take_damage(self.max_damage)
-        elif self.health > self.max_health/4:
+        elif self.health > self.max_health / 4:
             self.is_defencing = True
         else:
             self.healing()
@@ -166,6 +176,7 @@ class BattleMenu:
 
         self.display_surf = pygame.display.get_surface()
         self.__event_list = []
+        self.sound_bt_hover = pygame.mixer.Sound('music_and_sound/sound/button/hover.mp3')
 
     def change_target_on_n(self, n):
         self.buttons[self.target_index].is_targeted = False
@@ -186,11 +197,13 @@ class BattleMenu:
         for event in self.__event_list:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_a:
+                    self.sound_bt_hover.play()
                     if self.target_index - 1 >= 0:
                         self.change_target_on_n(self.target_index - 1)
                     else:
                         self.change_target_on_n(self.buttons_count - 1)
                 elif event.key == pygame.K_d:
+                    self.sound_bt_hover.play()
                     if self.target_index + 1 < self.buttons_count:
                         self.change_target_on_n(self.target_index + 1)
                     else:
@@ -219,7 +232,7 @@ class BattleGroup(pygame.sprite.Group):
 
 
 class Battle:
-    def __init__(self, game_player, enemies_data,
+    def __init__(self, game_player, enemies_data, music_path,
                  bg_image_path: str = "./sprites/fight/fight_background/desert.png",
                  select_sprite_path: str = "./sprites/fight/UI/select_sprite.png"):
         self.is_battle = False
@@ -257,6 +270,8 @@ class Battle:
 
         self.select_sprite = pygame.image.load(select_sprite_path)
         self.select_rect = self.select_sprite.get_rect(center=self.enemies[0].pos)
+
+        self.music_path = music_path
 
     def set_battle_menu(self):
         attack_btn = ui.Button(func=self.make_move, args=BATTLE_MOVES.attack, pos=BATTLE_BUTTONS_POS[0],
@@ -340,7 +355,7 @@ class Battle:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_e:
                     self.enemies[self.selected_enemy].take_damage(
-                        self.battle_player.max_damage*self.battle_scale.get_value())
+                        self.battle_player.max_damage * self.battle_scale.get_value())
                     self.state_of_battle = BATTLE_STATES.waiting
                     self.battle_player.attack()
 
@@ -384,10 +399,13 @@ class Battle:
         if not self.is_battle and not self.is_finished_battle:
             self.is_battle = True
             # print(f"Начался бой с \n {self.enemies}")
+        pygame.mixer.music.load("music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3")
+        pygame.mixer.music.play(-1)
 
     def end(self, is_finished):
         if self.is_battle:
             self.is_finished_battle = is_finished
             self.is_battle = False
+            pygame.mixer.music.load(self.music_path)
+            pygame.mixer.music.play(-1)
             # print(f"Бой закончен\n Победа: {self.is_finished_battle}")
-
