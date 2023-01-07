@@ -3,17 +3,15 @@ import sys
 
 import pygame
 
-from character import NPC, Portal
+from character import Portal
 from battle_system import Battle
 from character import NPC
-from decoration import Clouds
 from player import Player
 from properties import *
-from replicas_data import test_npc, test_npc2
+from replicas_data import test_npc2
 from support import import_csv_layout, import_cut_graphics
-from tile import Tile, Trigger, NotTiledImage
+from tile import Tile, Trigger
 from pytmx.util_pygame import load_pygame
-from scripts import TestScript
 
 import scripts as scr
 
@@ -23,14 +21,19 @@ log = logging.getLogger(__name__)
 class Level:
     def __init__(self, level_data, set_current_level):
         """Отрисовка спрайтов на уровне"""
+        self.player = None
+        self.window = None
+        self.pause_menu = None
         self.events_list = None
         log.info(f'Level class intialization')
 
         self.is_runned = False
         self.__display_surface = pygame.display.get_surface()
+
         # для перемещения между уровнями
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
+
         # отрисовка
         self.__map = level_data["MAP"]
         self.__tileset = level_data["TileSet"]
@@ -48,7 +51,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TEST_ENEMY_2])
+        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TUMBLEWEED_ENEMY])
 
         # Триггер для начала боя
         # В будущем должен создаваться с помощью csv
@@ -65,7 +68,7 @@ class Level:
                 if obj.name == "Portal":
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
-                    pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
+                    pos = (obj.x + obj_image.centerx - TILE_SIZE/2, obj.y + obj_image.bottom - TILE_SIZE)
                     Portal(pos,
                            [self.__all_sprites, self.__interactable_sprites],
                            self.set_current_level,
@@ -95,7 +98,7 @@ class Level:
         # self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
         #                      30, self.all_sprites)
 
-    def __create_tile_group(self, layout, type):
+    def __create_tile_group(self, layout, tile_type):
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 # если не пустая клетка
@@ -103,11 +106,11 @@ class Level:
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
 
-                    if type == 'limiters':
+                    if tile_type == 'limiters':
                         Tile((x, y), [self.__all_sprites,
-                                      self.__collision_sprites], import_cut_graphics(self.__tileset[type])[int(val)])
+                                      self.__collision_sprites], import_cut_graphics(self.__tileset[tile_type])[int(val)])
                     else:
-                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[type])[int(val)])
+                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[tile_type])[int(val)])
 
     def __player_setup(self, layout):
         for row_index, row in enumerate(layout):
