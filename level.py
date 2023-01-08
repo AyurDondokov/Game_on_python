@@ -3,11 +3,11 @@ import sys
 
 import pygame
 
+import UI
 import battle_system
-from character import Portal
+import game_object
 from scripts import ActivatePortalScript
-from character import NPC, Portal, Component
-from battle_system import Battle
+from character import Portal, Component
 from character import NPC
 from player import Player
 from properties import *
@@ -26,7 +26,6 @@ class Level:
         """Отрисовка спрайтов на уровне"""
         self.player = None
         self.window = None
-        self.pause_menu = None
         self.events_list = None
         log.info(f'Level class intialization')
 
@@ -36,6 +35,20 @@ class Level:
         # для перемещения между уровнями
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
+
+        # Меню паузы
+        buttons = (
+            UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
+                      image_path="./sprites/pause_menu/button.png",
+                      selected_image_path="./sprites/pause_menu/button_hover.png",
+                      sprite_group=self.__all_sprites,
+                      text="Продолжить",
+
+                      ),
+        )
+        self.pause_menu = UI.Menu(buttons,
+                                  action_bar_path="./sprites/pause_menu/menu_background.png")
+
 
         # отрисовка
         self.__map = level_data["MAP"]
@@ -93,7 +106,8 @@ class Level:
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
                 else:
-                    Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
+                    game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["ground"],
+                                           image_surf=obj.image)
         script.receiver = portal
 
     def __create_map(self):
@@ -155,7 +169,7 @@ class Level:
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    self.pause_def()
+                    self.pause()
                 if event.key == pygame.K_1:
                     self.set_current_level(self.move_to)
 
@@ -167,7 +181,7 @@ class Level:
             self.battle_manager.update(dt)
             self.battle_manager.set_events_list(self.events_list)
 
-    def pause_def(self):
+    def pause(self):
 
         # TODO: сделать так чтобы при одновременном нажатии esc и удержании кнопки перемещения,
         # перемещение не происходило

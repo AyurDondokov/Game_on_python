@@ -182,58 +182,6 @@ class BattlePlayer(BattleObject):
         )
 
 
-class BattleMenu:
-    def __init__(self, buttons,
-                 action_bar_path: str = "./sprites/fight/UI/action_bar.png"):
-        self._action_bar = pygame.sprite.Sprite()
-        self._action_bar.image = pygame.image.load(action_bar_path)
-        self._action_bar.rect = self._action_bar.image.get_rect(center=BATTLE_ACTIONS_BAR_POS)
-        self._target_index = 0
-
-        self._buttons = buttons
-        self._buttons_count = len(self._buttons)
-        self._buttons[self._target_index].is_targeted = True
-
-        self._display_surf = pygame.display.get_surface()
-        self.__event_list = []
-        self.sound_bt_hover = pygame.mixer.Sound('music_and_sound/sound/button/hover.mp3')
-
-    def change_target_on_n(self, n):
-        self._buttons[self._target_index].is_targeted = False
-        self._target_index = n
-        self._buttons[self._target_index].is_targeted = True
-
-    def draw_menu(self):
-        self._display_surf.blit(self._action_bar.image, self._action_bar.rect)
-        for button in self._buttons:
-            button.draw()
-
-    def set_events_list(self, event_list):
-        self.__event_list = event_list
-        for button in self._buttons:
-            button.set_events_list(event_list)
-
-    def input(self):
-        for event in self.__event_list:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    self.sound_bt_hover.play()
-                    if self._target_index - 1 >= 0:
-                        self.change_target_on_n(self._target_index - 1)
-                    else:
-                        self.change_target_on_n(self._buttons_count - 1)
-                elif event.key == pygame.K_d:
-                    self.sound_bt_hover.play()
-                    if self._target_index + 1 < self._buttons_count:
-                        self.change_target_on_n(self._target_index + 1)
-                    else:
-                        self.change_target_on_n(0)
-
-    def update(self):
-        for button in self._buttons:
-            button.update()
-
-
 class BattleGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
@@ -305,7 +253,7 @@ class Battle:
                               text="block")
         run_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.run, pos=BATTLE_BUTTONS_POS[3],
                             text="run")
-        self._battle_menu = BattleMenu((attack_btn, heal_btn, block_btn, run_btn))
+        self._battle_menu = ui.Menu((attack_btn, heal_btn, block_btn, run_btn))
 
     def _remove_enemy(self, index):
         for enemy_data in self._enemies[index].new_phase_enemies_data:
@@ -436,7 +384,7 @@ class Battle:
         self._display_surf.blit(self._bg_image, self._bg_rect)
         if self._state_of_battle == BATTLE_STATES.selecting_enemy:
             self._select_rect.centerx = self._enemies[self._selected_enemy].rect.centerx
-            self._select_rect.centery = self._enemies[self._selected_enemy].rect.bottom + 25
+            self._select_rect.centery = self._enemies[self._selected_enemy].rect.bottom
             self._display_surf.blit(self._select_sprite, self._select_rect)
         self._battle_group.custom_draw()
         self._battle_menu.draw_menu()

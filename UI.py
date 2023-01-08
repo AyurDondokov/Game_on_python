@@ -2,6 +2,59 @@ import pygame
 import properties as pr
 
 
+class Menu:
+    def __init__(self, buttons,
+                 action_bar_path: str = "./sprites/fight/UI/action_bar.png",
+                 pos: tuple = pr.BATTLE_ACTIONS_BAR_POS):
+        self._action_bar = pygame.sprite.Sprite()
+        self._action_bar.image = pygame.image.load(action_bar_path)
+        self._action_bar.rect = self._action_bar.image.get_rect(center=pos)
+        self._target_index = 0
+
+        self._buttons = buttons
+        self._buttons_count = len(self._buttons)
+        self._buttons[self._target_index].is_targeted = True
+
+        self._display_surf = pygame.display.get_surface()
+        self.__event_list = []
+        self.sound_bt_hover = pygame.mixer.Sound('music_and_sound/sound/button/hover.mp3')
+
+    def change_target_on_n(self, n):
+        self._buttons[self._target_index].is_targeted = False
+        self._target_index = n
+        self._buttons[self._target_index].is_targeted = True
+
+    def draw_menu(self):
+        self._display_surf.blit(self._action_bar.image, self._action_bar.rect)
+        for button in self._buttons:
+            button.draw()
+
+    def set_events_list(self, event_list):
+        self.__event_list = event_list
+        for button in self._buttons:
+            button.set_events_list(event_list)
+
+    def input(self):
+        for event in self.__event_list:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    self.sound_bt_hover.play()
+                    if self._target_index - 1 >= 0:
+                        self.change_target_on_n(self._target_index - 1)
+                    else:
+                        self.change_target_on_n(self._buttons_count - 1)
+                elif event.key == pygame.K_d:
+                    self.sound_bt_hover.play()
+                    if self._target_index + 1 < self._buttons_count:
+                        self.change_target_on_n(self._target_index + 1)
+                    else:
+                        self.change_target_on_n(0)
+
+    def update(self):
+        for button in self._buttons:
+            button.update()
+
+
 class Button:
     def __init__(self, func, args, pos,
                  # Настройки для кнопки изображения
@@ -25,6 +78,19 @@ class Button:
             self.__button_sprite.rect = self.__button_sprite.image.get_rect(center=pos)
         elif len(image_path) == 0 and len(text) != 0:
             self.__button_type = "text"
+            self.__font = pygame.font.Font(font_name, text_size)
+            self.__text = text
+            self.__selected_text_color = selected_text_color
+            self.__text_color = text_color
+            self.__text_surface = self.__font.render(self.__text, True, self.__text_color)
+            self.__text_rect = self.__text_surface.get_rect(center=pos)
+        elif len(image_path) != 0 and len(text) != 0:
+            self.__button_type = "image_text"
+            self.__button_sprite = pygame.sprite.Sprite(sprite_group)
+            self.__image = pygame.image.load(image_path)
+            self.__button_sprite.image = self.__image
+            self.__selected_image = pygame.image.load(selected_image_path)
+            self.__button_sprite.rect = self.__button_sprite.image.get_rect(center=pos)
             self.__font = pygame.font.Font(font_name, text_size)
             self.__text = text
             self.__selected_text_color = selected_text_color
@@ -60,12 +126,23 @@ class Button:
                 self.__text_surface = self.__font.render(self.__text, True, self.__text_color)
             else:
                 self.__text_surface = self.__font.render(self.__text, True, self.__selected_text_color)
+        elif self.__button_type == "image_text":
+            if not self.__is_targeted:
+                self.__button_sprite.image = self.__image
+                self.__text_surface = self.__font.render(self.__text, True, self.__text_color)
+            else:
+                self.__button_sprite.image = self.__selected_image
+                self.__text_surface = self.__font.render(self.__text, True, self.__selected_text_color)
+
         self.input()
 
     def draw(self):
         if self.__button_type == "image":
             self.__display_surf.blit(self.__button_sprite.image, self.__button_sprite.rect)
         elif self.__button_type == "text":
+            self.__display_surf.blit(self.__text_surface, self.__text_rect)
+        elif self.__button_type == "image_text":
+            self.__display_surf.blit(self.__button_sprite.image, self.__button_sprite.rect)
             self.__display_surf.blit(self.__text_surface, self.__text_rect)
 
     @property
