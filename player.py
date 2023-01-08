@@ -125,23 +125,20 @@ class Player(GameObject):
 
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""
+        flag = False
         for sprite in self.__interactable_sprites:
             if hasattr(sprite, 'interact_component'):
                 sprite.interact_component.is_able = self._pos.distance_to(
                     sprite.pos) < DISTANCE_FOR_INTERACT
                 if hasattr(sprite, 'dialog'):
-
                     if sprite.dialog.is_open:
-
+                        flag = True
                         self._managed = False
                         self._direction.x = 0
                         self._direction.y = 0
-                    else:
-
-                        self._managed = True
-                        # if hasattr(sprite, 'is_use_able'):
-                        #     sprite.is_use_able = self._pos.distance_to(
-                        #         sprite.pos) < DISTANCE_FOR_INTERACT
+                        self._change_anim_status("idle_" + self._anim_status.split('_')[1])
+        if not flag:
+            self._managed = True
 
     def update(self, dt):
         super().update(dt)
