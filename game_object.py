@@ -13,6 +13,8 @@ class GameObject(pygame.sprite.Sprite):
                  sprite_group: pygame.sprite.Group,
                  sprite_path: str,
                  z: int,
+                 image_surf: pygame.surface.Surface = None,
+                 hitbox_size: tuple = (0, 0),
                  hitbox_offset: tuple = (0, 0),
                  movement_speed: float = 0,
                  is_animated: bool = False,
@@ -28,11 +30,15 @@ class GameObject(pygame.sprite.Sprite):
             self._anim_frame_index = 0  # Индекс кадра, на котором находится текущая анимация
             self._anim_speed = anim_speed  # Сколько секунд должно пройти для переключения кадра
 
-        self._import_assets(sprite_path)
+        if not image_surf:
+            self._import_assets(sprite_path)
+        else:
+            self.image = image_surf
 
         # Основные настройки
         self.rect = self.image.get_rect(topleft=position)
-        self.hitbox = self.rect.copy()
+        self.hitbox = self.rect.copy().inflate(self.rect.width * hitbox_size[0] - self.rect.width,
+                                               self.rect.height * hitbox_size[1] - self.rect.height)
         self.hitbox_offset = hitbox_offset
         self.z = z
 
@@ -71,18 +77,19 @@ class GameObject(pygame.sprite.Sprite):
             self.rect.height * self.hitbox_offset[1]
 
     def _move(self, dt):
-        if self._direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
-            self._direction = self._direction.normalize()
+        if self._speed != 0:
+            if self._direction.magnitude() > 0:  # Нужно для того чтобы персонаж не ускорялся двигаясь по диагонали
+                self._direction = self._direction.normalize()
 
-        self._pos.x += self._direction.x * self._speed * dt
-        self.hitbox.centerx = round(self._pos.x)
-        self.rect.centerx = self.hitbox.centerx
-        self._collision('horizontal')
+            self._pos.x += self._direction.x * self._speed * dt
+            self.hitbox.centerx = round(self._pos.x)
+            self.rect.centerx = self.hitbox.centerx
+            self._collision('horizontal')
 
-        self._pos.y += self._direction.y * self._speed * dt
-        self.hitbox.centery = round(self._pos.y)
-        self.rect.centery = self.hitbox.centery
-        self._collision('vertical')
+            self._pos.y += self._direction.y * self._speed * dt
+            self.hitbox.centery = round(self._pos.y)
+            self.rect.centery = self.hitbox.centery
+            self._collision('vertical')
 
     def _change_anim_status(self, new_state: str):
         self._anim_status = new_state
