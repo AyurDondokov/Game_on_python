@@ -183,4 +183,6 @@ poetry.toml
 .idea/workspace.xml
 /.idea/inspectionProfiles/Project_Default.xml
 .vscode
+Game_on_python.iml
+misc.xml
 

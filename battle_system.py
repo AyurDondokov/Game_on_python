@@ -5,17 +5,19 @@ import pygame.sprite
 
 import player as pl
 import UI as ui
+import effects as effects
 from timer import Timer
 from properties import *
 
 
 # Абстрактный класс для участников боя
 class BattleObject(pygame.sprite.Sprite):
-    def __init__(self, position, battle_group, image_path, max_health, max_damage, defence, health, heal,
+    def __init__(self, position, battle_group, effect_group, image_path, max_health, max_damage, defence, health, heal,
                  attack_image_path: str = ''):
         super().__init__(battle_group)
 
         # Основные настройки.
+        self.s_punch = None
         self._stay_image = pygame.image.load(image_path)
         if attack_image_path != '':
             self._attack_image = pygame.image.load(attack_image_path)
@@ -50,6 +52,9 @@ class BattleObject(pygame.sprite.Sprite):
         self.sound_death = pygame.mixer.Sound('music_and_sound/sound/game/death.mp3')
         self.sound_win = pygame.mixer.Sound('music_and_sound/sound/game/win.mp3')
 
+        self._wound_effect = effects.Effect(position, "./sprites/fight/fight_effect/wound", effect_group)
+        self._heal_effect = effects.Effect(position, "./sprites/fight/fight_effect/heal", effect_group)
+
     def _shake(self, intensity: float, speed: float, dt):
         if self.pos.x >= self._start_pos.x + intensity:
             self._x_direction = -1
@@ -72,6 +77,7 @@ class BattleObject(pygame.sprite.Sprite):
         else:
             self._health = self._max_health
         self._health_bar.value = self._health / self._max_health
+        self._heal_effect.start()
         self._is_defencing = False
 
     def take_damage(self, damage):
@@ -85,14 +91,19 @@ class BattleObject(pygame.sprite.Sprite):
                 self.sound_death.play()
                 self._health = 0.0
                 self._die()
+            self._wound_effect.start()
             self._health_bar.value = self._health / self._max_health
             self._is_defencing = False
 
     def _die(self):
         self._timers['shake'].activate()
         self._is_defeated = True
+        self._wound_effect.kill()
+        self._heal_effect.kill()
 
     def update(self, dt):
+        self._wound_effect.update(dt)
+        self._heal_effect.update(dt)
         if self._timers['shake'].active:
             self._timers['shake'].update()
             self._shake(BATTLE_SHAKE_INTENSITY, BATTLE_SHAKE_SPEED, dt)
@@ -110,6 +121,8 @@ class BattleObject(pygame.sprite.Sprite):
         self.rect.centery = round(self.pos.y)
         self._health_bar = ui.ProgressBar(self.rect.topleft)
         self._start_pos = self.pos.copy()
+        self._wound_effect.rect = self.rect.center
+        self._heal_effect.rect = self.rect.center
 
     @property
     def max_damage(self):
@@ -125,10 +138,11 @@ class BattleObject(pygame.sprite.Sprite):
 
 
 class BattleEnemy(BattleObject):
-    def __init__(self, position, data, battle_group, battle_player,
+    def __init__(self, position, data, battle_group, effect_group, battle_player,
                  new_phase_enemies_data: tuple = ()):
         super().__init__(position=position,
                          battle_group=battle_group,
+                         effect_group=effect_group,
                          image_path=data["image_path"],
                          max_health=data["max_health"],
                          max_damage=data["max_damage"],
@@ -139,9 +153,9 @@ class BattleEnemy(BattleObject):
         self._new_phase_enemies_data = new_phase_enemies_data
 
     def make_move(self):
-        if self._health > self._max_health/2:
+        if self._health > self._max_health / 2:
             self._battle_player.take_damage(self._max_damage)
-        elif self._health > self._max_health/4:
+        elif self._health > self._max_health / 4:
             self._is_defencing = True
         else:
             self.healing()
@@ -152,11 +166,12 @@ class BattleEnemy(BattleObject):
 
 
 class BattlePlayer(BattleObject):
-    def __init__(self, battle_group, game_player: pl.Player,
+    def __init__(self, battle_group, effect_group, game_player: pl.Player,
                  attack_image_path: str = "sprites/main_character/fighting/fighting_hit.png"):
         super().__init__(
             position=BATTLE_PLAYER_POS,
             battle_group=battle_group,
+            effect_group=effect_group,
             image_path=DEFAULT_PLAYER_BATTLE_SPRITE,
             max_health=LEVELS_PROPERTIES[game_player.level]['max_health'],
             max_damage=LEVELS_PROPERTIES[game_player.level]['max_damage'],
@@ -258,9 +273,11 @@ class Battle:
         self._bg_rect = self._bg_image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
         self._battle_menu = None
         self._battle_group = BattleGroup()
+        self._effect_group = effects.EffectGroup()
         self.set_battle_menu()
         self._battle_scale = ui.PowerScale()
         self._battle_player = BattlePlayer(battle_group=self._battle_group,
+                                           effect_group=self._effect_group,
                                            game_player=game_player,
                                            attack_image_path="sprites/main_character/fighting/fighting_hit.png")
 
@@ -304,6 +321,7 @@ class Battle:
         self._enemies.append(BattleEnemy(
             position=(0, 0),
             battle_group=self._battle_group,
+            effect_group=self._effect_group,
             data=new_enemy_data,
             battle_player=self._battle_player,
             new_phase_enemies_data=new_enemy_data["new_phase_enemies"]
@@ -319,17 +337,21 @@ class Battle:
 
     def _make_move(self, move):
         if move == BATTLE_MOVES.attack:
+            self._timers["make_move"].activate()
             self._state_of_battle = BATTLE_STATES.selecting_enemy
         elif move == BATTLE_MOVES.heal:
             self._battle_player.healing()
+            self._timers["make_move"].activate()
             self._state_of_battle = BATTLE_STATES.waiting
         elif move == BATTLE_MOVES.block:
             self._battle_player.is_defencing = True
+            self._timers["make_move"].activate()
             self._state_of_battle = BATTLE_STATES.waiting
         elif move == BATTLE_MOVES.run:
             if random.randint(0, 100) < BATTLE_RUN_CHANCE:
                 self._end(False)
             else:
+                self._timers["make_move"].activate()
                 self._state_of_battle = BATTLE_STATES.waiting
 
     def _selecting_enemy(self):
@@ -347,7 +369,6 @@ class Battle:
                         self._selected_enemy = len(self._enemies) - 1
                 elif event.key == pygame.K_e:
                     self._state_of_battle = BATTLE_STATES.stash_damage
-                    self._timers["make_move"].activate()
 
     def _waiting(self):
         if self._timers["make_move"].active:
@@ -367,6 +388,7 @@ class Battle:
                 if event.key == pygame.K_e:
                     self._enemies[self._selected_enemy].take_damage(
                         self._battle_player.max_damage * self._battle_scale.get_value())
+                    self._timers["make_move"].activate()
                     self._state_of_battle = BATTLE_STATES.waiting
                     self._battle_player.attack()
 
@@ -418,6 +440,7 @@ class Battle:
             self._display_surf.blit(self._select_sprite, self._select_rect)
         self._battle_group.custom_draw()
         self._battle_menu.draw_menu()
+        self._effect_group.custom_draw()
         if self._state_of_battle == BATTLE_STATES.stash_damage:
             self._battle_scale.draw()
 
@@ -430,6 +453,10 @@ class Battle:
     @property
     def is_battle(self):
         return self._is_battle
+
+    @property
+    def effect_group(self):
+        return self._effect_group
 
 
 class BattleManager:
