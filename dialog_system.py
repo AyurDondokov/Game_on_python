@@ -1,5 +1,6 @@
 from properties import *
 from support import *
+from dialog.dialog_data import DIALOG_ICONS
 
 
 class Text:
@@ -83,16 +84,13 @@ class Dialog(pygame.sprite.Group):
         if self.replica_index < len(self.replicas):
 
             if not self.replicas[self.replica_index].startswith('+'):
-                print(self.replicas[self.replica_index])
                 if self.replicas[self.replica_index].find("\\n") > 0:
-                    print("YEP")
                     splited = self.replicas[self.replica_index].split('\\n', 1)
-                    print(splited)
                     self.text_name.text = splited[0].split(':')[0]
                     self.text_replica.text = splited[0].split(':')[1]
                     self.second_line.text = splited[1]
+                    self.replica_index += 1
                 else:
-                    print("NO")
                     self.second_line.text = ""
                     self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
                     # s = ''
@@ -103,7 +101,6 @@ class Dialog(pygame.sprite.Group):
                     #     self.text_replica.out()
                     #     print(s)
                     # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
-
                     self.text_name.text = self.replicas[self.replica_index].split(':')[0]
                     self.replica_index += 1
             else:
