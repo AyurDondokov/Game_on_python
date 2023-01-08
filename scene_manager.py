@@ -27,7 +27,7 @@ class SceneManager:
     def run(self, dt):
         """Переключает уровни, меню в зависимости от
          указателей  self.__current_level и self.__current_menu"""
-        if self.is_game_started == True:
+        if self.is_game_started:
             self.__list_of_levels[self.__current_level].run(dt)
         else:
             self.__dict_of_menus[self.__current_menu].display_menu()

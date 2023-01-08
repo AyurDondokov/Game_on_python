@@ -18,11 +18,14 @@ class TestScript(Script):
         print("Script activated")
 
 
-class StartBatlleScript(Script):
+class StartBattleScript(Script):
+    def __init__(self, receiver, battle_index):
+        super().__init__(receiver)
+        self._battle_index = battle_index
 
     def execute(self):
         """Запускает бой"""
-        self._reseiver.start()
+        self._reseiver.start(self._battle_index)
 
 
 class SwitchDialogScript(Script):
@@ -32,5 +35,21 @@ class SwitchDialogScript(Script):
 
     def execute(self):
         """Включает следующую реплику у NPC"""
+
         print("DialogSwitched")
         self._reseiver.switch_dialog(self.loc)
+
+
+class ActivatePortalScript(Script):
+    def execute(self):
+
+        self._reseiver.activate()
+
+    @property
+    def receiver(self):
+        return None
+
+    @receiver.setter
+    def receiver(self, receiver):
+        self._reseiver = receiver
+        print(self._reseiver)

@@ -30,7 +30,15 @@ level_0 = {
     },
     "TMXData": "levels_data/levels/0/level_objects.tmx",
     "move_to": 1,
-    "music": "music_and_sound/music/level/embient.mp3"
+    "music": "music_and_sound/music/level/embient.mp3",
+    "battles": {
+        0: {"enemies": ["tumbleweed", "tumbleweed"],
+            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
+        1: {"enemies": ["varan"], "music_path":
+            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
+        2: {"enemies": ["mummy", "mummy"],
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
+    }
 }
 level_1 = {
     "MAP": {
@@ -42,18 +50,25 @@ level_1 = {
     },
 
     "TileSet": {
-        "rocks": "./levels_data/graphics/decoration2/SandLight.png",
-        "sand": "./levels_data/graphics/decoration2/SandLight.png",
-        'water': 'levels_data/graphics/decoration/water/hub_water.png',
+        "rocks": "./levels_data/graphics/desert_tileset/tileset.png",
+        "sand": "./levels_data/graphics/desert_tileset/tileset.png",
+        'water': 'levels_data/graphics/desert_tileset/tileset.png',
         'limiters': './levels_data/graphics/decoration2/SandLight.png',
     },
     "TMXData": "levels_data/levels/1/level_1__objects.tmx",
     "move_to": 0,
-    "music": "music_and_sound/music/level/Desert theme.mp3"
-
+    "music": "music_and_sound/music/level/Desert theme.mp3",
+    "battles": {
+        0: {"enemies": ["tumbleweed", "tumbleweed"],
+            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
+        1: {"enemies": ["varan"], "music_path":
+            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
+        2: {"enemies": ["mummy", "mummy"],
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
+    }
 }
 
 levels = {
     0: level_0,
-    1: level_1
+    1: level_1,
 }

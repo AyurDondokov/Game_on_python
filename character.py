@@ -90,22 +90,63 @@ class Portal(GameObject):
         self.move_to = move_to
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0, -self.rect.height * 0)
         self.is_use_able = False
-        self.__use_icon = GameObject(
+        self.__icon = GameObject(
+            position=(self.rect.topright[0], self.rect.topright[1] - 80),
+            sprite_group=self.groups()[0],
+            sprite_path='./sprites/use_icon.png',
+            z=LAYERS['ux']
+        )
+        self._active = False
+
+    def display_icon(self):
+        if self.is_use_able:
+            self.__icon.add(self.groups()[0])
+        else:
+            self.__icon.remove(self.groups()[0])
+
+    def activate(self):
+        self._active = True
+
+    def execute(self):
+        if self._active:
+            self.__set_current_level(self.move_to)
+
+    def update(self, dt):
+        self.display_icon()
+
+
+class Component(GameObject):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, script):
+        super().__init__(position,
+                         sprite_group,
+                         sprite_path="./levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png",
+                         z=LAYERS['ground'],
+                         hitbox_offset=(0, 0.25),
+                         )
+        self.state = True
+        self.__script = script
+        self.hitbox = self.rect.copy().inflate(-self.rect.width * 0, -self.rect.height * 0)
+        self.is_use_able = False
+        self.__icon = GameObject(
             position=(self.rect.topright[0], self.rect.topright[1] - 80),
             sprite_group=self.groups()[0],
             sprite_path='./sprites/use_icon.png',
             z=LAYERS['ux']
         )
 
-    def display_dialog_icon(self):
-        if self.is_use_able:
-            self.__use_icon.add(self.groups()[0])
+    def display_icon(self):
+        if self.state:
+            if self.is_use_able:
+                self.__icon.add(self.groups()[0])
+            else:
+                self.__icon.remove(self.groups()[0])
         else:
-            self.__use_icon.remove(self.groups()[0])
+            self.__icon.kill()
 
     def execute(self):
-        self.__set_current_level(self.move_to)
+        self.state = False
+        self.__script.execute()
+        self.kill()
 
     def update(self, dt):
-        # super().update(dt)
-        self.display_dialog_icon()
+        self.display_icon()

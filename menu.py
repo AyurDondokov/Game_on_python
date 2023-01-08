@@ -24,6 +24,8 @@ class Menu:
         self.K_w = False
         self.K_ESCAPE = False
         self.START_KEY = False
+        self.sound_bt_hover = pygame.mixer.Sound('music_and_sound/sound/button/hover.mp3')
+        self.sound_bt_click = pygame.mixer.Sound('music_and_sound/sound/button/click.mp3')
 
     def events_update(self):
         for event in pygame.event.get():
@@ -34,16 +36,21 @@ class Menu:
                 if event.key == pygame.K_BACKSPACE:
                     self.BACK_KEY = True
                 if event.key == pygame.K_DOWN:
+                    self.sound_bt_hover.play()
                     self.DOWN_KEY = True
                 if event.key == pygame.K_UP:
+                    self.sound_bt_hover.play()
                     self.UP_KEY = True
                 if event.key == pygame.K_s:
+                    self.sound_bt_hover.play()
                     self.K_s = True
                 if event.key == pygame.K_w:
+                    self.sound_bt_hover.play()
                     self.K_w = True
                 if event.key == pygame.K_ESCAPE:
                     self.K_ESCAPE = True
                 if event.key == pygame.K_RETURN:
+                    self.sound_bt_click.play()
                     self.START_KEY = True
 
     def draw_text(self, text, size, x, y):
@@ -175,8 +182,8 @@ class OptionsMenu(Menu):
         Menu.__init__(self)
         self.set_current_menu = change_menu_f
         self.state = "Volume"
-        self.volx, self.voly = self.mid_w, self.mid_h + 20
-        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 40
+        self.volx, self.voly = self.mid_w, self.mid_h + 35
+        self.controlsx, self.controlsy = self.mid_w, self.mid_h + 75
         self.cursor_rect.midtop = (self.volx + self.offset, self.voly)
 
     def display_menu(self):
@@ -184,7 +191,7 @@ class OptionsMenu(Menu):
         self.events_update()
         self.display_surface.fill('black')
         self.draw_text(
-            "OPRIONS", 85, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 30)
+            "OPTIONS", 85, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 150)
         self.draw_text("Volume", 40, self.volx, self.voly)
         self.draw_text("Window", 40, self.controlsx, self.controlsy)
         self.draw_cursor()
