@@ -41,11 +41,10 @@ class NPC(GameObject):
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
 
         # Инициализация диалога
+        if not dialog_replicas:
+            dialog_replicas = {"1": ["???: ..."]}
         self.dialog_replicas = dialog_replicas
-
         self.dialog = Dialog(self.dialog_replicas["1"])
-        print()
-        print(dialog_replicas)
         self.is_dialog_able = False
         self.dialog_icon = GameObject(
             position=(self.rect.centerx, self.rect.centery - 100),

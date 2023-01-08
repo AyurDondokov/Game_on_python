@@ -96,23 +96,18 @@ class Level:
                         )
                         print(obj.x, obj.y)
                     if getattr(obj, "class") == "npc":
+                        dialog = None
+                        if obj.properties.get("dialog"):
+                            dialog = self.reader.get_npc_replicas(obj.name)
                         self.__npc_dict.update(
                             {obj.name:
                              NPC((obj.x, obj.y),
                                  [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                                 obj.name, dialog_replicas=self.reader.get_npc_replicas(obj.name))}
+                                 obj.name, dialog_replicas=dialog)}
                         )
                 else:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
         script.receiver = portal
-
-        # Триггер для начала боя
-        # В будущем должен создаваться с помощью tmx
-        print(self.name)
-        if self.name == 1:
-            Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites], pygame.image.load(
-                "images/ground/trigger.png"),
-                SwitchDialogScript(self.__npc_dict["test_npc"], "2"))
 
     def __create_map(self):
         for key in self.__map:
