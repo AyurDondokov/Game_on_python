@@ -38,7 +38,6 @@ class Button:
         self.__args = args
         self.__display_surf = pygame.display.get_surface()
         self.__event_list = []
-        print(self.__button_type)
 
     def set_events_list(self, event_list):
         self.__event_list = event_list

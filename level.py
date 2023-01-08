@@ -3,17 +3,18 @@ import sys
 
 import pygame
 
-from character import NPC, Portal
+import battle_system
+from character import Portal
+from scripts import ActivatePortalScript
+from character import NPC, Portal, Component
 from battle_system import Battle
 from character import NPC
-from decoration import Clouds
 from player import Player
 from properties import *
-from replicas_data import test_npc, test_npc2
+from replicas_data import test_npc2
 from support import import_csv_layout, import_cut_graphics
-from tile import Tile, Trigger, NotTiledImage
+from tile import Tile, Trigger
 from pytmx.util_pygame import load_pygame
-from scripts import TestScript
 
 import scripts as scr
 
@@ -23,18 +24,25 @@ log = logging.getLogger(__name__)
 class Level:
     def __init__(self, level_data, set_current_level):
         """Отрисовка спрайтов на уровне"""
+        self.player = None
+        self.window = None
+        self.pause_menu = None
         self.events_list = None
         log.info(f'Level class intialization')
 
         self.is_runned = False
         self.__display_surface = pygame.display.get_surface()
+
         # для перемещения между уровнями
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
+
         # отрисовка
         self.__map = level_data["MAP"]
         self.__tileset = level_data["TileSet"]
         self.__tmx_data = load_pygame(level_data["TMXData"])
+
+        self.battles_data = level_data["battles"]
 
         self.__music_path = level_data["music"]
 
@@ -48,12 +56,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.test_battle = Battle(self.player, [TUMBLEWEED_ENEMY, TEST_ENEMY_2], self.__music_path)
-
-        # Триггер для начала боя
-        # В будущем должен создаваться с помощью csv
-        Trigger((1200, 500), [self.__all_sprites, self.__trigger_sprites],
-                pygame.image.load("images/ground/trigger.png"), scr.StartBattleScript(self.test_battle))
+        self.battle_manager = battle_system.BattleManager(self.battles_data, self.player, self.__music_path)
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
@@ -66,21 +69,32 @@ class Level:
                     obj_image = obj.image.get_rect()
                     # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
                     pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
-                    Portal(pos,
-                           [self.__all_sprites, self.__interactable_sprites],
-                           self.set_current_level,
-                           self.move_to)
+                    portal = Portal(pos,
+                                    [self.__all_sprites, self.__interactable_sprites],
+                                    self.set_current_level,
+                                    self.move_to)
                     # отображение портала
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["back_decor"])
+                if obj.name == "component":
+                    script = ActivatePortalScript(None)
+                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
-                    if getattr(obj, "class") == "npc":
+                    if getattr(obj, "class") == "battle":
+                        Trigger(
+                            pos=(obj.x, obj.y),
+                            groups=[self.__all_sprites, self.__trigger_sprites],
+                            surface=pygame.image.load("images/ground/trigger.png"),
+                            script=scr.StartBattleScript(self.battle_manager, obj.properties.get("battle_index"))
+                        )
+                        print(obj.x, obj.y)
+                    elif getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
-                        pass
                 else:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
+        script.receiver = portal
 
     def __create_map(self):
         for key in self.__map:
@@ -95,7 +109,8 @@ class Level:
         # self.clouds = Clouds(SCREEN_HEIGHT*2, level_width,
         #                      30, self.all_sprites)
 
-    def __create_tile_group(self, layout, type):
+    def __create_tile_group(self, layout, tile_type):
+        cut_tileset = import_cut_graphics(self.__tileset[tile_type])
         for row_index, row in enumerate(layout):
             for col_index, val in enumerate(row):
                 # если не пустая клетка
@@ -103,11 +118,11 @@ class Level:
                     x = col_index * TILE_SIZE
                     y = row_index * TILE_SIZE
 
-                    if type == 'limiters':
+                    if tile_type == 'limiters':
                         Tile((x, y), [self.__all_sprites,
-                                      self.__collision_sprites], import_cut_graphics(self.__tileset[type])[int(val)])
+                                      self.__collision_sprites], cut_tileset[int(val)])
                     else:
-                        Tile((x, y), self.__all_sprites, import_cut_graphics(self.__tileset[type])[int(val)])
+                        Tile((x, y), self.__all_sprites, cut_tileset[int(val)])
 
     def __player_setup(self, layout):
         for row_index, row in enumerate(layout):
@@ -144,14 +159,13 @@ class Level:
                 if event.key == pygame.K_1:
                     self.set_current_level(self.move_to)
 
-        if not self.test_battle.is_battle:
+        if not self.battle_manager.is_battle:
             self.__all_sprites.centralize_on_obj(self.player)
             self.__all_sprites.custom_draw(self.player)
             self.__all_sprites.update(dt)
         else:
-            self.test_battle.update(dt)
-            self.test_battle.set_events_list(self.events_list)
-            self.test_battle.draw()
+            self.battle_manager.update(dt)
+            self.battle_manager.set_events_list(self.events_list)
 
     def pause_def(self):
 
@@ -191,17 +205,19 @@ class CameraGroup(pygame.sprite.Group):
     def custom_draw(self, player):
         for layer in LAYERS.values():
             for sprite in self.sprites():
-                if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
-                    # нужно для правильного накладывания гг на обьект или за обьект
-                    if sprite.rect.centery > player.rect.centery:
-                        # если Yцентр спрайта выше гг отрисовывать его перед гг
-                        sprite.z = LAYERS['forward_' +
-                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
-                    else:
-                        # наоборот рисовать сзади гг
-                        sprite.z = LAYERS['back_' +
-                                          list(LAYERS.keys())[sprite.z].split('_')[1]]
-                if sprite.z == layer:
-                    offset_rect = sprite.rect.copy()
-                    offset_rect.center -= self.offset
-                    self.display_surf.blit(sprite.image, offset_rect)
+                if abs(player.rect.x - sprite.rect.x) <= SCREEN_WIDTH*0.75 and \
+                        abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT*0.75:
+                    if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
+                        # нужно для правильного накладывания гг на обьект или за обьект
+                        if sprite.rect.centery > player.rect.centery:
+                            # если Yцентр спрайта выше гг отрисовывать его перед гг
+                            sprite.z = LAYERS['forward_' +
+                                              list(LAYERS.keys())[sprite.z].split('_')[1]]
+                        else:
+                            # наоборот рисовать сзади гг
+                            sprite.z = LAYERS['back_' +
+                                              list(LAYERS.keys())[sprite.z].split('_')[1]]
+                    if sprite.z == layer:
+                        offset_rect = sprite.rect.copy()
+                        offset_rect.center -= self.offset
+                        self.display_surf.blit(sprite.image, offset_rect)
