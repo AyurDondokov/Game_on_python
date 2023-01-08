@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="maze_environment" tilewidth="384" tileheight="320" tilecount="24" columns="0">
+<tileset version="1.9" tiledversion="1.9.2" name="maze_environment" tilewidth="384" tileheight="320" tilecount="26" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="32" height="32" source="../maze_environment/bush.png"/>
@@ -71,6 +71,12 @@
   <image width="64" height="64" source="../maze_environment/pink_bush.png"/>
  </tile>
  <tile id="23">
-  <image width="19" height="19" source="../maze_environment/grass4.png"/>
+  <image width="38" height="38" source="../maze_environment/grass4.png"/>
+ </tile>
+ <tile id="24">
+  <image width="18" height="64" source="../maze_environment/bottle.png"/>
+ </tile>
+ <tile id="25">
+  <image width="33" height="34" source="../maze_environment/bottle_2.png"/>
  </tile>
 </tileset>
