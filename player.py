@@ -21,16 +21,16 @@ class Player(GameObject):
                  trigger_sprites: pygame.sprite.Group,
                  player_level: int = 1,
                  health: int = LEVELS_PROPERTIES[1]["max_health"]):
-        super().__init__(position, sprite_group,
-                         "./sprites/main_character/",
-                         LAYERS['player'],
-                         (0, 0.375),
-                         DEFAULT_CHARACTER_SPEED,
-                         True,
-                         DEFAULT_CHARACTER_ANIM_SPEED,
-                         STANDARD_CHARACTER_ANIM_PACK)
-        self.hitbox = self.rect.copy().inflate(-self.rect.width *
-                                               0.2, -self.rect.height * 0.75)
+        super().__init__(position=position,
+                         sprite_group=sprite_group,
+                         sprite_path="./sprites/main_character/",
+                         z=LAYERS['player'],
+                         hitbox_offset=(0, 0.375),
+                         hitbox_size=(0.8, 0.25),
+                         movement_speed=DEFAULT_CHARACTER_SPEED,
+                         is_animated=True,
+                         anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
+                         animations_pack=STANDARD_CHARACTER_ANIM_PACK)
         self.__collision_sprites = collision_sprites
         self.__interactable_sprites = interactable_sprites
         self.__trigger_sprites = trigger_sprites

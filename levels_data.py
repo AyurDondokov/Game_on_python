@@ -51,6 +51,7 @@ level_1 = {
 
     "TileSet": {
         "rocks": "./levels_data/graphics/desert_tileset/tileset.png",
+        "footpath": "./levels_data/graphics/desert_tileset/tileset.png",
         "sand": "./levels_data/graphics/desert_tileset/tileset.png",
         'water': 'levels_data/graphics/desert_tileset/tileset.png',
         'limiters': './levels_data/graphics/decoration2/SandLight.png',

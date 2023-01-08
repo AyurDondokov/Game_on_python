@@ -34,12 +34,17 @@ class GameObject(pygame.sprite.Sprite):
             self._import_assets(sprite_path)
         else:
             self.image = image_surf
+            print(self.image)
 
         # Основные настройки
         self.rect = self.image.get_rect(topleft=position)
         self.hitbox = self.rect.copy().inflate(self.rect.width * hitbox_size[0] - self.rect.width,
                                                self.rect.height * hitbox_size[1] - self.rect.height)
         self.hitbox_offset = hitbox_offset
+        self.hitbox.centerx = self.rect.centerx + \
+                              self.rect.width * self.hitbox_offset[0]
+        self.hitbox.centery = self.rect.centery + \
+                              self.rect.height * self.hitbox_offset[1]
         self.z = z
 
         # Настройки передвижения

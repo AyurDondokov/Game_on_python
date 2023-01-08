@@ -42,17 +42,18 @@ class Level:
         self.move_to = level_data["move_to"]
 
         # Меню паузы
-        buttons = (
-            UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
-                      image_path="./sprites/pause_menu/button.png",
-                      selected_image_path="./sprites/pause_menu/button_hover.png",
-                      sprite_group=self.__all_sprites,
-                      text="Продолжить",
+        # buttons = (
+        #     UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
+        #               image_path="./sprites/pause_menu/button.png",
+        #               selected_image_path="./sprites/pause_menu/button_hover.png",
+        #               sprite_group=self.__all_sprites,
+        #               text="Продолжить",
+        #
+        #               ),
+        # )
+        # self.pause_menu = UI.Menu(buttons,
+        #                           action_bar_path="./sprites/pause_menu/menu_background.png")
 
-                      ),
-        )
-        self.pause_menu = UI.Menu(buttons,
-                                  action_bar_path="./sprites/pause_menu/menu_background.png")
 
         # отрисовка
         self.__map = level_data["MAP"]
@@ -98,7 +99,6 @@ class Level:
                     Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
-
                     if getattr(obj, "class") == "battle":
                         Trigger(
                             pos=(obj.x, obj.y),
@@ -118,8 +118,14 @@ class Level:
                                  obj.name, dialog_replicas=dialog)}
                         )
                 else:
-                    game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["ground"],
-                                           image_surf=obj.image)
+                    if hasattr(obj, "hitbox_offset_x"):
+                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
+                                               image_surf=obj.image,
+                                               hitbox_offset=(getattr(obj, "hitbox_offset_x"), getattr(obj, "hitbox_offset_y")),
+                                               hitbox_size=(getattr(obj, "hitbox_size_x"), getattr(obj, "hitbox_size_y")))
+                    else:
+                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
+                                               image_surf=obj.image)
         script.receiver = portal
 
     def __create_map(self):
