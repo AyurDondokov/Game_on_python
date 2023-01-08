@@ -316,7 +316,6 @@ class Battle:
         for index, enemy in enumerate(self._enemies):
             pos = (BATTLE_ENEMY_POS_X, (index + 1) * (SCREEN_HEIGHT / (len(self._enemies) + 1)))
             enemy.set_pos(pos)
-            enemy._args = index
 
     def _make_move(self, move):
         if move == BATTLE_MOVES.attack:
@@ -443,7 +442,7 @@ class BattleManager:
         self._current_battle_index = 0
         self._is_battle = False
 
-    def _add_battle(self, battle_data: list, level_music_path):
+    def _add_battle(self, battle_data: dict, level_music_path):
         enemies = []
         for enemy_name in battle_data["enemies"]:
             enemies.append(BATTLE_ENEMIES[enemy_name])
