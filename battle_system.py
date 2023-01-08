@@ -98,6 +98,8 @@ class BattleObject(pygame.sprite.Sprite):
     def _die(self):
         self._timers['shake'].activate()
         self._is_defeated = True
+        self._wound_effect.kill()
+        self._heal_effect.kill()
 
     def update(self, dt):
         self._wound_effect.update(dt)

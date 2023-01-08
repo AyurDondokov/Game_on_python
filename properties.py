@@ -100,7 +100,7 @@ BATTLE_SLIDER_SPEED = 500
 # Enemies
 mummy = {
         "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
-        "max_health": 120,
+        "max_health": 100,
         "max_damage": 10,
         "defence": 20,
         "heal": 5,
@@ -116,18 +116,17 @@ pig = {
     }
 keanu = {
         "image_path": "./sprites/enemies/tumbleweed/keanu.png",
-        "max_health": 100,
-        "max_damage": 10,
-        "defence": 20,
-        "heal": 10,
+        "max_health": 50,
+        "max_damage": 15,
+        "defence": 30,
+        "heal": 15,
         "new_phase_enemies": []
     }
 tumbleweed = {
         "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
-        "max_health": 100,
-        "max_damage": 10,
-        "defence": 20,
-        "max-health": 100,
+        "max_health": 30,
+        "max_damage": 5,
+        "defence": 10,
         "heal": 10,
         "new_phase_enemies": [keanu]
     }
