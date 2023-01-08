@@ -9,6 +9,7 @@ TILE_SIZE = 64
 
 FONT_NAME = './addons/monospace.ttf'
 WHITE = (255, 255, 255)
+GRAY = (120, 120, 120)
 BLACK = (0, 0, 0)
 
 VERTICAL_TILE_NUMBER = math.ceil(SCREEN_HEIGHT / TILE_SIZE)
