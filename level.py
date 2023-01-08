@@ -41,6 +41,9 @@ class Level:
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
 
+        pygame.mixer.music.load("music_and_sound/music/menu/mmF.mp3")
+        pygame.mixer.music.play(-1)
+
         # Меню паузы
         # buttons = (
         #     UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
