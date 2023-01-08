@@ -2,7 +2,7 @@ import pygame
 DIALOG_ICONS = {
     "???": {"idle": pygame.surface.Surface((10, 10))},
     "None": {"idle": pygame.surface.Surface((10, 10))},
-    "carvan-leader": {
+    "Лидер": {
         "idle": pygame.image.load("./sprites/dialog_icons/caravan_leader/carvan-leader-idle.png"),
         "angry": pygame.image.load("./sprites/dialog_icons/caravan_leader/carvan-leader-angry.png"),
         "laughter": pygame.image.load("./sprites/dialog_icons/caravan_leader/carvan-leader-laughter.png"),
