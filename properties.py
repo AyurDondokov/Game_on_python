@@ -84,8 +84,8 @@ BATTLE_ATTACK_TIME = 300
 BATTLE_RUN_CHANCE = 20
 BATTLE_MOVE_TIME = 600
 
-BATTLE_ENEMY_POS_X = SCREEN_WIDTH * 0.75
-BATTLE_PLAYER_POS = (SCREEN_WIDTH * 0.25, SCREEN_HEIGHT / 2)
+BATTLE_ENEMY_POS_X = SCREEN_WIDTH * 0.25
+BATTLE_PLAYER_POS = (SCREEN_WIDTH * 0.75, SCREEN_HEIGHT / 2)
 
 DEFAULT_PLAYER_BATTLE_SPRITE = "./sprites/main_character/fighting/fighting_readiness.png"
 
@@ -96,41 +96,42 @@ BATTLE_BUTTONS_POS = ((SCREEN_WIDTH / 5, SCREEN_HEIGHT - 100), (SCREEN_WIDTH / 5
 BATTLE_SLIDER_POS = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200)
 BATTLE_SLIDER_SPEED = 500
 
-BATTLE_ENEMIES = {
-    "mummy": {
+
+# Enemies
+mummy = {
         "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
-        "max_health": 100,
+        "max_health": 120,
         "max_damage": 10,
         "defence": 20,
-        "max-health": 100,
-        "heal": 10,
+        "heal": 5,
         "new_phase_enemies": []
-    },
-    "pig": {
+    }
+pig = {
         "image_path": "./sprites/enemies/pig/pig_fighting.png",
         "max_health": 100,
         "max_damage": 10,
         "defence": 20,
         "heal": 10,
         "new_phase_enemies": []
-    },
-    "keanu": {
+    }
+keanu = {
         "image_path": "./sprites/enemies/tumbleweed/keanu.png",
         "max_health": 100,
         "max_damage": 10,
         "defence": 20,
         "heal": 10,
         "new_phase_enemies": []
-    },
-    "tumbleweed": {
+    }
+tumbleweed = {
         "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
-        "max_health": 25,
+        "max_health": 100,
         "max_damage": 10,
         "defence": 20,
+        "max-health": 100,
         "heal": 10,
-        "new_phase_enemies": []
-    },
-    "varan": {
+        "new_phase_enemies": [keanu]
+    }
+varan = {
         "image_path": "./sprites/enemies/varan/varan_fighting.png",
         "max_health": 50,
         "max_damage": 15,
@@ -138,4 +139,13 @@ BATTLE_ENEMIES = {
         "heal": 15,
         "new_phase_enemies": []
     }
+
+BATTLE_ENEMIES = {
+    "mummy": mummy,
+    "pig": pig,
+    "keanu": keanu,
+    "tumbleweed": tumbleweed,
+    "varan": varan
 }
+
+DEFAULT_EFFECT_ANIM_SPEED = 0.2

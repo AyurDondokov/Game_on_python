@@ -24,9 +24,21 @@
     <property name="battle_index" value="1"/>
    </properties>
   </object>
-  <object id="55" class="battle" x="2368" y="1792" width="64" height="64">
+ </objectgroup>
+ <objectgroup id="13" name="battles">
+  <object id="59" name="battle_1" class="battle" gid="22" x="2713.45" y="1295.27" width="64" height="64">
    <properties>
-    <property name="battle_index" value="1"/>
+    <property name="battle_index" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="60" name="battle_2" class="battle" gid="22" x="4649.82" y="546.788" width="64" height="64">
+   <properties>
+    <property name="battle_index" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="61" name="battle_0" class="battle" gid="22" x="4258.91" y="1789.21" width="64" height="64">
+   <properties>
+    <property name="battle_index" type="int" value="0"/>
    </properties>
   </object>
   <object id="56" class="battle" x="4224" y="1600" width="64" height="64">
