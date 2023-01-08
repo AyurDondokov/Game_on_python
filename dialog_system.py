@@ -72,9 +72,10 @@ class Dialog(pygame.sprite.Group):
                               size=24,
                               color=(255, 255, 255, 255))
 
-    def next_npc_profile(self):
-        # +1
-        pass
+    def change_npc_icon(self, char, value: str):
+
+        surface = DIALOG_ICONS[char][value]
+        self.npc_profile.image = surface
 
     def next_replica(self):
         """Отображение следущей реплики, пока таковые остались в списке"""
@@ -84,9 +85,14 @@ class Dialog(pygame.sprite.Group):
         if self.replica_index < len(self.replicas):
 
             if not self.replicas[self.replica_index].startswith('+'):
+                text_name = self.replicas[self.replica_index].split(':')[0]
+                self.text_name.text = text_name
+                if (pos_icon := text_name.find("|")) != -1:
+                    self.change_npc_icon(text_name[:pos_icon], text_name[pos_icon+1:])
+                else:
+                    self.change_npc_icon(text_name, "idle")
                 if self.replicas[self.replica_index].find("\\n") > 0:
                     splited = self.replicas[self.replica_index].split('\\n', 1)
-                    self.text_name.text = splited[0].split(':')[0]
                     self.text_replica.text = splited[0].split(':')[1]
                     self.second_line.text = splited[1]
                     self.replica_index += 1
@@ -101,7 +107,7 @@ class Dialog(pygame.sprite.Group):
                     #     self.text_replica.out()
                     #     print(s)
                     # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
-                    self.text_name.text = self.replicas[self.replica_index].split(':')[0]
+
                     self.replica_index += 1
             else:
                 self.text_name.text = None
