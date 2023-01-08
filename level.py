@@ -42,6 +42,8 @@ class Level:
         self.__tileset = level_data["TileSet"]
         self.__tmx_data = load_pygame(level_data["TMXData"])
 
+        self.battles_data = level_data["battles"]
+
         self.__music_path = level_data["music"]
 
         self.__all_sprites = CameraGroup()
@@ -54,7 +56,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.battle_manager = battle_system.BattleManager(TEST_BATTLES_DATA, self.player, self.__music_path)
+        self.battle_manager = battle_system.BattleManager(self.battles_data, self.player, self.__music_path)
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():

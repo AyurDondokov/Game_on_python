@@ -447,7 +447,8 @@ class BattleManager:
         for enemy_name in battle_data["enemies"]:
             enemies.append(BATTLE_ENEMIES[enemy_name])
         self._enemies = enemies
-        self._battles.append(Battle(self._player, enemies, level_music_path))
+        self._battles.append(Battle(self._player, enemies, level_music_path,
+                                    battle_music_path=battle_data["music_path"]))
 
     def set_events_list(self, event_list):
         self._battles[self._current_battle_index].set_events_list(event_list)
