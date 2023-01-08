@@ -4,6 +4,7 @@ from tile import Tile
 from support import import_surfaces_from_folder
 from random import choice, randint
 
+
 class Clouds:
     def __init__(self, horizon, level_width, cloud_number, group):
         cloud_surf_list = import_surfaces_from_folder('levels_data/graphics/decoration/clouds')

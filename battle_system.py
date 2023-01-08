@@ -1,3 +1,4 @@
+import os
 import random
 
 import pygame.sprite
@@ -236,7 +237,8 @@ class BattleGroup(pygame.sprite.Group):
 
 
 class Battle:
-    def __init__(self, game_player, enemies_data, music_path,
+    def __init__(self, game_player, enemies_data, level_music_path,
+                 battle_music_path: str = "music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3",
                  bg_image_path: str = "./sprites/fight/fight_background/desert.png",
                  select_sprite_path: str = "./sprites/fight/UI/select_sprite.png"):
         self._is_battle = False
@@ -273,6 +275,9 @@ class Battle:
 
         self._select_sprite = pygame.image.load(select_sprite_path)
         self._select_rect = self._select_sprite.get_rect(center=self._enemies[self._selected_enemy].pos)
+
+        self.level_music_path = level_music_path
+        self.battle_music_path = battle_music_path
 
     def set_battle_menu(self):
         attack_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.attack, pos=BATTLE_BUTTONS_POS[0],
@@ -382,6 +387,8 @@ class Battle:
         if self._is_battle:
             self._is_finished_battle = is_finished
             self._is_battle = False
+            pygame.mixer.music.load(self.level_music_path)
+            pygame.mixer.music.play(-1)
 
     def set_events_list(self, event_list):
         self.__event_list = event_list
@@ -418,7 +425,8 @@ class Battle:
     def start(self):
         if not self._is_battle and not self._is_finished_battle:
             self._is_battle = True
-            print("battle_started")
+            pygame.mixer.music.load(self.battle_music_path)
+            pygame.mixer.music.play(-1)
 
     @property
     def is_battle(self):
@@ -426,35 +434,21 @@ class Battle:
 
 
 class BattleManager:
-    def __init__(self, battles_data, player):
+    def __init__(self, battles_data, player, level_music_path):
         self._enemies = None
         self._battles = []
         self._player = player
         for keys in battles_data.keys():
-            self._add_battle(battles_data[keys])
+            self._add_battle(battles_data[keys], level_music_path)
         self._current_battle_index = 0
         self._is_battle = False
-        if not self.is_battle and not self.is_finished_battle:
-            self.is_battle = True
-            # print(f"Начался бой с \n {self.enemies}")
-        pygame.mixer.music.load("music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3")
-        pygame.mixer.music.play(-1)
 
-    def _add_battle(self, enemies_data: list):
+    def _add_battle(self, battle_data: list, level_music_path):
         enemies = []
-        for enemy_name in enemies_data:
+        for enemy_name in battle_data["enemies"]:
             enemies.append(BATTLE_ENEMIES[enemy_name])
         self._enemies = enemies
-        
-    def end(self, is_finished):
-        if self.is_battle:
-            self.is_finished_battle = is_finished
-            self.is_battle = False
-            pygame.mixer.music.load(self.music_path)
-            pygame.mixer.music.play(-1)
-            # print(f"Бой закончен\n Победа: {self.is_finished_battle}")
-
-        self._battles.append(Battle(self._player, enemies))
+        self._battles.append(Battle(self._player, enemies, level_music_path))
 
     def set_events_list(self, event_list):
         self._battles[self._current_battle_index].set_events_list(event_list)

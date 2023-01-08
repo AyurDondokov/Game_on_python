@@ -54,7 +54,7 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.battle_manager = battle_system.BattleManager(TEST_BATTLES_DATA, self.player)
+        self.battle_manager = battle_system.BattleManager(TEST_BATTLES_DATA, self.player, self.__music_path)
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
@@ -76,6 +76,7 @@ class Level:
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
                     Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
+                    script.receiver = portal
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
@@ -92,7 +93,6 @@ class Level:
                             obj.name, dialog_replicas=test_npc2)
                 else:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["ground"])
-        script.receiver = portal
 
     def __create_map(self):
         for key in self.__map:

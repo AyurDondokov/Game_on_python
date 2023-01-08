@@ -141,7 +141,7 @@ BATTLE_ENEMIES = {
 }
 
 TEST_BATTLES_DATA = {
-    0: ["tumbleweed", "tumbleweed"],
-    1: ["varan"],
-    2: ["mummy", "mummy"]
+    0: {"enemies": ["tumbleweed", "tumbleweed"], "music_path": ""},
+    1: {"enemies": ["varan"], "music_path": ""},
+    2: {"enemies": ["mummy", "mummy"], "music_path": ""}
 }
