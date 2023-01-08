@@ -27,6 +27,7 @@ log = logging.getLogger(__name__)
 class Level:
     def __init__(self, level_data, set_current_level, name):
         """Отрисовка спрайтов на уровне"""
+        self.is_paused = None
         self.player = None
         self.window = None
         self.events_list = None
@@ -40,20 +41,6 @@ class Level:
         # для перемещения между уровнями
         self.set_current_level = set_current_level
         self.move_to = level_data["move_to"]
-
-        # Меню паузы
-        # buttons = (
-        #     UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
-        #               image_path="./sprites/pause_menu/button.png",
-        #               selected_image_path="./sprites/pause_menu/button_hover.png",
-        #               sprite_group=self.__all_sprites,
-        #               text="Продолжить",
-        #
-        #               ),
-        # )
-        # self.pause_menu = UI.Menu(buttons,
-        #                           action_bar_path="./sprites/pause_menu/menu_background.png")
-
 
         # отрисовка
         self.__map = level_data["MAP"]
@@ -69,6 +56,37 @@ class Level:
         self.__interactable_sprites = pygame.sprite.Group()
         self.__trigger_sprites = pygame.sprite.Group()
         self.__npc_dict = {}
+        # Меню паузы
+        buttons = (
+            UI.Button(self.pause, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.2),
+                      image_path="./sprites/pause_menu/button.png",
+                      selected_image_path="./sprites/pause_menu/button_hover.png",
+                      sprite_group=[],
+                      text="Продолжить"
+                      ),
+            UI.Button(self.save, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4),
+                      image_path="./sprites/pause_menu/button.png",
+                      selected_image_path="./sprites/pause_menu/button_hover.png",
+                      sprite_group=[],
+                      text="Сохранить"
+                      ),
+            UI.Button(self.load, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.6),
+                      image_path="./sprites/pause_menu/button.png",
+                      selected_image_path="./sprites/pause_menu/button_hover.png",
+                      sprite_group=[],
+                      text="Загрузить"
+                      ),
+            UI.Button(self.exit, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.8),
+                      image_path="./sprites/pause_menu/button.png",
+                      selected_image_path="./sprites/pause_menu/button_hover.png",
+                      sprite_group=[],
+                      text="Выйти",
+                      selected_text_color=GRAY
+                      ),
+        )
+        self.pause_menu = UI.Menu(buttons,
+                                  action_bar_path="./sprites/pause_menu/menu_background.png",
+                                  pos=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
 
         self.__create_map()
         self.__setup()
@@ -178,9 +196,6 @@ class Level:
             self.start()
 
         self.events_list = pygame.event.get()
-        # список событий передаётся компонентам для самостоятельной обработки
-        self.player.set_events_list(self.events_list)
-        # выход из игры
         for event in self.events_list:
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -191,36 +206,41 @@ class Level:
                 if event.key == pygame.K_1:
                     self.set_current_level(self.move_to)
 
-        if not self.battle_manager.is_battle:
-            self.__all_sprites.centralize_on_obj(self.player)
-            self.__all_sprites.custom_draw(self.player)
-            self.__all_sprites.update(dt)
+        # список событий передаётся компонентам для самостоятельной обработки
+        if not self.is_paused:
+            self.player.set_events_list(self.events_list)
+
+            if not self.battle_manager.is_battle:
+                self.__all_sprites.centralize_on_obj(self.player)
+                self.__all_sprites.custom_draw(self.player)
+                self.__all_sprites.update(dt)
+            else:
+                self.battle_manager.update(dt)
+                self.battle_manager.set_events_list(self.events_list)
         else:
-            self.battle_manager.update(dt)
-            self.battle_manager.set_events_list(self.events_list)
+            self.__all_sprites.custom_draw(self.player)
+            self.pause_menu.set_events_list(self.events_list)
+            self.pause_menu.draw_menu()
+            self.pause_menu.input()
+            self.pause_menu.update()
+
+        pygame.display.update()
 
     def pause(self):
+        self.is_paused = not self.is_paused
+        print(self.is_paused)
 
-        # TODO: сделать так чтобы при одновременном нажатии esc и удержании кнопки перемещения,
-        # перемещение не происходило
+    def save(self):
+        pass
 
-        self.pause_menu = True
-        # цикл замараживает всю остальную часть кода
-        while self.pause_menu:
-            log.debug(f"pause active")
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE:
-                        self.pause_menu = False
-            self.__all_sprites.custom_draw(self.player)
-            self.window = pygame.sprite.Sprite()
-            self.window.image = pygame.image.load('./sprites/pause_menu.png')
-            self.window.rect = self.window.image.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
-            self.__display_surface.blit(self.window.image, self.window.rect)
-            pygame.display.update()
+    def load(self):
+        pass
+
+    def settings(self):
+        pass
+
+    def exit(self):
+        pass
 
 
 class CameraGroup(pygame.sprite.Group):
