@@ -49,6 +49,18 @@ class Menu:
                         self.change_target_on_n(self._target_index + 1)
                     else:
                         self.change_target_on_n(0)
+                elif event.key == pygame.K_w:
+                    self.sound_bt_hover.play()
+                    if self._target_index - 1 >= 0:
+                        self.change_target_on_n(self._target_index - 1)
+                    else:
+                        self.change_target_on_n(self._buttons_count - 1)
+                elif event.key == pygame.K_s:
+                    self.sound_bt_hover.play()
+                    if self._target_index + 1 < self._buttons_count:
+                        self.change_target_on_n(self._target_index + 1)
+                    else:
+                        self.change_target_on_n(0)
 
     def update(self):
         for button in self._buttons:
@@ -113,8 +125,10 @@ class Button:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_e:
                     if self.__is_targeted:
-                        self.__function(self.__args)
-
+                        if self.__args:
+                            self.__function(self.__args)
+                        else:
+                            self.__function()
     def update(self):
         if self.__button_type == "image":
             if not self.__is_targeted:

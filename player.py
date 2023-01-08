@@ -109,7 +109,7 @@ class Player(GameObject):
         keys = self.__event_list
         for event in keys:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_e:
                     for sprite in self.__interactable_sprites:
                         # переключение на следующую реплику в диалоге
                         if hasattr(sprite, 'interact_component'):
