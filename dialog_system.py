@@ -59,6 +59,11 @@ class Dialog(pygame.sprite.Group):
                                  position=(self.window.rect.x + 15, self.window.rect.top + 60),
                                  size=24,
                                  color=(255, 255, 255, 255))
+        self.second_line = Text(screen=self.display_surf,
+                                text="",
+                                position=(self.window.rect.x + 15, self.window.rect.top + 100),
+                                size=24,
+                                color=(255, 255, 255, 255))
         # имя говорящего
         self.text_name = Text(screen=self.display_surf,
                               text=self.replicas[self.replica_index].split(':')[0],
@@ -78,17 +83,29 @@ class Dialog(pygame.sprite.Group):
         if self.replica_index < len(self.replicas):
 
             if not self.replicas[self.replica_index].startswith('+'):
-                self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
-                # s = ''
-                # for i in self.replicas[self.replica_index].split(':')[1]:
-                #     s += i
-                #     self.text_replica.text = s
-                #     time.sleep(0.03)
-                #     self.text_replica.out()
-                #     print(s)
-                # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
-                self.text_name.text = self.replicas[self.replica_index].split(':')[0]
-                self.replica_index += 1
+                print(self.replicas[self.replica_index])
+                if self.replicas[self.replica_index].find("\\n") > 0:
+                    print("YEP")
+                    splited = self.replicas[self.replica_index].split('\\n', 1)
+                    print(splited)
+                    self.text_name.text = splited[0].split(':')[0]
+                    self.text_replica.text = splited[0].split(':')[1]
+                    self.second_line.text = splited[1]
+                else:
+                    print("NO")
+                    self.second_line.text = ""
+                    self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
+                    # s = ''
+                    # for i in self.replicas[self.replica_index].split(':')[1]:
+                    #     s += i
+                    #     self.text_replica.text = s
+                    #     time.sleep(0.03)
+                    #     self.text_replica.out()
+                    #     print(s)
+                    # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
+
+                    self.text_name.text = self.replicas[self.replica_index].split(':')[0]
+                    self.replica_index += 1
             else:
                 self.text_name.text = None
                 self.text_replica.text = self.replicas[self.replica_index].split('+')[1].split('->')[0]
@@ -104,6 +121,7 @@ class Dialog(pygame.sprite.Group):
             self.display_surf.blit(self.window.image, self.window.rect)
             self.display_surf.blit(self.npc_profile.image, self.npc_profile.rect)
             self.text_replica.out()
+            self.second_line.out()
             self.text_name.out()
 
     def update_loc(self, new_loc):
