@@ -108,6 +108,10 @@ class GameObject(pygame.sprite.Sprite):
         self.image = self._animations[self._anim_status][int(
             self._anim_frame_index)]
 
+    def locate(self, pos):
+        "меняет расположение обьекта"
+        self._pos = pos
+
     def update(self, dt):
         self._input(dt)
         self._move(dt)
