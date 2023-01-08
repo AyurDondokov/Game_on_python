@@ -61,6 +61,12 @@ cover/
 
 # Django stuff:
 *.log
+
+.vscode
+./idea
+.idea
+.DS_Store
+
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
@@ -166,6 +172,7 @@ cython_debug/
 ### Python Patch ###
 # Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
 poetry.toml
+>>>>>>> main
 
 
 # End of https://www.toptal.com/developers/gitignore/api/python
@@ -176,6 +183,6 @@ poetry.toml
 .idea/workspace.xml
 /.idea/inspectionProfiles/Project_Default.xml
 .vscode
-
 Game_on_python.iml
 misc.xml
+

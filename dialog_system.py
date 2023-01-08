@@ -1,5 +1,6 @@
 from properties import *
 from support import *
+from dialog.dialog_data import DIALOG_ICONS
 
 
 class Text:
@@ -31,10 +32,13 @@ class Text:
 
 
 class Dialog(pygame.sprite.Group):
+    """Класс отрисовки диалогов, кнопок в диалогах и тп"""
+
     def __init__(self, dialog_replicas, position: tuple = DIALOG_WINDOW_POSITION):
         super().__init__()
         self.display_surf = pygame.display.get_surface()
         self.is_open = False
+        self.selection = []
 
         # подложка диалога
         self.window = pygame.sprite.Sprite(self)
@@ -56,6 +60,11 @@ class Dialog(pygame.sprite.Group):
                                  position=(self.window.rect.x + 15, self.window.rect.top + 60),
                                  size=24,
                                  color=(255, 255, 255, 255))
+        self.second_line = Text(screen=self.display_surf,
+                                text="",
+                                position=(self.window.rect.x + 15, self.window.rect.top + 100),
+                                size=24,
+                                color=(255, 255, 255, 255))
         # имя говорящего
         self.text_name = Text(screen=self.display_surf,
                               text=self.replicas[self.replica_index].split(':')[0],
@@ -63,14 +72,50 @@ class Dialog(pygame.sprite.Group):
                               size=24,
                               color=(255, 255, 255, 255))
 
+    def change_npc_icon(self, char, value: str):
+
+        surface = DIALOG_ICONS[char][value]
+        self.npc_profile.image = surface
+
     def next_replica(self):
         """Отображение следущей реплики, пока таковые остались в списке"""
         if not self.is_open:
             self.is_open = True
+
         if self.replica_index < len(self.replicas):
-            self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
-            self.text_name.text = self.replicas[self.replica_index].split(':')[0]
-            self.replica_index += 1
+
+            if not self.replicas[self.replica_index].startswith('+'):
+                text_name = self.replicas[self.replica_index].split(':')[0]
+                self.text_name.text = text_name
+                if (pos_icon := text_name.find("|")) != -1:
+                    self.change_npc_icon(text_name[:pos_icon], text_name[pos_icon+1:])
+                    self.text_name.text = text_name[:pos_icon]
+                else:
+                    self.change_npc_icon(text_name, "idle")
+                if self.replicas[self.replica_index].find("\\n") > 0:
+                    splited = self.replicas[self.replica_index].split('\\n', 1)
+                    self.text_replica.text = splited[0].split(':')[1]
+                    self.second_line.text = splited[1]
+                    self.replica_index += 1
+                else:
+                    self.second_line.text = ""
+                    self.text_replica.text = self.replicas[self.replica_index].split(':')[1]
+                    # s = ''
+                    # for i in self.replicas[self.replica_index].split(':')[1]:
+                    #     s += i
+                    #     self.text_replica.text = s
+                    #     time.sleep(0.03)
+                    #     self.text_replica.out()
+                    #     print(s)
+                    # print(self.text_replica.text)  # <Surface(963x28x8 SW)>
+
+                    self.replica_index += 1
+            else:
+                self.text_name.text = None
+                self.text_replica.text = self.replicas[self.replica_index].split('+')[1].split('->')[0]
+                self.selection.append(self.replicas[self.replica_index].split('+')[1].split('->')[0])
+                self.replica_index += 1
+            # print(self.selection)
         else:
             self.is_open = False
             self.replica_index = 0
@@ -80,7 +125,11 @@ class Dialog(pygame.sprite.Group):
             self.display_surf.blit(self.window.image, self.window.rect)
             self.display_surf.blit(self.npc_profile.image, self.npc_profile.rect)
             self.text_replica.out()
+            self.second_line.out()
             self.text_name.out()
+
+    def update_loc(self, new_loc):
+        self.replicas = new_loc
 
     def update(self, dt):
         self.custom_draw()

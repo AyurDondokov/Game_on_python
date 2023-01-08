@@ -1,8 +1,12 @@
+import scripts as scr
+from scripts import *
 import logging
 import sys
 
 import pygame
 
+from reader_dialog import ReadingLocations
+import battle_system
 import UI
 import battle_system
 import game_object
@@ -16,18 +20,19 @@ from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger
 from pytmx.util_pygame import load_pygame
 
-import scripts as scr
 
 log = logging.getLogger(__name__)
 
 
 class Level:
-    def __init__(self, level_data, set_current_level):
+    def __init__(self, level_data, set_current_level, name):
         """Отрисовка спрайтов на уровне"""
         self.player = None
         self.window = None
         self.events_list = None
         log.info(f'Level class intialization')
+        self.name = name
+        self.reader = ReadingLocations(f'dialog/{self.name}.txt')
 
         self.is_runned = False
         self.__display_surface = pygame.display.get_surface()
@@ -63,6 +68,7 @@ class Level:
         self.__collision_sprites = pygame.sprite.Group()
         self.__interactable_sprites = pygame.sprite.Group()
         self.__trigger_sprites = pygame.sprite.Group()
+        self.__npc_dict = {}
 
         self.__create_map()
         self.__setup()
@@ -100,10 +106,17 @@ class Level:
                             surface=pygame.image.load("images/ground/trigger.png"),
                             script=scr.StartBattleScript(self.battle_manager, obj.properties.get("battle_index"))
                         )
-                    elif getattr(obj, "class") == "npc":
-                        NPC((obj.x, obj.y),
-                            [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                            obj.name, dialog_replicas=test_npc2)
+                        print(obj.x, obj.y)
+                    if getattr(obj, "class") == "npc":
+                        dialog = None
+                        if obj.properties.get("dialog"):
+                            dialog = self.reader.get_npc_replicas(obj.name)
+                        self.__npc_dict.update(
+                            {obj.name:
+                             NPC((obj.x, obj.y),
+                                 [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                                 obj.name, dialog_replicas=dialog)}
+                        )
                 else:
                     if hasattr(obj, "hitbox_offset_x"):
                         game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
@@ -228,7 +241,7 @@ class CameraGroup(pygame.sprite.Group):
                         abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT*0.75:
                     if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
                         # нужно для правильного накладывания гг на обьект или за обьект
-                        if sprite.rect.bottom > player.rect.bottom:
+                        if sprite.rect.centery > player.rect.centery:
                             # если Yцентр спрайта выше гг отрисовывать его перед гг
                             sprite.z = LAYERS['forward_' +
                                               list(LAYERS.keys())[sprite.z].split('_')[1]]

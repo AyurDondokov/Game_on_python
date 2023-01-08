@@ -472,7 +472,11 @@
   <object id="60" name="Portal" gid="107" x="1205" y="1856" width="204" height="256"/>
  </objectgroup>
  <objectgroup id="17" name="NPC">
-  <object id="50" name="caravan_leader" class="npc" gid="108" x="2816" y="1280" width="64" height="64"/>
+  <object id="50" name="caravan_leader" class="npc" gid="108" x="2816" y="1280" width="64" height="64">
+   <properties>
+    <property name="dialog" value="1"/>
+   </properties>
+  </object>
   <object id="51" name="caravan_member/left" class="npc" gid="108" x="3136" y="1408" width="64" height="64"/>
   <object id="52" name="caravan_member/right" class="npc" gid="108" x="2560" y="1344" width="64" height="64"/>
  </objectgroup>

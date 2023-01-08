@@ -1,21 +1,51 @@
-import logging as log
-
-
 class ReadingLocations:
-    """"Класс для работы с диалогами из файла"""
+    """"Класс для работы с диалогами из файла
 
-    def __init__(self, title):
-        self.conversation, self.choice = [], []  # массивы: обычного диалога и выборки реплик
-        self.title = title
-        self.__dict_of_locations = {}  # словарь из локаций {локация: (start, end)} - индексы строк диалога
-        self.__dictionary_of_locations = []  # массив индексов локаций (=== loc ===)
+        формат файла:
+        ===location=== (указатель на блок текста, локация для диалога)
+        основной блок текста
+        Name: *text*
+
+        На выходе получаем словарь
+        {npc1: [{loc1: [text]}, {loc2: [text]}], npc2...}
+    """
+
+    def __init__(self, title: str):
+        """
+        self.title = содержит документ .txt
+
+        основная логика*
+        self.__dict_npc_loc -> dict основной словарь  {npc1: [{loc1: [text]}, {loc2: [text]}], npc2...}
+        self.__dict_of_locations_select словарь из выбора по локациямлокаций {выбор: локация}
+        self.__dictionary_of_locations -> list массив индексов строк локаций (=== loc ===)
         self.__listing_locations = []  # массив из локаций
-        self.dialog = None
+        self.__dict_of_locations -> dict -  словарь из локаций {loc: (start, end)} - индексы строк диалога
+
+        дополнительно*
+        elf.lines = () - чтение всех линий файла
+        self.mac = {} словарь {loc1: [text], loc2: [text]}
+        self.dialog = [] - массив читорый сохраняет текст от начала до конца из {loc: (start, end)}
+        """
+        self.title = title
+        self.__dict_npc_loc = {}
+        self.__dict_of_locations_select = {}
+        self.__dictionary_of_locations = []
+        self.__listing_locations = []
+        self.__dict_of_locations = {}
         self.lines = ()
+        self.mac = {}
+        self.dialog = []
+        # чтение диалогого файла
         self.reader()
 
     def reader(self):
-        """Чтение файла и первоначальная обработка"""
+        """ Первоначальное чтение файла
+
+        читает файл построчно заносит сведенья:
+            1. всех npc данного мира - *self.__dict_npc_loc
+            2. массив из данных строк: начала и конца диалогов - self.__dict_of_locations
+            3. массив из всех локаций мира - self.__listing_locations
+        """
         with open(self.title, 'r', encoding="utf-8") as file:
             self.lines = file.readlines()
             for line in self.lines:
@@ -23,64 +53,54 @@ class ReadingLocations:
                     self.__dictionary_of_locations.append(self.lines.index(line))
                     example = {line.rstrip()[4:-4]: None}
                     self.__dict_of_locations.update(example)
+
+                    name_loc = line.rstrip()[4:-4]
+                    npc = name_loc.split('__')[0]
+                    name_npc = {npc: None}
+                    self.__dict_npc_loc.update(name_npc)
+
             self.__dictionary_of_locations.append(len(self.lines))
             self.__listing_locations = list(self.__dict_of_locations)
             for i in range(len(self.__dict_of_locations)):
                 self.__dict_of_locations[self.__listing_locations[i]] = \
                     [self.__dictionary_of_locations[i], self.__dictionary_of_locations[i + 1]]
+        #
+        self.mac_red()
 
-    def dia_loc(self, loc):
-        """Вызов диалога определенной локации"""
+    def mac_red(self) -> dict:
+        """"
+        Метод который пополняет уже созданный словарь:
+        к каждому ключу npc представляется значение (массив)
+        в котором впредставлены словари - {loc: *text*}
+        """
+        for name in (*self.__dict_npc_loc,):
+            self.__dict_of_locations_select = {}
+            self.mac = {}
+            for i in self.__listing_locations:
+                if i.startswith(name):
+                    nut = i.split('__')[1]
+                    example = {nut: self.dia_loc(i)}
+                    self.mac.update(example)
+            self.__dict_npc_loc.update({name: self.mac})
+
+    def dia_loc(self, loc: str) -> list:
+        """Вызов диалога определенной локации - возвращает массив реплик"""
         start, end = self.__dict_of_locations[loc]
         dialogue = self.lines[start + 1:end - 1]
         self.dialog = []
         for line in dialogue:
             self.dialog.append(line.rstrip())
-        self.selection()
-        log.debug(f"convesation is{self.conversation}")
+        return self.dialog
 
-    def selection(self):
-        """Разделение обычного диалога и выбора сценария при наличии"""
-        i = 0
-        self.conversation, self.choice = [], []
-        while i < len(self.dialog):
-            if self.dialog[i][0:1] != '+':
-                self.conversation.append(self.dialog[i])
-            elif self.dialog[i][0:1] == '+':
-                if i < len(self.dialog) - 1 and self.dialog[i + 1][0:1] == '+':
-                    self.choice.append(self.dialog[i][2:])
-            i += 1
-        if self.dialog[i - 1][0:1] == '+':
-            self.choice.append(self.dialog[len(self.dialog) - 1][2:])
-        # self.checking_the_selection()
-
-    # @property
-    # def conversation(self):
-    #     return self.conversation
-    #
-    # @property.setter
-    # def conversation(self, value):
-    #     self.conversation = value
-
-    # def checking_the_selection(self):
-    #     if self.choice == []:
-    #         print('\n')
-    #         for i in range(len(self.conversation)):
-    #             print(self.conversation[i])
-    #     else:
-    #         print('\n')
-    #         for i in range(len(self.conversation)):
-    #             print(self.conversation[i])
-    #         for i in self.choice:
-    #             print(i)
-    #             monologue, state = i.split("->")
-    #         if state != 'END':
-    #             self.dia_loc(f'{state.strip()}')
+    def get_npc_replicas(self, npc):
+        """Возвращение всех локаций определенного npc"""
+        return self.__dict_npc_loc[npc]
 
     @property
-    def location_dialog(self):
-        return self.__dict_of_locations
+    def dict_npc_loc(self):
+        return self.__dict_npc_loc
 
-    @property
-    def array_location(self):
-        return self.__listing_locations
+#
+# check = ReadingLocations('proba.txt')
+# print(check.dict_npc_loc)
+# print(check.get_npc_replicas('a'))

@@ -38,6 +38,8 @@ class Player(GameObject):
         self.level = player_level
         self.health = health
 
+        self._managed = True
+
     def _collision(self, direction):
         """Проверка столкновений"""
         super(Player, self)._collision(direction)
@@ -77,30 +79,31 @@ class Player(GameObject):
 
     def _input(self, dt):
         """Приём нажатия клавишь"""
-        keys = pygame.key.get_pressed()
+        if self._managed:
+            keys = pygame.key.get_pressed()
 
-        # Вертикальное движение
-        if keys[pygame.K_w] and not keys[pygame.K_s]:
-            self._direction.y = -1
-            self._change_anim_status("walk_up")
-        elif keys[pygame.K_s] and not keys[pygame.K_w]:
-            self._direction.y = 1
-            self._change_anim_status("walk_down")
-        else:
-            self._direction.y = 0
+            # Вертикальное движение
+            if keys[pygame.K_w] and not keys[pygame.K_s]:
+                self._direction.y = -1
+                self._change_anim_status("walk_up")
+            elif keys[pygame.K_s] and not keys[pygame.K_w]:
+                self._direction.y = 1
+                self._change_anim_status("walk_down")
+            else:
+                self._direction.y = 0
 
-        # Горизонтальное движение
-        if keys[pygame.K_a] and not keys[pygame.K_d]:
-            self._direction.x = -1
-            self._change_anim_status("walk_left")
-        elif keys[pygame.K_d] and not keys[pygame.K_a]:
-            self._direction.x = 1
-            self._change_anim_status("walk_right")
-        else:
-            self._direction.x = 0
+            # Горизонтальное движение
+            if keys[pygame.K_a] and not keys[pygame.K_d]:
+                self._direction.x = -1
+                self._change_anim_status("walk_left")
+            elif keys[pygame.K_d] and not keys[pygame.K_a]:
+                self._direction.x = 1
+                self._change_anim_status("walk_right")
+            else:
+                self._direction.x = 0
 
-        if self._direction.magnitude() == 0:
-            self._change_anim_status("idle_" + self._anim_status.split('_')[1])
+            if self._direction.magnitude() == 0:
+                self._change_anim_status("idle_" + self._anim_status.split('_')[1])
 
         # чтение событий pygame.event
         keys = self.__event_list
@@ -109,12 +112,12 @@ class Player(GameObject):
                 if event.key == pygame.K_SPACE:
                     for sprite in self.__interactable_sprites:
                         # переключение на следующую реплику в диалоге
-                        if hasattr(sprite, 'is_dialog_able'):
-                            if sprite.is_dialog_able:
-                                sprite.dialog.next_replica()
-                        if hasattr(sprite, 'is_use_able'):
-                            if sprite.is_use_able:
-                                sprite.execute()
+                        if hasattr(sprite, 'interact_component'):
+                            if sprite.interact_component.is_able:
+                                sprite.interact_component.interact()
+                        # if hasattr(sprite, 'is_use_able'):
+                        #     if sprite.is_use_able:
+                        #         sprite.execute()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
@@ -122,13 +125,20 @@ class Player(GameObject):
 
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""
+        flag = False
         for sprite in self.__interactable_sprites:
-            if hasattr(sprite, 'is_dialog_able'):
-                sprite.is_dialog_able = self._pos.distance_to(
+            if hasattr(sprite, 'interact_component'):
+                sprite.interact_component.is_able = self._pos.distance_to(
                     sprite.pos) < DISTANCE_FOR_INTERACT
-            if hasattr(sprite, 'is_use_able'):
-                sprite.is_use_able = self._pos.distance_to(
-                    sprite.pos) < DISTANCE_FOR_INTERACT
+                if hasattr(sprite, 'dialog'):
+                    if sprite.dialog.is_open:
+                        flag = True
+                        self._managed = False
+                        self._direction.x = 0
+                        self._direction.y = 0
+                        self._change_anim_status("idle_" + self._anim_status.split('_')[1])
+        if not flag:
+            self._managed = True
 
     def update(self, dt):
         super().update(dt)
