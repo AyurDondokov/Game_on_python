@@ -37,17 +37,17 @@ class Level:
         self.move_to = level_data["move_to"]
 
         # Меню паузы
-        buttons = (
-            UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
-                      image_path="./sprites/pause_menu/button.png",
-                      selected_image_path="./sprites/pause_menu/button_hover.png",
-                      sprite_group=self.__all_sprites,
-                      text="Продолжить",
-
-                      ),
-        )
-        self.pause_menu = UI.Menu(buttons,
-                                  action_bar_path="./sprites/pause_menu/menu_background.png")
+        # buttons = (
+        #     UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
+        #               image_path="./sprites/pause_menu/button.png",
+        #               selected_image_path="./sprites/pause_menu/button_hover.png",
+        #               sprite_group=self.__all_sprites,
+        #               text="Продолжить",
+        #
+        #               ),
+        # )
+        # self.pause_menu = UI.Menu(buttons,
+        #                           action_bar_path="./sprites/pause_menu/menu_background.png")
 
 
         # отрисовка
@@ -100,14 +100,19 @@ class Level:
                             surface=pygame.image.load("images/ground/trigger.png"),
                             script=scr.StartBattleScript(self.battle_manager, obj.properties.get("battle_index"))
                         )
-                        print(obj.x, obj.y)
                     elif getattr(obj, "class") == "npc":
                         NPC((obj.x, obj.y),
                             [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
                             obj.name, dialog_replicas=test_npc2)
                 else:
-                    game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["ground"],
-                                           image_surf=obj.image)
+                    if hasattr(obj, "hitbox_offset_x"):
+                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
+                                               image_surf=obj.image,
+                                               hitbox_offset=(getattr(obj, "hitbox_offset_x"), getattr(obj, "hitbox_offset_y")),
+                                               hitbox_size=(getattr(obj, "hitbox_size_x"), getattr(obj, "hitbox_size_y")))
+                    else:
+                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
+                                               image_surf=obj.image)
         script.receiver = portal
 
     def __create_map(self):
@@ -223,7 +228,7 @@ class CameraGroup(pygame.sprite.Group):
                         abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT*0.75:
                     if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
                         # нужно для правильного накладывания гг на обьект или за обьект
-                        if sprite.rect.centery > player.rect.centery:
+                        if sprite.rect.bottom > player.rect.bottom:
                             # если Yцентр спрайта выше гг отрисовывать его перед гг
                             sprite.z = LAYERS['forward_' +
                                               list(LAYERS.keys())[sprite.z].split('_')[1]]
