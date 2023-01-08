@@ -58,7 +58,6 @@ class Level:
         # self.pause_menu = UI.Menu(buttons,
         #                           action_bar_path="./sprites/pause_menu/menu_background.png")
 
-
         # отрисовка
         self.__map = level_data["MAP"]
         self.__tileset = level_data["TileSet"]
@@ -82,7 +81,7 @@ class Level:
                       text="Продолжить",
                       text_color=GRAY,
                       selected_text_color=WHITE,
-                  ),
+                      ),
             UI.Button(self.save, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4),
                       image_path="./sprites/pause_menu/button.png",
                       selected_image_path="./sprites/pause_menu/button_hover.png",
@@ -155,6 +154,7 @@ class Level:
                         dialog = None
                         if obj.properties.get("dialog"):
                             dialog = self.reader.get_npc_replicas(obj.name)
+                            print(dialog)
                         self.__npc_dict.update(
                             {obj.name:
                              NPC((obj.x, obj.y),
@@ -163,10 +163,14 @@ class Level:
                         )
                 else:
                     if hasattr(obj, "hitbox_offset_x"):
-                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
-                                               image_surf=obj.image,
-                                               hitbox_offset=(getattr(obj, "hitbox_offset_x"), getattr(obj, "hitbox_offset_y")),
-                                               hitbox_size=(getattr(obj, "hitbox_size_x"), getattr(obj, "hitbox_size_y")))
+                        game_object.GameObject(
+                            (obj.x, obj.y),
+                            groups, "", LAYERS["back_decor"],
+                            image_surf=obj.image,
+                            hitbox_offset=(getattr(obj, "hitbox_offset_x"),
+                                           getattr(obj, "hitbox_offset_y")),
+                            hitbox_size=(getattr(obj, "hitbox_size_x"),
+                                         getattr(obj, "hitbox_size_y")))
                     else:
                         game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
                                                image_surf=obj.image)
