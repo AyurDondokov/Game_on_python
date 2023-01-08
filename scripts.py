@@ -37,7 +37,7 @@ class SwitchDialogScript(Script):
         """Включает следующую реплику у NPC"""
 
         print("DialogSwitched")
-        self._reseiver.switch_dialog(self.loc)
+        self._reseiver.switch_replica(self.loc)
 
 
 class ActivatePortalScript(Script):

@@ -109,12 +109,12 @@ class Player(GameObject):
                 if event.key == pygame.K_SPACE:
                     for sprite in self.__interactable_sprites:
                         # переключение на следующую реплику в диалоге
-                        if hasattr(sprite, 'is_dialog_able'):
-                            if sprite.is_dialog_able:
-                                sprite.dialog.next_replica()
-                        if hasattr(sprite, 'is_use_able'):
-                            if sprite.is_use_able:
-                                sprite.execute()
+                        if hasattr(sprite, 'interact_component'):
+                            if sprite.interact_component.is_able:
+                                sprite.interact_component.interact()
+                        # if hasattr(sprite, 'is_use_able'):
+                        #     if sprite.is_use_able:
+                        #         sprite.execute()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
@@ -123,12 +123,12 @@ class Player(GameObject):
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""
         for sprite in self.__interactable_sprites:
-            if hasattr(sprite, 'is_dialog_able'):
-                sprite.is_dialog_able = self._pos.distance_to(
+            if hasattr(sprite, 'interact_component'):
+                sprite.interact_component.is_able = self._pos.distance_to(
                     sprite.pos) < DISTANCE_FOR_INTERACT
-            if hasattr(sprite, 'is_use_able'):
-                sprite.is_use_able = self._pos.distance_to(
-                    sprite.pos) < DISTANCE_FOR_INTERACT
+            # if hasattr(sprite, 'is_use_able'):
+            #     sprite.is_use_able = self._pos.distance_to(
+            #         sprite.pos) < DISTANCE_FOR_INTERACT
 
     def update(self, dt):
         super().update(dt)
