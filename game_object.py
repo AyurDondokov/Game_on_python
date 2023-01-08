@@ -42,9 +42,9 @@ class GameObject(pygame.sprite.Sprite):
                                                self.rect.height * hitbox_size[1] - self.rect.height)
         self.hitbox_offset = hitbox_offset
         self.hitbox.centerx = self.rect.centerx + \
-                              self.rect.width * self.hitbox_offset[0]
+            self.rect.width * self.hitbox_offset[0]
         self.hitbox.centery = self.rect.centery + \
-                              self.rect.height * self.hitbox_offset[1]
+            self.rect.height * self.hitbox_offset[1]
         self.z = z
 
         # Настройки передвижения
@@ -107,6 +107,11 @@ class GameObject(pygame.sprite.Sprite):
             self._anim_frame_index = 0
         self.image = self._animations[self._anim_status][int(
             self._anim_frame_index)]
+
+    def locate(self, pos):
+        "меняет расположение обьекта"
+        self._pos.x = pos[0]
+        self._pos.y = pos[1]
 
     def update(self, dt):
         self._input(dt)
