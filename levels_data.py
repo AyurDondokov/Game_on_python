@@ -57,7 +57,7 @@ level_1 = {
         'limiters': './levels_data/graphics/decoration2/SandLight.png',
     },
     "TMXData": "levels_data/levels/1/level_1__objects.tmx",
-    "move_to": 0,
+    "move_to": 2,
     "music": "music_and_sound/music/level/Desert theme.mp3",
     "battles": {
         0: {"enemies": ["tumbleweed", "tumbleweed"],
