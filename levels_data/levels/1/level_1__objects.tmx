@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="80" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="14" nextobjectid="59">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="92" height="53" tilewidth="64" tileheight="64" infinite="0" nextlayerid="20" nextobjectid="61">
  <tileset firstgid="1" source="../tilesets/desert_tileset.tsx"/>
  <tileset firstgid="81" source="../tilesets/desert_water.tsx"/>
  <tileset firstgid="106" source="../tilesets/hub_portal.tsx"/>
  <tileset firstgid="108" source="../tilesets/start.tsx"/>
  <tileset firstgid="109" source="../tilesets/tomb.tsx"/>
  <tileset firstgid="112" source="../tilesets/limiters.tsx"/>
- <objectgroup id="5" name="Veget2" offsetx="-1024" offsety="0"/>
- <objectgroup id="4" name="Veget" offsetx="-1024" offsety="0"/>
- <objectgroup id="7" name="NPC Leader" offsetx="-1024" offsety="0">
-  <object id="41" name="caravan_leader" class="npc" gid="22" x="2682.33" y="1174.67" width="64" height="64">
-   <properties>
-    <property name="collide" value="1"/>
-   </properties>
-  </object>
+ <tileset firstgid="128" source="../tilesets/hub_components_of_portal.tsx"/>
+ <objectgroup id="15" name="Component">
+  <object id="49" name="component" gid="128" x="5166" y="674" width="108" height="44"/>
  </objectgroup>
- <objectgroup id="13" name="battles">
-  <object id="55" class="battle" x="580" y="1564" width="64" height="64">
+ <objectgroup id="19" name="portal">
+  <object id="60" name="Portal" gid="107" x="1205" y="1856" width="204" height="256"/>
+ </objectgroup>
+ <objectgroup id="17" name="NPC">
+  <object id="50" name="caravan_leader" class="npc" gid="108" x="2816" y="1280" width="64" height="64"/>
+  <object id="51" name="caravan_member/left" class="npc" gid="108" x="3136" y="1408" width="64" height="64"/>
+  <object id="52" name="caravan_member/right" class="npc" gid="108" x="2560" y="1344" width="64" height="64"/>
+ </objectgroup>
+ <objectgroup id="18" name="battles">
+  <object id="54" class="battle" x="2112" y="1600" width="64" height="64">
    <properties>
     <property name="battle_index" value="1"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="8" name="portal" offsetx="-1024" offsety="0">
-  <object id="42" name="Portal" gid="107" x="928" y="1620" width="204" height="256">
+  <object id="55" class="battle" x="2368" y="1792" width="64" height="64">
    <properties>
-    <property name="collide" value="1"/>
+    <property name="battle_index" value="1"/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="10" name="tomb" offsetx="-1024" offsety="0">
-  <object id="43" gid="109" x="4084" y="3064" width="233" height="231"/>
-  <object id="44" gid="110" x="4404" y="3128" width="245" height="243"/>
-  <object id="45" gid="110" x="4212" y="3384" width="245" height="243"/>
-  <object id="46" gid="110" x="3780" y="3260" width="245" height="243"/>
+  <object id="56" class="battle" x="4224" y="1600" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="57" class="battle" x="4224" y="1664" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="58" class="battle" x="4224" y="1728" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="59" class="battle" x="4224" y="1792" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
