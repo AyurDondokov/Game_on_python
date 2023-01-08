@@ -71,6 +71,7 @@ level_1 = {
 
 level_2 = {
     "MAP": {
+        "cave": "levels_data/levels/2/level_2__cave.csv",
         "character": "levels_data/levels/2/level_2__character.csv",
         "green": "levels_data/levels/2/level_2__green.csv",
         "limiters": "levels_data/levels/2/level_2__limeters.csv",
@@ -79,6 +80,7 @@ level_2 = {
     },
 
     "TileSet": {
+        "cave": "./levels_data/graphics/decoration3/background/cave.png",
         "green": "./levels_data/graphics/decoration3/background/background_1.png",
         "pink": "./levels_data/graphics/decoration3/background/background_2.png",
         'maze': 'levels_data/graphics/decoration3/background/maze.png',

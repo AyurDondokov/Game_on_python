@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="90" tilewidth="64" tileheight="64" infinite="0" nextlayerid="28" nextobjectid="776">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="90" tilewidth="64" tileheight="64" infinite="0" nextlayerid="33" nextobjectid="888">
  <tileset firstgid="1" name="maze" tilewidth="64" tileheight="64" tilecount="54" columns="9">
   <image source="../../graphics/decoration3/background/maze.png" width="576" height="384"/>
  </tileset>
@@ -9,7 +9,7 @@
  <tileset firstgid="71" name="background_1" tilewidth="64" tileheight="64" tilecount="50" columns="10">
   <image source="../../graphics/decoration3/background/background_1.png" width="640" height="320"/>
  </tileset>
- <tileset firstgid="121" name="maze_environment" tilewidth="384" tileheight="320" tilecount="24" columns="0">
+ <tileset firstgid="121" name="maze_environment" tilewidth="384" tileheight="320" tilecount="26" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="32" height="32" source="../../graphics/decoration3/maze_environment/bush.png"/>
@@ -83,8 +83,14 @@
   <tile id="23">
    <image width="38" height="38" source="../../graphics/decoration3/maze_environment/grass4.png"/>
   </tile>
+  <tile id="24">
+   <image width="18" height="64" source="../../graphics/decoration3/maze_environment/bottle.png"/>
+  </tile>
+  <tile id="25">
+   <image width="33" height="34" source="../../graphics/decoration3/maze_environment/bottle_2.png"/>
+  </tile>
  </tileset>
- <tileset firstgid="145" name="computer" tilewidth="112" tileheight="128" tilecount="9" columns="0">
+ <tileset firstgid="147" name="computer" tilewidth="112" tileheight="128" tilecount="9" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="9">
    <image width="112" height="128" source="../../graphics/decoration3/computer/compute_redr.png"/>
@@ -114,7 +120,7 @@
    <image width="112" height="128" source="../../graphics/decoration3/computer/computer_yellow_on.png"/>
   </tile>
  </tileset>
- <tileset firstgid="163" name="cloud" tilewidth="472" tileheight="168" tilecount="18" columns="0">
+ <tileset firstgid="165" name="cloud" tilewidth="472" tileheight="168" tilecount="18" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="172" height="60" source="../../graphics/decoration3/cloud/cloud1.png"/>
@@ -171,13 +177,10 @@
    <image width="472" height="96" source="../../graphics/decoration3/cloud/cloud9 — копия.png"/>
   </tile>
  </tileset>
- <tileset firstgid="181" name="background_2" tilewidth="64" tileheight="64" tilecount="55" columns="11">
-  <image source="../../graphics/decoration3/background/background_2.png" width="704" height="320"/>
+ <tileset firstgid="183" name="background_2" tilewidth="64" tileheight="64" tilecount="88" columns="11">
+  <image source="../../graphics/decoration3/background/background_2.png" width="704" height="512"/>
  </tileset>
- <tileset firstgid="236" name="background_3" tilewidth="64" tileheight="64" tilecount="15" columns="5">
-  <image source="../../graphics/decoration3/background/background_3.png" width="320" height="192"/>
- </tileset>
- <tileset firstgid="251" name="portal" tilewidth="256" tileheight="256" tilecount="2" columns="0">
+ <tileset firstgid="271" name="portal" tilewidth="256" tileheight="256" tilecount="2" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
    <image width="256" height="256" source="../../graphics/decoration3/ruined_portal/big_destroy_portal.png"/>
@@ -186,10 +189,39 @@
    <image width="256" height="256" source="../../graphics/decoration3/ruined_portal/big_destroy_portal_second.png"/>
   </tile>
  </tileset>
- <tileset firstgid="253" name="start" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+ <tileset firstgid="273" name="start" tilewidth="64" tileheight="64" tilecount="1" columns="1">
   <image source="../../graphics/decoration3/character/start.png" width="64" height="64"/>
  </tileset>
- <tileset firstgid="254" source="../../graphics/decoration3/tsx/---.tsx"/>
+ <tileset firstgid="274" name="---" tilewidth="108" tileheight="44" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="108" height="44" source="../../../../ponytiled/Game_on_python/levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+ </tileset>
+ <objectgroup id="16" name="computer">
+  <object id="235" gid="157" x="3375" y="2753" width="94" height="124"/>
+ </objectgroup>
+ <objectgroup id="4" name="computer_red">
+  <object id="22" gid="156" x="2636" y="1478" width="112" height="128">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="computer_blue">
+  <object id="25" gid="161" x="2129" y="2546" width="112" height="128">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="12" name="computer_yellow">
+  <object id="23" gid="163" x="1412" y="2292" width="112" height="128">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+ </objectgroup>
  <objectgroup id="20" name="environment_in">
   <properties>
    <property name="collide" value=""/>
@@ -323,7 +355,11 @@
     <property name="collide" value=" "/>
    </properties>
   </object>
-  <object id="645" gid="134" x="5244" y="1930" width="64" height="64"/>
+  <object id="645" gid="134" x="5244" y="1930" width="64" height="64">
+   <properties>
+    <property name="collide" value=" "/>
+   </properties>
+  </object>
   <object id="646" gid="134" x="6936" y="1894" width="64" height="64">
    <properties>
     <property name="collide" value=""/>
@@ -337,42 +373,42 @@
   </object>
   <object id="649" gid="135" x="6351" y="1889" width="190" height="242">
    <properties>
-    <property name="collide" value=" "/>
+    <property name=" collide" value=" "/>
    </properties>
   </object>
-  <object id="651" gid="142" x="6716" y="3143" width="18" height="20"/>
-  <object id="652" gid="142" x="6671" y="3106" width="18" height="20"/>
-  <object id="653" gid="142" x="6648" y="3083" width="18" height="20"/>
-  <object id="654" gid="140" x="6887" y="3086" width="30" height="28"/>
-  <object id="655" gid="140" x="6901" y="3092" width="30" height="28"/>
-  <object id="656" gid="140" x="6908" y="3337" width="30" height="28"/>
-  <object id="657" gid="140" x="6919" y="3343" width="30" height="28"/>
-  <object id="658" gid="141" x="7037" y="3336" width="22" height="18"/>
-  <object id="659" gid="141" x="7023" y="3268" width="22" height="18"/>
-  <object id="660" gid="140" x="7106" y="3465" width="30" height="28"/>
-  <object id="661" gid="140" x="7140" y="3469" width="30" height="28"/>
-  <object id="662" gid="142" x="7129" y="3470" width="18" height="20"/>
-  <object id="663" gid="142" x="7159" y="3339" width="18" height="20"/>
-  <object id="664" gid="142" x="7206" y="3307" width="18" height="20"/>
-  <object id="665" gid="142" x="7166" y="3281" width="18" height="20"/>
-  <object id="666" gid="142" x="7085" y="3271" width="18" height="20"/>
-  <object id="667" gid="142" x="6904" y="3187" width="18" height="20"/>
-  <object id="668" gid="142" x="6831" y="3141" width="18" height="20"/>
-  <object id="669" gid="142" x="6749" y="3067" width="18" height="20"/>
-  <object id="670" gid="140" x="6758" y="3085" width="30" height="28"/>
-  <object id="671" gid="140" x="6911" y="3202" width="30" height="28"/>
-  <object id="672" gid="140" x="6740" y="3195" width="30" height="28"/>
-  <object id="673" gid="140" x="7034" y="3425" width="30" height="28"/>
-  <object id="674" gid="140" x="5738" y="3346" width="30" height="28"/>
-  <object id="675" gid="140" x="5992" y="3502" width="30" height="28"/>
-  <object id="676" gid="140" x="5990" y="3415" width="30" height="28"/>
-  <object id="677" gid="140" x="5861" y="3415" width="30" height="28"/>
-  <object id="678" gid="140" x="6201" y="3579" width="30" height="28"/>
-  <object id="679" gid="140" x="6197" y="3642" width="30" height="28"/>
+  <object id="651" gid="142" x="6683" y="2176" width="18" height="20"/>
+  <object id="652" gid="142" x="6638" y="2139" width="18" height="20"/>
+  <object id="653" gid="142" x="6615" y="2116" width="18" height="20"/>
+  <object id="654" gid="140" x="6854" y="2119" width="30" height="28"/>
+  <object id="655" gid="140" x="6868" y="2125" width="30" height="28"/>
+  <object id="656" gid="140" x="6875" y="2370" width="30" height="28"/>
+  <object id="657" gid="140" x="6886" y="2376" width="30" height="28"/>
+  <object id="658" gid="141" x="7004" y="2369" width="22" height="18"/>
+  <object id="659" gid="141" x="6990" y="2301" width="22" height="18"/>
+  <object id="660" gid="140" x="7073" y="2498" width="30" height="28"/>
+  <object id="661" gid="140" x="7107" y="2502" width="30" height="28"/>
+  <object id="662" gid="142" x="7096" y="2503" width="18" height="20"/>
+  <object id="663" gid="142" x="7126" y="2372" width="18" height="20"/>
+  <object id="664" gid="142" x="7173" y="2340" width="18" height="20"/>
+  <object id="665" gid="142" x="7133" y="2314" width="18" height="20"/>
+  <object id="666" gid="142" x="7052" y="2304" width="18" height="20"/>
+  <object id="667" gid="142" x="6871" y="2220" width="18" height="20"/>
+  <object id="668" gid="142" x="6798" y="2174" width="18" height="20"/>
+  <object id="669" gid="142" x="6716" y="2100" width="18" height="20"/>
+  <object id="670" gid="140" x="6725" y="2118" width="30" height="28"/>
+  <object id="671" gid="140" x="6878" y="2235" width="30" height="28"/>
+  <object id="672" gid="140" x="6707" y="2228" width="30" height="28"/>
+  <object id="673" gid="140" x="7001" y="2458" width="30" height="28"/>
+  <object id="674" gid="140" x="6854" y="2658" width="30" height="28"/>
+  <object id="675" gid="140" x="7108" y="2814" width="30" height="28"/>
+  <object id="676" gid="140" x="7106" y="2727" width="30" height="28"/>
+  <object id="677" gid="140" x="6977" y="2727" width="30" height="28"/>
+  <object id="678" gid="140" x="7317" y="2891" width="30" height="28"/>
+  <object id="679" gid="140" x="7313" y="2954" width="30" height="28"/>
   <object id="680" gid="140" x="5680" y="2673" width="30" height="28"/>
   <object id="681" gid="140" x="5877" y="2798" width="30" height="28"/>
   <object id="682" gid="140" x="5998" y="2675" width="30" height="28"/>
-  <object id="683" gid="140" x="5766" y="2753" width="30" height="28"/>
+  <object id="683" gid="140" x="5747" y="2725" width="30" height="28"/>
   <object id="684" gid="141" x="5686" y="2805" width="22" height="18"/>
   <object id="685" gid="141" x="5745" y="2620" width="22" height="18"/>
   <object id="686" gid="141" x="5518" y="2572" width="22" height="18"/>
@@ -380,42 +416,196 @@
   <object id="688" gid="141" x="6044" y="2701" width="22" height="18"/>
   <object id="689" gid="142" x="5876" y="2681" width="18" height="20"/>
   <object id="690" gid="142" x="5807" y="2687" width="18" height="20"/>
-  <object id="691" gid="142" x="5720" y="2833" width="18" height="20"/>
-  <object id="692" gid="142" x="5770" y="3371" width="18" height="20"/>
-  <object id="693" gid="142" x="5935" y="3391" width="18" height="20"/>
-  <object id="694" gid="142" x="5908" y="3455" width="18" height="20"/>
-  <object id="695" gid="142" x="6044" y="3367" width="18" height="20"/>
-  <object id="696" gid="142" x="6034" y="3373" width="18" height="20"/>
-  <object id="697" gid="142" x="6112" y="3575" width="18" height="20"/>
-  <object id="698" gid="142" x="6264" y="3510" width="18" height="20"/>
-  <object id="699" gid="142" x="6267" y="3491" width="18" height="20"/>
-  <object id="700" gid="142" x="6230" y="3465" width="18" height="20"/>
-  <object id="701" gid="142" x="6196" y="3477" width="18" height="20"/>
-  <object id="762" gid="126" x="6661" y="3253" width="36" height="36"/>
-  <object id="763" gid="126" x="6702" y="3297" width="36" height="36"/>
-  <object id="764" gid="126" x="6802" y="3206" width="36" height="36"/>
-  <object id="765" gid="193" x="6606" y="3627" width="64" height="64"/>
- </objectgroup>
- <objectgroup id="4" name="computer_red">
-  <object id="22" gid="154" x="2636" y="1478" width="112" height="128">
+  <object id="692" gid="142" x="6886" y="2683" width="18" height="20"/>
+  <object id="693" gid="142" x="7051" y="2703" width="18" height="20"/>
+  <object id="694" gid="142" x="7024" y="2767" width="18" height="20"/>
+  <object id="695" gid="142" x="7160" y="2679" width="18" height="20"/>
+  <object id="696" gid="142" x="7150" y="2685" width="18" height="20"/>
+  <object id="697" gid="142" x="7228" y="2887" width="18" height="20"/>
+  <object id="698" gid="142" x="7380" y="2822" width="18" height="20"/>
+  <object id="699" gid="142" x="7383" y="2803" width="18" height="20"/>
+  <object id="700" gid="142" x="7346" y="2777" width="18" height="20"/>
+  <object id="701" gid="142" x="7312" y="2789" width="18" height="20"/>
+  <object id="762" gid="126" x="6628" y="2286" width="36" height="36"/>
+  <object id="763" gid="126" x="6669" y="2330" width="36" height="36"/>
+  <object id="764" gid="126" x="6769" y="2239" width="36" height="36"/>
+  <object id="765" gid="195" x="6573" y="2660" width="64" height="64"/>
+  <object id="780" gid="143" x="5677" y="2531" width="64" height="64"/>
+  <object id="789" gid="143" x="5750" y="2529" width="64" height="64"/>
+  <object id="790" gid="143" x="5821" y="2532" width="64" height="64"/>
+  <object id="791" gid="143" x="5896" y="2529" width="64" height="64"/>
+  <object id="792" gid="143" x="5968" y="2537" width="64" height="64"/>
+  <object id="793" gid="143" x="6039" y="2527" width="64" height="64"/>
+  <object id="794" gid="143" x="6119" y="2542" width="64" height="64"/>
+  <object id="795" gid="143" x="6192" y="2533" width="64" height="64"/>
+  <object id="796" gid="143" x="6265" y="2549" width="64" height="64"/>
+  <object id="797" gid="143" x="6310" y="2535" width="64" height="64">
    <properties>
     <property name="collide" value=""/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="11" name="computer_blue">
-  <object id="25" gid="159" x="2129" y="2546" width="112" height="128">
+  <object id="799" gid="143" x="6292" y="2566" width="64" height="64"/>
+  <object id="800" gid="143" x="6220" y="2567" width="64" height="64"/>
+  <object id="801" gid="143" x="6153" y="2555" width="64" height="64"/>
+  <object id="802" gid="143" x="6072" y="2547" width="64" height="64"/>
+  <object id="803" gid="143" x="6097" y="2565" width="64" height="64"/>
+  <object id="804" gid="143" x="6005" y="2547" width="64" height="64"/>
+  <object id="805" gid="143" x="6033" y="2563" width="64" height="64"/>
+  <object id="806" gid="143" x="5926" y="2547" width="64" height="64"/>
+  <object id="807" gid="143" x="5923" y="2565" width="64" height="64"/>
+  <object id="808" gid="143" x="5847" y="2545" width="64" height="64"/>
+  <object id="809" gid="143" x="5821" y="2571" width="64" height="64"/>
+  <object id="810" gid="143" x="5777" y="2548" width="64" height="64"/>
+  <object id="811" gid="143" x="5715" y="2547" width="64" height="64"/>
+  <object id="812" gid="143" x="5721" y="2566" width="64" height="64"/>
+  <object id="813" gid="143" x="5608" y="2420" width="64" height="64">
    <properties>
     <property name="collide" value=""/>
    </properties>
   </object>
- </objectgroup>
- <objectgroup id="16" name="computer">
-  <object id="235" gid="155" x="3375" y="2753" width="94" height="124"/>
+  <object id="816" gid="143" x="5159" y="2172" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="817" gid="143" x="5451" y="1964" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="826" gid="143" x="5624" y="1888" width="64" height="64"/>
+  <object id="827" gid="143" x="5557" y="1884" width="64" height="64"/>
+  <object id="828" gid="143" x="5488" y="1868" width="64" height="64"/>
+  <object id="829" gid="143" x="5523" y="1899" width="64" height="64"/>
+  <object id="831" gid="143" x="5529" y="1941" width="64" height="64"/>
+  <object id="832" gid="143" x="5571" y="1917" width="64" height="64"/>
+  <object id="833" gid="143" x="5567" y="1980" width="64" height="64"/>
+  <object id="834" gid="143" x="5611" y="1943" width="64" height="64"/>
+  <object id="836" gid="143" x="5632" y="1963" width="64" height="64"/>
+  <object id="837" gid="143" x="5603" y="1999" width="64" height="64"/>
+  <object id="842" gid="140" x="5277" y="2034" width="30" height="28"/>
+  <object id="843" gid="140" x="5165" y="1963" width="30" height="28"/>
+  <object id="844" gid="140" x="5178" y="1969" width="30" height="28"/>
+  <object id="845" gid="140" x="5153" y="2035" width="30" height="28"/>
+  <object id="846" gid="140" x="5164" y="2017" width="30" height="28"/>
+  <object id="847" gid="140" x="5328" y="1933" width="30" height="28"/>
+  <object id="848" gid="140" x="5157" y="2362" width="30" height="28"/>
+  <object id="849" gid="140" x="5481" y="2651" width="30" height="28"/>
+  <object id="850" gid="140" x="5329" y="2445" width="30" height="28"/>
+  <object id="851" gid="140" x="5493" y="2539" width="30" height="28"/>
+  <object id="852" gid="140" x="5406" y="2875" width="30" height="28"/>
+  <object id="853" gid="141" x="5481" y="2804" width="22" height="18"/>
+  <object id="854" gid="141" x="5353" y="2801" width="22" height="18"/>
+  <object id="855" gid="142" x="5388" y="2879" width="18" height="20"/>
+  <object id="858" gid="143" x="7169" y="2873" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="863" gid="143" x="7119" y="2857" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="864" gid="143" x="7166" y="2919" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="865" gid="143" x="7125" y="2944" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="866" gid="143" x="6647" y="3088" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="867" gid="143" x="6627" y="2895" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="868" gid="143" x="7027" y="3039" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="869" gid="143" x="7236" y="2718" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="870" gid="143" x="6755" y="2970" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="871" gid="143" x="7312" y="3043" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="872" gid="143" x="7510" y="2872" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="873" gid="143" x="7442" y="2649" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="874" gid="143" x="7251" y="2470" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="875" gid="143" x="7334" y="2276" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="876" gid="143" x="6342" y="2086" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="877" gid="143" x="6364" y="2032" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="878" gid="143" x="6334" y="2002" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="879" gid="143" x="6670" y="1952" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="880" gid="143" x="6710" y="1932" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="881" gid="143" x="7112" y="2020" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
+  <object id="882" gid="143" x="7152" y="2044" width="64" height="64">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="22" name="portal">
-  <object id="770" name="Portal" gid="251" x="549" y="895" width="256" height="256"/>
-  <object id="774" name="component" gid="254" x="6888" y="2555" width="108" height="44"/>
+  <object id="770" name="Portal" gid="271" x="549" y="895" width="256" height="256"/>
+  <object id="776" name="component" gid="274" x="7369" y="2100" width="108" height="44"/>
  </objectgroup>
  <objectgroup id="5" name="bush around the maze">
   <object id="13" gid="121" x="2770" y="2619" width="32" height="32"/>
@@ -684,14 +874,12 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="12" name="computer_yellow">
-  <object id="23" gid="161" x="1412" y="2292" width="112" height="128">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+ <objectgroup id="32" name="bottle">
+  <object id="883" name="bottle" gid="145" x="7145" y="2876" width="18" height="64"/>
  </objectgroup>
  <objectgroup id="23" name="npc">
-  <object id="771" name="fairy" class="npc" gid="253" x="2560" y="1216" width="64" height="64"/>
+  <object id="771" name="fairy" class="npc" gid="273" x="2560" y="1216" width="64" height="64"/>
+  <object id="884" name="keeper" class="npc" gid="273" x="6021" y="2181" width="64" height="64"/>
+  <object id="885" name="pig" class="npc" gid="273" x="6978" y="2882" width="64" height="64"/>
  </objectgroup>
 </map>
