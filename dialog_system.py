@@ -89,6 +89,7 @@ class Dialog(pygame.sprite.Group):
                 self.text_name.text = text_name
                 if (pos_icon := text_name.find("|")) != -1:
                     self.change_npc_icon(text_name[:pos_icon], text_name[pos_icon+1:])
+                    self.text_name.text = text_name[:pos_icon]
                 else:
                     self.change_npc_icon(text_name, "idle")
                 if self.replicas[self.replica_index].find("\\n") > 0:
