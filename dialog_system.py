@@ -34,12 +34,12 @@ class Text:
 class Dialog(pygame.sprite.Group):
     """Класс отрисовки диалогов, кнопок в диалогах и тп"""
 
-    def __init__(self, dialog_replicas, position: tuple = DIALOG_WINDOW_POSITION):
+    def __init__(self, dialog_replicas, notify_func=None, position: tuple = DIALOG_WINDOW_POSITION):
         super().__init__()
         self.display_surf = pygame.display.get_surface()
         self.is_open = False
         self.selection = []
-
+        self.notify_func = notify_func
         # подложка диалога
         self.window = pygame.sprite.Sprite(self)
         self.window.image = pygame.image.load('./sprites/dialog_window.png')
@@ -111,10 +111,13 @@ class Dialog(pygame.sprite.Group):
 
                     self.replica_index += 1
             else:
-                self.text_name.text = None
-                self.text_replica.text = self.replicas[self.replica_index].split('+')[1].split('->')[0]
-                self.selection.append(self.replicas[self.replica_index].split('+')[1].split('->')[0])
+                self.text_name.text = "None"
+                replica = self.replicas[self.replica_index].split('+')[1]
+                self.text_replica.text = replica.split('->')[0]
                 self.replica_index += 1
+                print(replica.split('->')[1])
+                self.notify_func(replica.split('->')[1])
+
             # print(self.selection)
         else:
             self.is_open = False

@@ -4,6 +4,7 @@ from dialog_system import Dialog
 from properties import *
 from support import *
 from game_object import GameObject
+from scripts import LocateCharacter
 import logging as log
 
 
@@ -50,12 +51,12 @@ class NPC(GameObject):
                          animations_pack=STANDARD_CHARACTER_ANIM_PACK
                          )
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
-
+        self.name = name
         # Инициализация диалога
         if not dialog_replicas:
             dialog_replicas = {"1": ["???: ..."]}
         self.dialog_replicas = dialog_replicas
-        self.dialog = Dialog(self.dialog_replicas["1"])
+        self.dialog = Dialog(self.dialog_replicas["1"], self.notify_script)
 
         # чтобы взаимодействовать с обьектом
         # необходимо передать функцию при взаимодействии
@@ -69,6 +70,12 @@ class NPC(GameObject):
     def switch_replica(self, loc):
         self.dialog.replicas = self.dialog_replicas[loc]
         print(self.dialog_replicas)
+
+    def notify_script(self, value: str):
+        print(value)
+        if value.startswith(" to_"):
+            print(value[3:])
+            self.switch_replica(value.split(self.name)[1][2:])
 
     def update(self, dt):
         super().update(dt)

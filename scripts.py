@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from player import Player
+
 
 class Script(ABC):
     """Патерн команда для скриптов"""
