@@ -62,26 +62,33 @@ class Level:
                       image_path="./sprites/pause_menu/button.png",
                       selected_image_path="./sprites/pause_menu/button_hover.png",
                       sprite_group=[],
-                      text="Продолжить"
-                      ),
+                      text="Продолжить",
+                      text_color=GRAY,
+                      selected_text_color=WHITE,
+                  ),
             UI.Button(self.save, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4),
                       image_path="./sprites/pause_menu/button.png",
                       selected_image_path="./sprites/pause_menu/button_hover.png",
                       sprite_group=[],
-                      text="Сохранить"
+                      selected_text_color=WHITE,
+                      text="Сохранить",
+                      text_color=GRAY
                       ),
             UI.Button(self.load, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.6),
                       image_path="./sprites/pause_menu/button.png",
                       selected_image_path="./sprites/pause_menu/button_hover.png",
                       sprite_group=[],
-                      text="Загрузить"
+                      text="Загрузить",
+                      text_color=GRAY,
+                      selected_text_color=WHITE
                       ),
             UI.Button(self.exit, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.8),
                       image_path="./sprites/pause_menu/button.png",
                       selected_image_path="./sprites/pause_menu/button_hover.png",
                       sprite_group=[],
                       text="Выйти",
-                      selected_text_color=GRAY
+                      text_color=GRAY,
+                      selected_text_color=WHITE
                       ),
         )
         self.pause_menu = UI.Menu(buttons,
