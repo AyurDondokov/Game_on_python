@@ -73,7 +73,7 @@ level_2 = {
     "MAP": {
         "character": "levels_data/levels/2/level_2__character.csv",
         "green": "levels_data/levels/2/level_2__green.csv",
-        "limeters": "levels_data/levels/2/level_2__limeters.csv",
+        "limiters": "levels_data/levels/2/level_2__limeters.csv",
         "maze": "levels_data/levels/2/level_2__maze.csv",
         "pink": "levels_data/levels/2/level_2__pink.csv",
     },
@@ -83,7 +83,7 @@ level_2 = {
         "pink": "./levels_data/graphics/decoration3/background/background_2.png",
         'maze': 'levels_data/graphics/decoration3/background/maze.png',
         'limiters': './levels_data/graphics/decoration3/limiters/limiters.png',
-        "character":'levels_data/graphics/decoration3/character/start.png'
+        "character": 'levels_data/graphics/decoration3/character/start.png'
     },
     "TMXData": "levels_data/levels/2/level_2_object.tmx",
     "move_to": 0,

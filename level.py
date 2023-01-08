@@ -79,7 +79,9 @@ class Level:
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
+            print('layer', layer)
             for obj in layer:
+                print('obj', obj)
                 # если объекту было назначаенно свойство в Tiled, то..
                 groups = [self.__all_sprites]
                 if obj.properties.get("collide"):
@@ -129,8 +131,11 @@ class Level:
         script.receiver = portal
 
     def __create_map(self):
+        print("self.__map", self.__map)
         for key in self.__map:
+
             if key != "character":
+                print("key", self.__map[key], key)
                 self.__create_tile_group(import_csv_layout(self.__map[key]), key)
             else:
                 self.__player_setup(import_csv_layout(self.__map[key]))
