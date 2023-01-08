@@ -121,7 +121,7 @@ class Player(GameObject):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_q:
-                    pass
+                    print(self._pos)
 
     def check_npc_distance(self):
         """Если NPC близко отобразить иконку взаимодействия над NPC"""

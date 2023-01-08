@@ -195,7 +195,7 @@
  <tileset firstgid="274" name="---" tilewidth="108" tileheight="44" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="0">
-   <image width="108" height="44" source="../../../../ponytiled/Game_on_python/levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png"/>
+   <image width="108" height="44" source="../../graphics/decoration/ruined_portal/destroy_portal_components.png"/>
   </tile>
  </tileset>
  <objectgroup id="16" name="computer">

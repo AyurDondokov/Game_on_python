@@ -8,7 +8,7 @@
 Лидер: Для такого любителя историй как я, любая выдумка будет \n интересна
 Лидер: Пойдем ка со мной
 Ната|frustrasion: А?
-+ None: *хвать* -> to_caravan_leader__2
++ None: *хвать* -> to_caravan_leader__2|locate2996,2050
 
 === caravan_leader__2 ===
 Ната|frustrasion: КУДА

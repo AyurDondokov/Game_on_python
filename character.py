@@ -71,11 +71,13 @@ class NPC(GameObject):
         self.dialog.replicas = self.dialog_replicas[loc]
         print(self.dialog_replicas)
 
-    def notify_script(self, value: str):
-        print(value)
-        if value.startswith(" to_"):
-            print(value[3:])
-            self.switch_replica(value.split(self.name)[1][2:])
+    def notify_script(self, values: str):
+        for command in values.split("|"):
+            print(command)
+            if command.startswith(" to_"):
+                self.switch_replica(command.split(self.name)[1][2:])
+            if command.startswith("locate"):
+                self.locate(list(map(int, command[6:].split(","))))
 
     def update(self, dt):
         super().update(dt)
