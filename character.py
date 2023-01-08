@@ -96,6 +96,8 @@ class Portal(GameObject):
             z=LAYERS['ux']
         )
         self._active = False
+        dialog_replicas = ["Ната:Он разрушен", "Ната:Что же мне делать..."]
+        self.dialog = Dialog(dialog_replicas)
 
     def display_icon(self):
         if self.is_use_able:
@@ -109,9 +111,13 @@ class Portal(GameObject):
     def execute(self):
         if self._active:
             self.__set_current_level(self.move_to)
+        else:
+            self.dialog.next_replica()
 
     def update(self, dt):
         self.display_icon()
+        if self.is_use_able and not self._active:
+            self.dialog.update(dt)
 
 
 class Component(GameObject):
