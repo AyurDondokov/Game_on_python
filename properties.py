@@ -139,9 +139,3 @@ BATTLE_ENEMIES = {
         "new_phase_enemies": []
     }
 }
-
-TEST_BATTLES_DATA = {
-    0: {"enemies": ["tumbleweed", "tumbleweed"], "music_path": ""},
-    1: {"enemies": ["varan"], "music_path": ""},
-    2: {"enemies": ["mummy", "mummy"], "music_path": ""}
-}
