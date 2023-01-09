@@ -186,7 +186,7 @@ class Level:
                     portal = self.add_portal(obj, groups)
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
-                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
+                    Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":

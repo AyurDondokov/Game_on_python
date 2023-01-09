@@ -147,12 +147,13 @@ class Portal(GameObject):
 
 
 class Component(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, script):
+    def __init__(self, position: tuple, image, sprite_group: pygame.sprite.Group, script):
         super().__init__(position,
                          sprite_group,
-                         sprite_path="./levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png",
+                         sprite_path="",
                          z=LAYERS['ground'],
                          hitbox_offset=(0, 0.25),
+                         image_surf=image
                          )
         self.state = True
         self.__script = script
