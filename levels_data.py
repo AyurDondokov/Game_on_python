@@ -100,10 +100,13 @@ level_2 = {
 }
 level_cutscene = {
     "MAP": {
+        "limiters": "levels_data/levels/cutscene/laboratory_limiters.csv",
+        "character_scene": "levels_data/levels/cutscene/laboratory_character_scene.csv",
     },
 
     "TileSet": {
-
+        "limiters": './levels_data/graphics/decoration3/limiters/limiters.png',
+        "character_scene": './levels_data/graphics/decoration3/limiters/limiters.png',
     },
     "TMXData": "levels_data/levels/level_data/laboratory.tmx",
     "move_to": 0,
