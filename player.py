@@ -168,3 +168,22 @@ class Player(GameObject):
     @property
     def exp(self):
         return self._exp
+
+
+class CutscenePlayer(Player):
+    def _input(self, dt):
+        if self._managed:
+            keys = pygame.key.get_pressed()
+
+            # Горизонтальное движение
+            if keys[pygame.K_a] and not keys[pygame.K_d]:
+                self._direction.x = -1
+                self._change_anim_status("walk_left")
+            elif keys[pygame.K_d] and not keys[pygame.K_a]:
+                self._direction.x = 1
+                # self._change_anim_status("walk_right")
+            else:
+                self._direction.x = 0
+
+            if self._direction.magnitude() == 0:
+                self._change_anim_status("idle_down")
