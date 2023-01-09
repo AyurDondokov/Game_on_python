@@ -108,21 +108,14 @@ level_cutscene = {
         "limiters": './levels_data/graphics/decoration3/limiters/limiters.png',
         "character_scene": './levels_data/graphics/decoration3/limiters/limiters.png',
     },
-    "TMXData": "levels_data/levels/level_data/laboratory.tmx",
+    "TMXData": "levels_data/levels/cutscene/laboratory.tmx",
     "move_to": 0,
     "music": "music_and_sound/music/level/world2.mp3",
-    "battles": {
-        0: {"enemies": ["tumbleweed", "tumbleweed"],
-            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
-            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
-        2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
-    }
+    "battles": {}
 }
 
 levels = {
-    -1: level_cutscene,
+    # -1: level_cutscene,
     0: level_0,
     1: level_1,
     2: level_2,
