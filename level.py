@@ -139,7 +139,7 @@ class Level:
                     Tile((obj.x, obj.y), groups, obj.image, LAYERS["back_decor"])
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
-                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
+                    Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
