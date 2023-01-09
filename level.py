@@ -159,7 +159,7 @@ class Level:
                             {obj.name:
                              NPC((obj.x, obj.y),
                                  [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                                 obj.name, dialog_replicas=dialog)}
+                                 obj.name, self, dialog_replicas=dialog)}
                         )
                 else:
                     if hasattr(obj, "hitbox_offset_x"):
