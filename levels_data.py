@@ -1,5 +1,6 @@
 """информация о уровнях"""
 """Порядок в MAP важен!!"""
+
 level_0 = {
     "MAP": {
         'limiters': 'levels_data/levels/0/level_0__limiters.csv',
@@ -16,7 +17,6 @@ level_0 = {
 
     "TileSet": {
         'portal components': 'levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png',
-
         'island ends': 'levels_data/graphics/decoration/ends_of_island/ends_of_island.png',
         'grass': 'levels_data/graphics/decoration/grass/hub_grass.png',
         'rocks': ['levels_data/graphics/decoration/rocks/rock1.png', 'levels_data/graphics/decoration/rocks/rock2.png'],
@@ -64,7 +64,7 @@ level_1 = {
         1: {"enemies": ["varan"], "music_path":
             "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
         2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"},
     }
 }
 
@@ -90,9 +90,9 @@ level_2 = {
     "move_to": 0,
     "music": "music_and_sound/music/level/world2.mp3",
     "battles": {
-        0: {"enemies": ["tumbleweed", "tumbleweed"],
+        0: {"enemies": ["stump"],
             "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
+        1: {"enemies": ["slug"], "music_path":
             "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
         2: {"enemies": ["mummy", "mummy"],
             "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
@@ -113,6 +113,7 @@ level_cutscene = {
     "music": "music_and_sound/music/level/world2.mp3",
     "battles": {}
 }
+
 
 levels = {
     # -1: level_cutscene,

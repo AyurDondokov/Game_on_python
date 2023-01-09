@@ -106,60 +106,110 @@ BATTLE_BUTTONS_POS = ((SCREEN_WIDTH / 5, SCREEN_HEIGHT - 100), (SCREEN_WIDTH / 5
 BATTLE_SLIDER_POS = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 200)
 BATTLE_SLIDER_SPEED = 500
 
-
 # Enemies
 mummy = {
-        "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
-        "max_health": 100,
-        "max_damage": 10,
-        "defence": 20,
-        "heal": 5,
-        "new_phase_enemies": [],
-        "exp": 5
-    }
+    "image_path": "./sprites/enemies/mummy/mummy_fighting.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 5,
+    "new_phase_enemies": [],
+    "exp": 5
+}
 pig = {
-        "image_path": "./sprites/enemies/pig/pig_fighting.png",
-        "max_health": 100,
-        "max_damage": 10,
-        "defence": 20,
-        "heal": 10,
-        "new_phase_enemies": [],
-        "exp": 5
-    }
+    "image_path": "./sprites/enemies/pig/pig_fighting.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [],
+    "exp": 5
+}
 keanu = {
-        "image_path": "./sprites/enemies/tumbleweed/keanu.png",
-        "max_health": 50,
-        "max_damage": 15,
-        "defence": 30,
-        "heal": 15,
-        "new_phase_enemies": [],
-        "exp": 2
-    }
+    "image_path": "./sprites/enemies/tumbleweed/keanu.png",
+    "max_health": 50,
+    "max_damage": 15,
+    "defence": 30,
+    "heal": 15,
+    "new_phase_enemies": [],
+    "exp": 2
+}
 tumbleweed = {
-        "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
-        "max_health": 30,
-        "max_damage": 5,
-        "defence": 10,
-        "heal": 10,
-        "new_phase_enemies": [keanu],
-        "exp": 1
-    }
+    "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
+    "max_health": 30,
+    "max_damage": 5,
+    "defence": 10,
+    "heal": 10,
+    "new_phase_enemies": [keanu],
+    "exp": 1
+}
 varan = {
-        "image_path": "./sprites/enemies/varan/varan_fighting.png",
-        "max_health": 50,
-        "max_damage": 15,
-        "defence": 15,
-        "heal": 15,
-        "new_phase_enemies": [],
-        "exp": 20
-    }
+    "image_path": "./sprites/enemies/varan/varan_fighting.png",
+    "max_health": 50,
+    "max_damage": 15,
+    "defence": 15,
+    "heal": 15,
+    "new_phase_enemies": [],
+    "exp": 20
+}
+stump = {
+    "image_path": "./sprites/enemies/stump/stump_fighting.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [],
+    "exp": 5
+}
+leaf = {
+    "image_path": "./sprites/enemies/leaf/leaf_2.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [],
+    "exp": 5
+}
+slug_mini1 = {
+    "image_path": "./sprites/enemies/slug/mini/slug_1.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [],
+    "exp": 5
+}
+slug_mini2 = {
+    "image_path": "./sprites/enemies/slug/mini/slug_1.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [],
+    "exp": 5
+}
+slug = {
+    "image_path": "./sprites/enemies/slug/normal/slug_1.png",
+    "max_health": 100,
+    "max_damage": 10,
+    "defence": 20,
+    "heal": 10,
+    "new_phase_enemies": [slug_mini1, slug_mini2],
+    "exp": 5
+}
 
 BATTLE_ENEMIES = {
     "mummy": mummy,
     "pig": pig,
     "keanu": keanu,
     "tumbleweed": tumbleweed,
-    "varan": varan
+    "varan": varan,
+    "stump": stump,
+    "slug_mini1": slug_mini1,
+    "slug_mini2": slug_mini2,
+    "slug": slug,
+    "leaf": leaf,
+
 }
 
 DEFAULT_EFFECT_ANIM_SPEED = 0.2
