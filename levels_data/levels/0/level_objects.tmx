@@ -1,20 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="33" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="25" nextobjectid="479">
- <tileset firstgid="1" source="../tilesets/hub_grass.tsx"/>
- <tileset firstgid="17" source="../tilesets/hub_water_hole.tsx"/>
- <tileset firstgid="21" source="../tilesets/start.tsx"/>
- <tileset firstgid="22" source="../tilesets/hub_sky.tsx"/>
- <tileset firstgid="23" source="../tilesets/ends_of_island.tsx"/>
- <tileset firstgid="87" source="../tilesets/limiters.tsx"/>
- <tileset firstgid="103" source="../tilesets/hub_grass_elements.tsx"/>
- <tileset firstgid="119" source="../tilesets/hub_sand.tsx"/>
- <tileset firstgid="144" source="../tilesets/hub_water.tsx"/>
- <tileset firstgid="169" source="../tilesets/hub_crater.tsx"/>
- <tileset firstgid="209" source="../tilesets/vegetashion.tsx"/>
- <tileset firstgid="211" source="../tilesets/hub_portal.tsx"/>
- <tileset firstgid="213" source="../tilesets/hub_rock.tsx"/>
- <tileset firstgid="215" source="../tilesets/hub_components_of_portal.tsx"/>
- <objectgroup id="18" name="vegetashion" visible="0">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="33" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="26" nextobjectid="592">
+ <tileset firstgid="1" name="hub_grass" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="../../graphics/decoration/grass/hub_grass.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="17" name="hub_water_hole" tilewidth="64" tileheight="64" tilecount="4" columns="2">
+  <image source="../../graphics/decoration/sand/water_hole.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="21" name="start" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../../graphics/character/start.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="22" name="hub_sky" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../../graphics/decoration/sky/sky.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="23" name="ends_of_island" tilewidth="64" tileheight="64" tilecount="64" columns="8">
+  <image source="../../graphics/decoration/ends_of_island/ends_of_island.png" width="512" height="512"/>
+ </tileset>
+ <tileset firstgid="87" name="limiters2" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="../../graphics/decoration/limiters/limiters.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="103" name="hub_grass_elements" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="../../graphics/decoration/grass/hub_grass_elements.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="119" name="hub_sand" tilewidth="64" tileheight="64" tilecount="25" columns="5">
+  <image source="../../graphics/decoration/sand/hub_sand.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="144" name="hub_water" tilewidth="64" tileheight="64" tilecount="25" columns="5">
+  <image source="../../graphics/decoration/water/hub_water.png" width="320" height="320"/>
+ </tileset>
+ <tileset firstgid="169" name="hub_crater" tilewidth="64" tileheight="64" tilecount="40" columns="8">
+  <image source="../../graphics/decoration/crater/hub_crater.png" width="512" height="320"/>
+ </tileset>
+ <tileset firstgid="209" name="vegetashion" tilewidth="44" tileheight="44" tilecount="2" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="44" height="40" source="../../graphics/decoration/flowers/chamomiles.png"/>
+  </tile>
+  <tile id="1">
+   <image width="44" height="44" source="../../graphics/decoration/plants/plant.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="211" name="hub_portal" tilewidth="204" tileheight="256" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="32" height="32"/>
+  <tile id="1">
+   <image width="204" height="256" source="../../graphics/decoration/ruined_portal/big_destroy_portal.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="213" name="hub_rock" tilewidth="256" tileheight="152" tilecount="2" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="256" height="152" source="../../graphics/decoration/rocks/rock1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="256" height="152" source="../../graphics/decoration/rocks/rock2.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="215" name="hub_portal_component" tilewidth="108" tileheight="44" tilecount="3" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="108" height="44" source="../../graphics/decoration/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+  <tile id="1">
+   <image width="108" height="44" source="../../graphics/decoration2/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+  <tile id="2">
+   <image width="108" height="44" source="../../graphics/decoration3/ruined_portal/destroy_portal_componentst.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="218" name="limeters" tilewidth="32" tileheight="32" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="32" height="32" source="../../graphics/limeters.png"/>
+  </tile>
+ </tileset>
+ <objectgroup id="18" name="vegetashion" locked="1">
   <object id="5" gid="210" x="800.667" y="1076.67" width="44" height="44"/>
   <object id="6" gid="210" x="1276.67" y="1128.67" width="44" height="44"/>
   <object id="104" gid="209" x="630" y="1284" width="44" height="40"/>
@@ -135,11 +273,11 @@
   <object id="390" gid="209" x="1375.72" y="644.777" width="44" height="40"/>
   <object id="391" gid="209" x="752.723" y="650.132" width="44" height="40"/>
  </objectgroup>
- <objectgroup id="20" name="rocks" visible="0">
+ <objectgroup id="20" name="rocks" locked="1">
   <object id="12" gid="213" x="576" y="896" width="256" height="152"/>
   <object id="15" gid="214" x="1344" y="896" width="256" height="152"/>
  </objectgroup>
- <objectgroup id="22" name="vegetashion_up" visible="0">
+ <objectgroup id="22" name="vegetashion_up" locked="1">
   <object id="349" gid="209" x="1384.56" y="872.341" width="44" height="40"/>
   <object id="350" gid="209" x="1406.57" y="890.348" width="44" height="40"/>
   <object id="351" gid="209" x="1442.59" y="888.347" width="44" height="40"/>
@@ -155,228 +293,533 @@
   <object id="379" gid="209" x="1585.55" y="908.679" width="44" height="40"/>
   <object id="380" gid="209" x="542.151" y="906.792" width="44" height="40"/>
  </objectgroup>
- <objectgroup id="19" name="portal" visible="0">
+ <objectgroup id="19" name="portal" locked="1">
   <object id="16" name="Portal" gid="212" x="987" y="577" width="204" height="256">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="21" name="portal_component" visible="0">
+ <objectgroup id="21" name="portal_component" locked="1">
   <object id="14" name="component" gid="215" x="1024" y="1024" width="108" height="44"/>
  </objectgroup>
- <objectgroup id="24" name="limiters2">
-  <object id="435" name="limiters2" gid="87" x="1152" y="960" width="64" height="64">
+ <objectgroup id="25" name="limiters2">
+  <object id="479" name="limiters2" gid="218" x="896" y="928" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="436" name="limiters2" gid="87" x="1024" y="960" width="64" height="64">
+  <object id="481" name="limiters2" gid="218" x="928" y="928" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="437" name="limiters2" gid="87" x="960" y="960" width="64" height="64">
+  <object id="482" name="limiters2" gid="218" x="928" y="960" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="438" name="limiters2" gid="87" x="896" y="960" width="64" height="64">
+  <object id="483" name="limiters2" gid="218" x="896" y="960" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="439" name="limiters2" gid="87" x="896" y="1024" width="64" height="64">
+  <object id="484" name="limiters2" gid="218" x="864" y="960" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="440" name="limiters2" gid="87" x="960" y="1024" width="64" height="64">
+  <object id="485" name="limiters2" gid="218" x="864" y="928" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="441" name="limiters2" gid="87" x="1024" y="1024" width="64" height="64">
+  <object id="488" name="limiters2" gid="218" x="848" y="944" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="442" name="limiters2" gid="87" x="1088" y="1024" width="64" height="64">
+  <object id="489" name="limiters2" gid="218" x="848" y="960" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="443" name="limiters2" gid="87" x="1152" y="1024" width="64" height="64">
+  <object id="490" name="limiters2" gid="218" x="880" y="912" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="444" name="limiters2" gid="87" x="1088" y="960" width="64" height="64">
+  <object id="491" name="limiters2" gid="218" x="896" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="445" name="limiters2" gid="87" x="1216" y="960" width="64" height="64">
+  <object id="492" name="limiters2" gid="218" x="912" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="446" name="limiters2" gid="87" x="1216" y="1024" width="64" height="64">
+  <object id="493" name="limiters2" gid="218" x="944" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="447" name="limiters2" gid="88" x="1280" y="960" width="64" height="64">
+  <object id="494" name="limiters2" gid="218" x="976" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="448" name="limiters2" gid="88" x="1280" y="1024" width="64" height="64">
+  <object id="495" name="limiters2" gid="218" x="1008" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="449" name="limiters2" gid="92" x="1152" y="1088" width="64" height="64">
+  <object id="496" name="limiters2" gid="218" x="1040" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="450" name="limiters2" gid="92" x="1152" y="1088" width="64" height="64">
+  <object id="497" name="limiters2" gid="218" x="1056" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="451" name="limiters2" gid="92" x="1216" y="1088" width="64" height="64">
+  <object id="498" name="limiters2" gid="218" x="1072" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="452" name="limiters2" gid="92" x="1088" y="1088" width="64" height="64">
+  <object id="499" name="limiters2" gid="218" x="1104" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="453" name="limiters2" gid="92" x="1024" y="1088" width="64" height="64">
+  <object id="500" name="limiters2" gid="218" x="1120" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="454" name="limiters2" gid="92" x="960" y="1088" width="64" height="64">
+  <object id="501" name="limiters2" gid="218" x="1152" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="455" name="limiters2" gid="100" x="960" y="896" width="64" height="64">
+  <object id="502" name="limiters2" gid="218" x="1184" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="456" name="limiters2" gid="100" x="1024" y="896" width="64" height="64">
+  <object id="503" name="limiters2" gid="218" x="1216" y="880" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="457" name="limiters2" gid="100" x="1088" y="896" width="64" height="64">
+  <object id="504" name="limiters2" gid="218" x="1232" y="896" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="458" name="limiters2" gid="100" x="1152" y="896" width="64" height="64">
+  <object id="506" name="limiters2" gid="218" x="1248" y="912" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="459" name="limiters2" gid="100" x="1216" y="896" width="64" height="64">
+  <object id="507" name="limiters2" gid="218" x="1264" y="928" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="460" name="limiters2" gid="100" x="896" y="896" width="64" height="64">
+  <object id="508" name="limiters2" gid="218" x="1280" y="944" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="461" name="limiters2" gid="92" x="896" y="1088" width="64" height="64">
+  <object id="510" name="limiters2" gid="218" x="1280" y="976" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="462" name="limiters2" gid="96" x="832" y="960" width="64" height="64">
+  <object id="511" name="limiters2" gid="218" x="1280" y="992" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="463" name="limiters2" gid="96" x="832" y="1024" width="64" height="64">
+  <object id="512" name="limiters2" gid="218" x="1264" y="1008" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="464" name="limiters2" gid="87" x="1408" y="1024" width="64" height="64">
+  <object id="513" name="limiters2" gid="218" x="1248" y="1024" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="465" name="limiters2" gid="87" x="1408" y="1088" width="64" height="64">
+  <object id="514" name="limiters2" gid="218" x="1232" y="1040" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="466" name="limiters2" gid="87" x="1408" y="1152" width="64" height="64">
+  <object id="515" name="limiters2" gid="218" x="1200" y="1056" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="468" name="limiters2" gid="87" x="704" y="1024" width="64" height="64">
+  <object id="516" name="limiters2" gid="218" x="1168" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="469" name="limiters2" gid="87" x="704" y="1088" width="64" height="64">
+  <object id="517" name="limiters2" gid="218" x="1136" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="470" name="limiters2" gid="91" x="768" y="1152" width="64" height="64">
+  <object id="518" name="limiters2" gid="218" x="1104" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="471" name="limiters2" gid="90" x="1344" y="1152" width="64" height="64">
+  <object id="519" name="limiters2" gid="218" x="1072" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="472" name="limiters2" gid="92" x="832" y="832" width="64" height="64">
+  <object id="520" name="limiters2" gid="218" x="1040" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="473" name="limiters2" gid="92" x="896" y="832" width="64" height="64">
+  <object id="521" name="limiters2" gid="218" x="1008" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="474" name="limiters2" gid="92" x="960" y="832" width="64" height="64">
+  <object id="523" name="limiters2" gid="218" x="976" y="1072" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="475" name="limiters2" gid="92" x="1024" y="832" width="64" height="64">
+  <object id="524" name="limiters2" gid="218" x="944" y="1056" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="476" name="limiters2" gid="92" x="1088" y="832" width="64" height="64">
+  <object id="525" name="limiters2" gid="218" x="912" y="1056" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="477" name="limiters2" gid="92" x="1152" y="832" width="64" height="64">
+  <object id="526" name="limiters2" gid="218" x="880" y="1040" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
-  <object id="478" name="limiters2" gid="92" x="1280" y="832" width="64" height="64">
+  <object id="527" name="limiters2" gid="218" x="864" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="528" name="limiters2" gid="218" x="848" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="529" name="limiters2" gid="218" x="848" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="530" name="limiters2" gid="218" x="1120" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="531" name="limiters2" gid="218" x="928" y="896" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="532" name="limiters2" gid="218" x="960" y="912" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="533" name="limiters2" gid="218" x="976" y="912" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="534" name="limiters2" gid="218" x="1008" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="535" name="limiters2" gid="218" x="960" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="536" name="limiters2" gid="218" x="992" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="537" name="limiters2" gid="218" x="960" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="538" name="limiters2" gid="218" x="992" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="539" name="limiters2" gid="218" x="880" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="540" name="limiters2" gid="218" x="912" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="541" name="limiters2" gid="218" x="944" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="542" name="limiters2" gid="218" x="896" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="543" name="limiters2" gid="218" x="928" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="544" name="limiters2" gid="218" x="944" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="545" name="limiters2" gid="218" x="976" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="546" name="limiters2" gid="218" x="976" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="547" name="limiters2" gid="218" x="976" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="548" name="limiters2" gid="218" x="1008" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="549" name="limiters2" gid="218" x="1008" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="550" name="limiters2" gid="218" x="1008" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="551" name="limiters2" gid="218" x="1024" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="554" name="limiters2" gid="218" x="1040" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="555" name="limiters2" gid="218" x="1072" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="556" name="limiters2" gid="218" x="1104" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="557" name="limiters2" gid="218" x="1056" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="559" name="limiters2" gid="218" x="1088" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="560" name="limiters2" gid="218" x="1120" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="561" name="limiters2" gid="218" x="1152" y="912" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="562" name="limiters2" gid="218" x="1184" y="912" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="563" name="limiters2" gid="218" x="1200" y="912" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="564" name="limiters2" gid="218" x="1152" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="565" name="limiters2" gid="218" x="1184" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="566" name="limiters2" gid="218" x="1152" y="976" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="567" name="limiters2" gid="218" x="1184" y="976" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="568" name="limiters2" gid="218" x="1152" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="569" name="limiters2" gid="218" x="1184" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="570" name="limiters2" gid="218" x="1152" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="571" name="limiters2" gid="218" x="1184" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="572" name="limiters2" gid="218" x="1120" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="573" name="limiters2" gid="218" x="1088" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="574" name="limiters2" gid="218" x="1056" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="575" name="limiters2" gid="218" x="1024" y="1040" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="576" name="limiters2" gid="218" x="1040" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="577" name="limiters2" gid="218" x="1040" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="578" name="limiters2" gid="218" x="1072" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="579" name="limiters2" gid="218" x="1072" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="580" name="limiters2" gid="218" x="1104" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="581" name="limiters2" gid="218" x="1104" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="582" name="limiters2" gid="218" x="1120" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="583" name="limiters2" gid="218" x="1120" y="1024" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="584" name="limiters2" gid="218" x="1216" y="928" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="585" name="limiters2" gid="218" x="1216" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="586" name="limiters2" gid="218" x="1232" y="944" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="587" name="limiters2" gid="218" x="1248" y="960" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="588" name="limiters2" gid="218" x="1248" y="992" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="589" name="limiters2" gid="218" x="1216" y="976" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="590" name="limiters2" gid="218" x="1216" y="1008" width="32" height="32">
+   <properties>
+    <property name="collide" value="1"/>
+   </properties>
+  </object>
+  <object id="591" name="limiters2" gid="218" x="1216" y="1024" width="32" height="32">
    <properties>
     <property name="collide" value="1"/>
    </properties>

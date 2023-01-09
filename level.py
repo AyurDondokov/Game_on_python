@@ -195,9 +195,9 @@ class Level:
                     Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
                 if obj.name == "limiters2":
                     image = obj.image
-                    image.set_colorkey((238, 65, 66))
+                    image.set_colorkey((237, 65, 65))
                     Tile((obj.x, obj.y), [self.__all_sprites,
-                                          ], image)
+                                          self.__collision_sprites], image)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":

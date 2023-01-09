@@ -7,7 +7,7 @@ DIALOG_ICONS = {
         "angry": pygame.image.load("./sprites/dialog_icons/caravan_leader/carvan-leader-angry.png"),
         "laughter": pygame.image.load("./sprites/dialog_icons/caravan_leader/carvan-leader-laughter.png"),
     },
-    "Ната": {
+    "Шура": {
         "idle": pygame.image.load("./sprites/dialog_icons/main_character/main_character_idle.png"),
         "dissatisfied": pygame.image.load("./sprites/dialog_icons/main_character/main_character_dissatisfied.png"),
         "frustrasion": pygame.image.load("./sprites/dialog_icons/main_character/main_character_frustration.png"),
