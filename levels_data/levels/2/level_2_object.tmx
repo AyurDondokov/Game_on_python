@@ -1,17 +1,218 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="90" tilewidth="64" tileheight="64" infinite="0" nextlayerid="35" nextobjectid="1073">
- <tileset firstgid="1" source="../../graphics/decoration3/tsx/maze.tsx"/>
- <tileset firstgid="55" source="../../graphics/decoration3/tsx/limiters.tsx"/>
- <tileset firstgid="71" source="../../graphics/decoration3/tsx/background_1.tsx"/>
- <tileset firstgid="121" source="../../graphics/decoration3/tsx/maze_environment.tsx"/>
- <tileset firstgid="147" source="../../graphics/decoration3/tsx/computer.tsx"/>
- <tileset firstgid="165" source="../../graphics/decoration3/tsx/cloud.tsx"/>
- <tileset firstgid="183" source="../../graphics/decoration3/tsx/background_2.tsx"/>
- <tileset firstgid="271" source="../../graphics/decoration3/tsx/portal.tsx"/>
- <tileset firstgid="273" source="../../graphics/decoration3/tsx/start.tsx"/>
- <tileset firstgid="274" source="../../graphics/decoration3/tsx/---.tsx"/>
- <tileset firstgid="275" source="../../graphics/decoration3/tsx/cave.tsx"/>
- <tileset firstgid="375" source="../tilesets/hub_components_of_portal.tsx"/>
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="130" height="90" tilewidth="64" tileheight="64" infinite="0" nextlayerid="36" nextobjectid="1085">
+ <tileset firstgid="1" name="maze" tilewidth="64" tileheight="64" tilecount="54" columns="9">
+  <image source="../../graphics/decoration3/background/maze1.png" width="576" height="384"/>
+ </tileset>
+ <tileset firstgid="55" name="limiters" tilewidth="64" tileheight="64" tilecount="16" columns="4">
+  <image source="../../graphics/decoration3/limiters/limiters.png" width="256" height="256"/>
+ </tileset>
+ <tileset firstgid="71" name="background_1" tilewidth="64" tileheight="64" tilecount="50" columns="10">
+  <image source="../../graphics/decoration3/background/background_1.png" width="640" height="320"/>
+ </tileset>
+ <tileset firstgid="121" name="maze_environment" tilewidth="384" tileheight="320" tilecount="26" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="32" height="32" source="../../graphics/decoration3/maze_environment/bush.png"/>
+  </tile>
+  <tile id="1">
+   <image width="32" height="32" source="../../graphics/decoration3/maze_environment/bush_flower.png"/>
+  </tile>
+  <tile id="2">
+   <image width="124" height="64" source="../../graphics/decoration3/maze_environment/carrot.png"/>
+  </tile>
+  <tile id="3">
+   <image width="64" height="60" source="../../graphics/decoration3/maze_environment/carrot_2.png"/>
+  </tile>
+  <tile id="4">
+   <image width="36" height="36" source="../../graphics/decoration3/maze_environment/flower_1.png"/>
+  </tile>
+  <tile id="5">
+   <image width="36" height="36" source="../../graphics/decoration3/maze_environment/flower_2.png"/>
+  </tile>
+  <tile id="6">
+   <image width="36" height="36" source="../../graphics/decoration3/maze_environment/flower_3.png"/>
+  </tile>
+  <tile id="7">
+   <image width="36" height="36" source="../../graphics/decoration3/maze_environment/flower_4.png"/>
+  </tile>
+  <tile id="8">
+   <image width="64" height="64" source="../../graphics/decoration3/maze_environment/green_stump.png"/>
+  </tile>
+  <tile id="9">
+   <image width="196" height="244" source="../../graphics/decoration3/maze_environment/green_tree.png"/>
+  </tile>
+  <tile id="10">
+   <image width="128" height="64" source="../../graphics/decoration3/maze_environment/log_down.png"/>
+  </tile>
+  <tile id="11">
+   <image width="128" height="128" source="../../graphics/decoration3/maze_environment/log_up.png"/>
+  </tile>
+  <tile id="12">
+   <image width="64" height="64" source="../../graphics/decoration3/maze_environment/mushroom.png"/>
+  </tile>
+  <tile id="13">
+   <image width="64" height="64" source="../../graphics/decoration3/maze_environment/pink_stump.png"/>
+  </tile>
+  <tile id="14">
+   <image width="190" height="242" source="../../graphics/decoration3/maze_environment/pink_tree.png"/>
+  </tile>
+  <tile id="15">
+   <image width="64" height="90" source="../../graphics/decoration3/maze_environment/bridge_center.png"/>
+  </tile>
+  <tile id="16">
+   <image width="64" height="90" source="../../graphics/decoration3/maze_environment/bridge_left.png"/>
+  </tile>
+  <tile id="17">
+   <image width="64" height="90" source="../../graphics/decoration3/maze_environment/bridge_right.png"/>
+  </tile>
+  <tile id="18">
+   <image width="384" height="320" source="../../graphics/decoration3/maze_environment/background_3t.png"/>
+  </tile>
+  <tile id="19">
+   <image width="30" height="28" source="../../graphics/decoration3/maze_environment/grass1.png"/>
+  </tile>
+  <tile id="20">
+   <image width="22" height="18" source="../../graphics/decoration3/maze_environment/grass2.png"/>
+  </tile>
+  <tile id="21">
+   <image width="18" height="20" source="../../graphics/decoration3/maze_environment/grass3.png"/>
+  </tile>
+  <tile id="22">
+   <image width="64" height="64" source="../../graphics/decoration3/maze_environment/pink_bush.png"/>
+  </tile>
+  <tile id="23">
+   <image width="38" height="38" source="../../graphics/decoration3/maze_environment/grass4.png"/>
+  </tile>
+  <tile id="24">
+   <image width="18" height="64" source="../../graphics/decoration3/maze_environment/bottle.png"/>
+  </tile>
+  <tile id="25">
+   <image width="33" height="34" source="../../graphics/decoration3/maze_environment/bottle_2.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="147" name="computer" tilewidth="112" tileheight="128" tilecount="9" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="9">
+   <image width="112" height="128" source="../../graphics/decoration3/computer/compute_redr.png"/>
+  </tile>
+  <tile id="10">
+   <image width="94" height="124" source="../../graphics/decoration3/computer/computer.png"/>
+  </tile>
+  <tile id="11">
+   <image width="108" height="126" source="../../graphics/decoration3/computer/computer_1.png"/>
+  </tile>
+  <tile id="12">
+   <image width="108" height="126" source="../../graphics/decoration3/computer/computer_2.png"/>
+  </tile>
+  <tile id="13">
+   <image width="108" height="126" source="../../graphics/decoration3/computer/computer_3.png"/>
+  </tile>
+  <tile id="14">
+   <image width="112" height="128" source="../../graphics/decoration3/computer/computer_blue_off.png"/>
+  </tile>
+  <tile id="15">
+   <image width="112" height="128" source="../../graphics/decoration3/computer/computer_blue_on.png"/>
+  </tile>
+  <tile id="16">
+   <image width="112" height="128" source="../../graphics/decoration3/computer/computer_yellow_off.png"/>
+  </tile>
+  <tile id="17">
+   <image width="112" height="128" source="../../graphics/decoration3/computer/computer_yellow_on.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="165" name="cloud" tilewidth="472" tileheight="168" tilecount="18" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="172" height="60" source="../../graphics/decoration3/cloud/cloud1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="208" height="44" source="../../graphics/decoration3/cloud/cloud2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="152" height="40" source="../../graphics/decoration3/cloud/cloud3.png"/>
+  </tile>
+  <tile id="3">
+   <image width="192" height="84" source="../../graphics/decoration3/cloud/cloud4.png"/>
+  </tile>
+  <tile id="4">
+   <image width="136" height="48" source="../../graphics/decoration3/cloud/cloud5.png"/>
+  </tile>
+  <tile id="5">
+   <image width="60" height="32" source="../../graphics/decoration3/cloud/cloud6.png"/>
+  </tile>
+  <tile id="6">
+   <image width="80" height="20" source="../../graphics/decoration3/cloud/cloud7.png"/>
+  </tile>
+  <tile id="7">
+   <image width="112" height="32" source="../../graphics/decoration3/cloud/cloud8.png"/>
+  </tile>
+  <tile id="8">
+   <image width="236" height="48" source="../../graphics/decoration3/cloud/cloud9.png"/>
+  </tile>
+  <tile id="9">
+   <image width="344" height="120" source="../../graphics/decoration3/cloud/cloud1 — копия.png"/>
+  </tile>
+  <tile id="10">
+   <image width="416" height="88" source="../../graphics/decoration3/cloud/cloud2 — копия.png"/>
+  </tile>
+  <tile id="11">
+   <image width="304" height="80" source="../../graphics/decoration3/cloud/cloud3 — копия.png"/>
+  </tile>
+  <tile id="12">
+   <image width="384" height="168" source="../../graphics/decoration3/cloud/cloud4 — копия.png"/>
+  </tile>
+  <tile id="13">
+   <image width="272" height="96" source="../../graphics/decoration3/cloud/cloud5 — копия.png"/>
+  </tile>
+  <tile id="14">
+   <image width="120" height="64" source="../../graphics/decoration3/cloud/cloud6 — копия.png"/>
+  </tile>
+  <tile id="15">
+   <image width="160" height="40" source="../../graphics/decoration3/cloud/cloud7 — копия.png"/>
+  </tile>
+  <tile id="16">
+   <image width="224" height="64" source="../../graphics/decoration3/cloud/cloud8 — копия.png"/>
+  </tile>
+  <tile id="17">
+   <image width="472" height="96" source="../../graphics/decoration3/cloud/cloud9 — копия.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="183" name="background_2" tilewidth="64" tileheight="64" tilecount="88" columns="11">
+  <image source="../../graphics/decoration3/background/background_2.png" width="704" height="512"/>
+ </tileset>
+ <tileset firstgid="271" name="portal" tilewidth="256" tileheight="256" tilecount="2" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="256" height="256" source="../../graphics/decoration3/ruined_portal/big_destroy_portal.png"/>
+  </tile>
+  <tile id="1">
+   <image width="256" height="256" source="../../graphics/decoration3/ruined_portal/big_destroy_portal_second.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="273" name="start" tilewidth="64" tileheight="64" tilecount="1" columns="1">
+  <image source="../../graphics/decoration3/character/start.png" width="64" height="64"/>
+ </tileset>
+ <tileset firstgid="274" name="---" tilewidth="108" tileheight="44" tilecount="1" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="108" height="44" source="../../graphics/decoration/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="275" name="cave" tilewidth="64" tileheight="64" tilecount="100" columns="10">
+  <image source="../../graphics/decoration3/background/cave.png" width="640" height="640"/>
+ </tileset>
+ <tileset firstgid="375" name="hub_portal_component" tilewidth="108" tileheight="44" tilecount="3" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="108" height="44" source="../../graphics/decoration/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+  <tile id="1">
+   <image width="108" height="44" source="../../graphics/decoration2/ruined_portal/destroy_portal_components.png"/>
+  </tile>
+  <tile id="2">
+   <image width="108" height="44" source="../../graphics/decoration3/ruined_portal/destroy_portal_componentst.png"/>
+  </tile>
+ </tileset>
  <objectgroup id="16" name="computer">
   <object id="235" gid="157" x="3375" y="2753" width="94" height="124"/>
  </objectgroup>
@@ -30,11 +231,7 @@
   </object>
  </objectgroup>
  <objectgroup id="12" name="computer_yellow">
-  <object id="23" gid="163" x="1412" y="2292" width="112" height="128">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="23" gid="163" x="1412" y="2292" width="112" height="128"/>
  </objectgroup>
  <objectgroup id="20" name="environment_in">
   <properties>
@@ -93,11 +290,7 @@
   <object id="556" gid="135" x="7810" y="2122" width="190" height="242"/>
   <object id="557" gid="135" x="7598" y="2240" width="190" height="242"/>
   <object id="558" gid="135" x="7707" y="2258" width="190" height="242"/>
-  <object id="559" gid="135" x="7507" y="2180" width="190" height="242">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="559" gid="135" x="7507" y="2180" width="190" height="242"/>
   <object id="560" gid="135" x="7583" y="2007" width="190" height="242"/>
   <object id="561" gid="135" x="7477" y="1946" width="190" height="242"/>
   <object id="562" gid="135" x="7628" y="1801" width="190" height="242"/>
@@ -159,37 +352,17 @@
   <object id="640" gid="135" x="6217" y="1407" width="190" height="242"/>
   <object id="641" gid="135" x="6313" y="1455" width="190" height="242"/>
   <object id="642" gid="135" x="6479" y="1457" width="190" height="242"/>
-  <object id="643" gid="134" x="6117" y="1865" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="643" gid="134" x="6117" y="1865" width="64" height="64"/>
   <object id="644" gid="134" x="5810" y="1940" width="64" height="64">
    <properties>
     <property name="collide" value=" "/>
    </properties>
   </object>
-  <object id="645" gid="134" x="5244" y="1930" width="64" height="64">
-   <properties>
-    <property name="collide" value=" "/>
-   </properties>
-  </object>
-  <object id="646" gid="134" x="6936" y="1894" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="645" gid="134" x="5244" y="1930" width="64" height="64"/>
+  <object id="646" gid="134" x="6936" y="1894" width="64" height="64"/>
   <object id="647" gid="134" x="7196" y="1894" width="64" height="64"/>
-  <object id="648" gid="135" x="7255" y="2039" width="190" height="242">
-   <properties>
-    <property name="collide" value=" "/>
-   </properties>
-  </object>
-  <object id="649" gid="135" x="6351" y="1889" width="190" height="242">
-   <properties>
-    <property name=" collide" value=" "/>
-   </properties>
-  </object>
+  <object id="648" gid="135" x="7255" y="2039" width="190" height="242"/>
+  <object id="649" gid="135" x="6351" y="1889" width="190" height="242"/>
   <object id="651" gid="142" x="6683" y="2176" width="18" height="20"/>
   <object id="652" gid="142" x="6638" y="2139" width="18" height="20"/>
   <object id="653" gid="142" x="6615" y="2116" width="18" height="20"/>
@@ -272,21 +445,9 @@
   <object id="810" gid="143" x="5777" y="2548" width="64" height="64"/>
   <object id="811" gid="143" x="5715" y="2547" width="64" height="64"/>
   <object id="812" gid="143" x="5721" y="2566" width="64" height="64"/>
-  <object id="813" gid="143" x="5608" y="2420" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="816" gid="143" x="5159" y="2172" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="817" gid="143" x="5451" y="1964" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="813" gid="143" x="5608" y="2420" width="64" height="64"/>
+  <object id="816" gid="143" x="5159" y="2172" width="64" height="64"/>
+  <object id="817" gid="143" x="5451" y="1964" width="64" height="64"/>
   <object id="826" gid="143" x="5624" y="1888" width="64" height="64"/>
   <object id="827" gid="143" x="5557" y="1884" width="64" height="64"/>
   <object id="828" gid="143" x="5488" y="1868" width="64" height="64"/>
@@ -311,119 +472,35 @@
   <object id="853" gid="141" x="5481" y="2804" width="22" height="18"/>
   <object id="854" gid="141" x="5353" y="2801" width="22" height="18"/>
   <object id="855" gid="142" x="5388" y="2879" width="18" height="20"/>
-  <object id="858" gid="143" x="7169" y="2873" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="863" gid="143" x="7119" y="2857" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="864" gid="143" x="7166" y="2919" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="865" gid="143" x="7125" y="2944" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="866" gid="143" x="6647" y="3088" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="867" gid="143" x="6627" y="2895" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="868" gid="143" x="7027" y="3039" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="869" gid="143" x="7236" y="2718" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="870" gid="143" x="6755" y="2970" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="871" gid="143" x="7312" y="3043" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="872" gid="143" x="7510" y="2872" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="873" gid="143" x="7442" y="2649" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="874" gid="143" x="7251" y="2470" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="875" gid="143" x="7334" y="2276" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="876" gid="143" x="6342" y="2086" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="877" gid="143" x="6364" y="2032" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="878" gid="143" x="6334" y="2002" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="879" gid="143" x="6670" y="1952" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="880" gid="143" x="6710" y="1932" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="881" gid="143" x="7112" y="2020" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
-  <object id="882" gid="143" x="7152" y="2044" width="64" height="64">
-   <properties>
-    <property name="collide" value=""/>
-   </properties>
-  </object>
+  <object id="858" gid="143" x="7169" y="2873" width="64" height="64"/>
+  <object id="863" gid="143" x="7119" y="2857" width="64" height="64"/>
+  <object id="864" gid="143" x="7166" y="2919" width="64" height="64"/>
+  <object id="865" gid="143" x="7125" y="2944" width="64" height="64"/>
+  <object id="866" gid="143" x="6647" y="3088" width="64" height="64"/>
+  <object id="867" gid="143" x="6627" y="2895" width="64" height="64"/>
+  <object id="868" gid="143" x="7027" y="3039" width="64" height="64"/>
+  <object id="869" gid="143" x="7236" y="2718" width="64" height="64"/>
+  <object id="870" gid="143" x="6755" y="2970" width="64" height="64"/>
+  <object id="871" gid="143" x="7312" y="3043" width="64" height="64"/>
+  <object id="872" gid="143" x="7510" y="2872" width="64" height="64"/>
+  <object id="873" gid="143" x="7442" y="2649" width="64" height="64"/>
+  <object id="874" gid="143" x="7251" y="2470" width="64" height="64"/>
+  <object id="875" gid="143" x="7334" y="2276" width="64" height="64"/>
+  <object id="876" gid="143" x="6342" y="2086" width="64" height="64"/>
+  <object id="877" gid="143" x="6364" y="2032" width="64" height="64"/>
+  <object id="878" gid="143" x="6334" y="2002" width="64" height="64"/>
+  <object id="879" gid="143" x="6670" y="1952" width="64" height="64"/>
+  <object id="880" gid="143" x="6710" y="1932" width="64" height="64"/>
+  <object id="881" gid="143" x="7112" y="2020" width="64" height="64"/>
+  <object id="882" gid="143" x="7152" y="2044" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="5" name="bush around the maze">
   <object id="13" gid="121" x="2816" y="2602" width="32" height="32"/>
   <object id="14" gid="121" x="2839" y="2621" width="32" height="32"/>
   <object id="15" gid="121" x="2819" y="876" width="32" height="32"/>
   <object id="16" gid="121" x="2826" y="894" width="32" height="32"/>
-  <object id="17" gid="121" x="916" y="899" width="32" height="32"/>
-  <object id="18" gid="121" x="935" y="914" width="32" height="32"/>
+  <object id="17" gid="121" x="978" y="871" width="32" height="32"/>
+  <object id="18" gid="121" x="960" y="885" width="32" height="32"/>
   <object id="19" gid="121" x="909" y="2620" width="32" height="32"/>
   <object id="20" gid="121" x="928" y="2637" width="32" height="32"/>
  </objectgroup>
@@ -457,7 +534,11 @@
   <object id="33" gid="122" x="1807" y="2061" width="32" height="32"/>
   <object id="34" gid="122" x="994" y="1488" width="32" height="32"/>
   <object id="35" gid="122" x="1230" y="1172" width="32" height="32"/>
-  <object id="37" gid="121" x="929" y="894" width="32" height="32"/>
+  <object id="37" gid="121" x="812" y="885" width="32" height="32">
+   <properties>
+    <property name="collide" value=""/>
+   </properties>
+  </object>
   <object id="38" gid="121" x="1865" y="1311" width="32" height="32"/>
   <object id="39" gid="121" x="2093" y="1398" width="32" height="32"/>
   <object id="40" gid="121" x="2706" y="1974" width="32" height="32"/>
@@ -686,18 +767,13 @@
   </object>
  </objectgroup>
  <objectgroup id="32" name="bottle">
-  <object id="883" name="bottle" gid="145" x="7145" y="2876" width="18" height="64"/>
+  <object id="883" name="bottle" class="npc " gid="145" x="7145" y="2876" width="18" height="64"/>
  </objectgroup>
  <objectgroup id="22" name="portal">
   <object id="770" name="Portal" gid="271" x="549" y="895" width="256" height="256"/>
   <object id="1072" name="component" gid="377" x="7393" y="2107" width="108" height="44"/>
  </objectgroup>
- <objectgroup id="23" name="npc">
-  <object id="771" name="fairy" class="npc" gid="273" x="2560" y="1216" width="64" height="64"/>
-  <object id="884" name="keeper" class="npc" gid="273" x="6021" y="2181" width="64" height="64"/>
-  <object id="885" name="pig" class="npc" gid="273" x="6978" y="2882" width="64" height="64"/>
- </objectgroup>
- <objectgroup id="33" name="cloud">
+ <objectgroup id="33" name="cloud" visible="0">
   <object id="888" gid="165" x="3722" y="1806" width="172" height="60"/>
   <object id="889" gid="165" x="4174" y="1830" width="172" height="60"/>
   <object id="890" gid="165" x="3902" y="2418" width="172" height="60"/>
@@ -876,5 +952,57 @@
   <object id="1065" gid="166" x="4872" y="1918" width="208" height="44"/>
   <object id="1066" gid="166" x="4440" y="1790" width="208" height="44"/>
   <object id="1070" gid="166" x="3935" y="1025" width="208" height="44"/>
+ </objectgroup>
+ <objectgroup id="35" name="battles">
+  <object id="1073" class="battle" gid="55" x="2304" y="1024" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="1074" class="battle" gid="55" x="2240" y="1472" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="0 "/>
+   </properties>
+  </object>
+  <object id="1075" class="battle" gid="55" x="1216" y="2304" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="3"/>
+   </properties>
+  </object>
+  <object id="1076" class="battle" gid="55" x="2240" y="2432" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="2 "/>
+   </properties>
+  </object>
+  <object id="1077" class="battle" gid="55" x="2496" y="2368" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="3 "/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="23" name="npc">
+  <object id="771" name="fairy" class="npc" gid="273" x="2560" y="1216" width="64" height="64"/>
+  <object id="884" name="keeper" class="npc" gid="273" x="6021" y="2181" width="64" height="64"/>
+  <object id="885" name="pig" class="npc" gid="273" x="6976" y="2880" width="64" height="64"/>
+  <object id="1081" class="battle" gid="55" x="6912" y="2752" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="4"/>
+   </properties>
+  </object>
+  <object id="1082" class="battle" gid="55" x="6848" y="2752" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="4"/>
+   </properties>
+  </object>
+  <object id="1083" class="battle" gid="55" x="6848" y="2816" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="4"/>
+   </properties>
+  </object>
+  <object id="1084" class="battle" gid="55" x="6848" y="2880" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="4"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
