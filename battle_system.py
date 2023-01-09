@@ -256,13 +256,13 @@ class Battle:
 
     def set_battle_menu(self):
         attack_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.attack, pos=BATTLE_BUTTONS_POS[0],
-                               text="attack")
+                               text="Атака")
         heal_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.heal, pos=BATTLE_BUTTONS_POS[1],
-                             text="heal")
+                             text="Лечиться")
         block_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.block, pos=BATTLE_BUTTONS_POS[2],
-                              text="block")
+                              text="Блок")
         run_btn = ui.Button(func=self._make_move, args=BATTLE_MOVES.run, pos=BATTLE_BUTTONS_POS[3],
-                            text="run")
+                            text="Побег")
         self._battle_menu = ui.Menu((attack_btn, heal_btn, block_btn, run_btn))
 
     def _remove_enemy(self, index):
