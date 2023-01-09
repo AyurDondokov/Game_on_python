@@ -90,7 +90,6 @@ class Level:
                                 font_name=FONT_NAME
                                 )
 
-
         self.__create_map()
         self.__setup()
 
@@ -144,15 +143,15 @@ class Level:
             game_object.GameObject((obj_tmx.x, obj_tmx.y), groups, "", LAYERS["back_decor"],
                                    image_surf=obj_tmx.image)
 
-    def add_npc(self, obj_tmx):
+    def add_npc(self, obj):
         dialog = None
-        if obj_tmx.properties.get("dialog"):
-            dialog = self.reader.get_npc_replicas(obj_tmx.name)
+        if obj.properties.get("dialog"):
+            dialog = self.reader.get_npc_replicas(obj.name)
         self.__npc_dict.update(
-            {obj_tmx.name:
-                 NPC((obj_tmx.x, obj_tmx.y),
-                     [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                     obj_tmx.name, dialog_replicas=dialog)}
+            {obj.name:
+             NPC((obj.x, obj.y),
+                 [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                 obj.name, self, dialog_replicas=dialog)}
         )
 
     def add_battle_trigger(self, obj_tmx):
@@ -177,13 +176,14 @@ class Level:
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
-        self.battle_manager = battle_system.BattleManager(self.battles_data, self.player, self.__music_path)
+        if self.battles_data != {}:
+            self.battle_manager = battle_system.BattleManager(self.battles_data, self.player, self.__music_path)
 
         # загрузка обьектов из tmx файла
         for layer in self.__tmx_data.layernames.values():
-            print('layer', layer)
+
             for obj in layer:
-                print('obj', obj)
+
                 # если объекту было назначаенно свойство в Tiled, то..
                 groups = [self.__all_sprites]
                 if obj.properties.get("collide"):
@@ -192,7 +192,7 @@ class Level:
                     portal = self.add_portal(obj, groups)
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
-                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
+                    Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
@@ -205,10 +205,15 @@ class Level:
 
     def __create_map(self):
         for key in self.__map:
-            if key != "character":
-                self.__create_tile_group(import_csv_layout(self.__map[key]), key)
-            else:
+
+            if key == "character":
+                print("FUCk")
                 self.__player_setup(import_csv_layout(self.__map[key]))
+            elif key == "character_scene":
+                print("char")
+                self.__cut_player_setup(import_csv_layout(self.__map[key]))
+            else:
+                self.__create_tile_group(import_csv_layout(self.__map[key]), key)
 
         # TODO: сделать совместимым с разными картами:
         # decoration
@@ -244,8 +249,13 @@ class Level:
         pygame.mixer.music.load(self.__music_path)
         pygame.mixer.music.play(-1)
         self.is_runned = True
-        self.player = Player((self.__player_x, self.__player_y), self.__all_sprites,
-                             self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
+        if isinstance(self.player, Player):
+            self.player = Player((self.__player_x, self.__player_y), self.__all_sprites,
+                                 self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
+        else:
+            print("GFDGDGSDGSDGSDGSDGSDGSDG")
+            self.player = CutscenePlayer((self.__player_x, self.__player_y), self.__all_sprites,
+                                         self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
     def run(self, dt):
         """Запусе отрисовки уровня"""
@@ -266,14 +276,18 @@ class Level:
         # список событий передаётся компонентам для самостоятельной обработки
         if not self.is_paused:
             self.player.set_events_list(self.events_list)
-
-            if not self.battle_manager.is_battle:
+            if self.battles_data != {}:
+                if not self.battle_manager.is_battle:
+                    self.__all_sprites.centralize_on_obj(self.player)
+                    self.__all_sprites.custom_draw(self.player)
+                    self.__all_sprites.update(dt)
+                else:
+                    self.battle_manager.update(dt)
+                    self.battle_manager.set_events_list(self.events_list)
+            else:
                 self.__all_sprites.centralize_on_obj(self.player)
                 self.__all_sprites.custom_draw(self.player)
                 self.__all_sprites.update(dt)
-            else:
-                self.battle_manager.update(dt)
-                self.battle_manager.set_events_list(self.events_list)
         else:
             self.__all_sprites.custom_draw(self.player)
             self.pause_menu.set_events_list(self.events_list)
@@ -286,17 +300,18 @@ class Level:
         pygame.display.update()
 
     def draw_ui(self):
-        if not self.battle_manager.is_battle:
-            self.health_bar.value = self.player.health / LEVELS_PROPERTIES[self.player.level]['max_health']
-            self.exp_bar.value = self.player.exp / LEVELS_PROPERTIES[self.player.level]['exp_to_next']
+        if self.battles_data != {}:
+            if not self.battle_manager.is_battle:
+                self.health_bar.value = self.player.health / LEVELS_PROPERTIES[self.player.level]['max_health']
+                self.exp_bar.value = self.player.exp / LEVELS_PROPERTIES[self.player.level]['exp_to_next']
 
-            pygame.draw.rect(self.__display_surface, self.health_bar.color[0], self.health_bar.rect[0])
-            pygame.draw.rect(self.__display_surface, self.health_bar.color[1], self.health_bar.rect[1])
-            pygame.draw.rect(self.__display_surface, self.exp_bar.color[0], self.exp_bar.rect[0])
-            pygame.draw.rect(self.__display_surface, self.exp_bar.color[1], self.exp_bar.rect[1])
+                pygame.draw.rect(self.__display_surface, self.health_bar.color[0], self.health_bar.rect[0])
+                pygame.draw.rect(self.__display_surface, self.health_bar.color[1], self.health_bar.rect[1])
+                pygame.draw.rect(self.__display_surface, self.exp_bar.color[0], self.exp_bar.rect[0])
+                pygame.draw.rect(self.__display_surface, self.exp_bar.color[1], self.exp_bar.rect[1])
 
-            self.health_text.draw()
-            self.exp_text.draw()
+                self.health_text.draw()
+                self.exp_text.draw()
 
             self.level_text.text = f"LVL: {self.player.level}"
             self.level_text.draw()

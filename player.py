@@ -35,7 +35,7 @@ class Player(GameObject):
         self.__collision_sprites = collision_sprites
         self.__interactable_sprites = interactable_sprites
         self.__trigger_sprites = trigger_sprites
-        self.__event_list = []
+        self._event_list = []
         self.level = player_level
         self.health = health
         self._exp = exp
@@ -81,7 +81,7 @@ class Player(GameObject):
         self.health = LEVELS_PROPERTIES[self.level]['max_health']
 
     def set_events_list(self, event_list):
-        self.__event_list = event_list
+        self._event_list = event_list
 
     def _input(self, dt):
         """Приём нажатия клавишь"""
@@ -112,7 +112,7 @@ class Player(GameObject):
                 self._change_anim_status("idle_" + self._anim_status.split('_')[1])
 
         # чтение событий pygame.event
-        keys = self.__event_list
+        keys = self._event_list
         for event in keys:
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_e:
@@ -168,3 +168,39 @@ class Player(GameObject):
     @property
     def exp(self):
         return self._exp
+
+
+class CutscenePlayer(Player):
+    def _input(self, dt):
+        if self._managed:
+            keys = pygame.key.get_pressed()
+
+            # Горизонтальное движение
+            if keys[pygame.K_a] and not keys[pygame.K_d]:
+                self._direction.x = -1
+                self._change_anim_status("walk_left")
+            elif keys[pygame.K_d] and not keys[pygame.K_a]:
+                self._direction.x = 1
+                # self._change_anim_status("walk_right")
+            else:
+                self._direction.x = 0
+
+            if self._direction.magnitude() == 0:
+                self._change_anim_status("idle_down")
+
+        keys = self._event_list
+        for event in keys:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_e:
+                    for sprite in self.__interactable_sprites:
+                        # переключение на следующую реплику в диалоге
+                        if hasattr(sprite, 'interact_component'):
+                            if sprite.interact_component.is_able:
+                                sprite.interact_component.interact()
+                        # if hasattr(sprite, 'is_use_able'):
+                        #     if sprite.is_use_able:
+                        #         sprite.execute()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    print(self._pos)

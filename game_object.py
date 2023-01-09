@@ -112,6 +112,7 @@ class GameObject(pygame.sprite.Sprite):
         "меняет расположение обьекта"
         self._pos.x = pos[0]
         self._pos.y = pos[1]
+        self.rect = self.image.get_rect(center=pos)
 
     def update(self, dt):
         self._input(dt)
