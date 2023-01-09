@@ -196,8 +196,7 @@ class Level:
                 if obj.name == "limiters2":
                     image = obj.image
                     image.set_colorkey((238, 65, 66))
-                    Tile((obj.x, obj.y), [self.__all_sprites,
-                                          ], image)
+                    Tile((obj.x, obj.y), [self.__all_sprites], image)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
