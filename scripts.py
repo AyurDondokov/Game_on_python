@@ -60,7 +60,7 @@ class ActivatePortalScript(Script):
 class LocateCharacter(Script):
     def __init__(self, receiver, pos) -> None:
         super().__init__(receiver)
-        self._pos = pos
+        self.pos = pos
 
     def execute(self):
         self._reseiver.locate(self._pos)

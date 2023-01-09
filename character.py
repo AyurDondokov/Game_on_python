@@ -86,6 +86,15 @@ class NPC(GameObject):
         if self.interact_component.is_able:
             self.dialog.update(dt)
 
+    @property
+    def pos(self):
+        return self._pos
+
+    @pos.setter
+    def pos(self, new_value):
+        self._pos = new_value
+        self.interact_component.icon.pos = new_value
+
 
 class Portal(GameObject):
     def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, set_current_level, move_to):

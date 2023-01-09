@@ -83,6 +83,12 @@ class Level:
                                 text_size=20,
                                 font_name=FONT_NAME
                                 )
+        self.level_text = UI.Text(pos=LEVEL_TEXT_POS,
+                                text="LVL: 1",
+                                text_color=(0, 220, 0),
+                                text_size=30,
+                                font_name=FONT_NAME
+                                )
 
 
         self.__create_map()
@@ -292,6 +298,9 @@ class Level:
             self.health_text.draw()
             self.exp_text.draw()
 
+            self.level_text.text = f"LVL: {self.player.level}"
+            self.level_text.draw()
+
     def pause(self):
         self.is_paused = not self.is_paused
         print(self.is_paused)
@@ -327,7 +336,7 @@ class CameraGroup(pygame.sprite.Group):
                         abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT * 0.75:
                     if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
                         # нужно для правильного накладывания гг на обьект или за обьект
-                        if sprite.rect.centery > player.rect.centery:
+                        if sprite.rect.bottom > player.rect.bottom:
                             # если Yцентр спрайта выше гг отрисовывать его перед гг
                             sprite.z = LAYERS['forward_' +
                                               list(LAYERS.keys())[sprite.z].split('_')[1]]

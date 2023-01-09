@@ -7,7 +7,7 @@ SCREEN_HEIGHT = 720
 FPS = 120
 TILE_SIZE = 64
 
-FONT_NAME = './addons/monospace.ttf'
+FONT_NAME = './addons/Roboto-Regular.ttf'
 WHITE = (255, 255, 255)
 GRAY = (120, 120, 120)
 BLACK = (0, 0, 0)
@@ -39,6 +39,7 @@ EXP_TEXT_POS = (25, 38)
 HEALTH_BAR_SIZE = (240, 25)
 EXP_BAR_SIZE = (240, 10)
 EXP_BAR_COLOR = (0, 10, 240)
+LEVEL_TEXT_POS = (SCREEN_WIDTH-100, 10)
 
 # Player values
 TIME_BETWEEN_INTERACT = 0.5
