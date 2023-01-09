@@ -20,7 +20,8 @@ class Player(GameObject):
                  interactable_sprites: pygame.sprite.Group,
                  trigger_sprites: pygame.sprite.Group,
                  player_level: int = 1,
-                 health: int = LEVELS_PROPERTIES[1]["max_health"]):
+                 health: int = LEVELS_PROPERTIES[1]["max_health"],
+                 exp: int = 0):
         super().__init__(position=position,
                          sprite_group=sprite_group,
                          sprite_path="./sprites/main_character/",
@@ -37,6 +38,7 @@ class Player(GameObject):
         self.__event_list = []
         self.level = player_level
         self.health = health
+        self._exp = exp
 
         self._managed = True
 
@@ -73,6 +75,10 @@ class Player(GameObject):
             if hasattr(sprite, 'hitbox'):
                 if sprite.hitbox.colliderect(self.hitbox):
                     sprite.check()
+
+    def _new_level(self):
+        self.level += 1
+        self.health = LEVELS_PROPERTIES[self.level]['max_health']
 
     def set_events_list(self, event_list):
         self.__event_list = event_list
@@ -143,3 +149,22 @@ class Player(GameObject):
     def update(self, dt):
         super().update(dt)
         self.check_npc_distance()
+
+    def take_exp(self, exp):
+        exp_to_next = LEVELS_PROPERTIES[self.level]['exp_to_next']
+        if self._exp + exp < exp_to_next:
+            self._exp += exp
+            print(self._exp)
+            return False
+        else:
+            self._exp = self._exp+exp - exp_to_next
+            self._new_level()
+            print(self._exp)
+            return True
+
+    def set_health(self, new_value):
+        self.health = new_value
+
+    @property
+    def exp(self):
+        return self._exp

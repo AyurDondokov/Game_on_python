@@ -2,6 +2,28 @@ import pygame
 import properties as pr
 
 
+class Text:
+    def __init__(self, pos, text, text_size, font_name, text_color):
+        self.__font = pygame.font.Font(font_name, text_size)
+        self.__text = text
+        self.__text_color = text_color
+        self.__text_surface = self.__font.render(self.__text, True, self.__text_color)
+        self.__text_rect = self.__text_surface.get_rect(topleft=pos)
+        self.__display_surf = pygame.display.get_surface()
+
+    def draw(self):
+        self.__display_surf.blit(self.__text_surface, self.__text_rect)
+
+    @property
+    def text(self):
+        return self.__text
+
+    @text.setter
+    def text(self, new_value):
+        self.__text = new_value
+        self.__text_surface = self.__font.render(self.__text, True, self.__text_color)
+
+
 class Menu:
     def __init__(self, buttons,
                  action_bar_path: str = "./sprites/fight/UI/action_bar.png",
@@ -129,6 +151,7 @@ class Button:
                             self.__function(self.__args)
                         else:
                             self.__function()
+
     def update(self):
         if self.__button_type == "image":
             if not self.__is_targeted:

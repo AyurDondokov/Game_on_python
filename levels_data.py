@@ -34,7 +34,7 @@ level_0 = {
     "battles": {
         0: {"enemies": ["tumbleweed", "tumbleweed"],
             "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
+        1: {"enemies": ["varan", "tumbleweed"],  "music_path":
             "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
         2: {"enemies": ["mummy", "mummy"],
             "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
