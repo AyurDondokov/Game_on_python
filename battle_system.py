@@ -129,6 +129,10 @@ class BattleObject(pygame.sprite.Sprite):
         return self._max_damage
 
     @property
+    def health(self):
+        return self._health
+
+    @property
     def health_bar(self):
         return self._health_bar
 
@@ -151,6 +155,7 @@ class BattleEnemy(BattleObject):
                          heal=data["heal"])
         self._battle_player = battle_player
         self._new_phase_enemies_data = new_phase_enemies_data
+        self._exp_from_me = data['exp']
 
     def make_move(self):
         if self._health > self._max_health / 2:
@@ -163,6 +168,10 @@ class BattleEnemy(BattleObject):
     @property
     def new_phase_enemies_data(self):
         return self._new_phase_enemies_data
+
+    @property
+    def exp_from_me(self):
+        return self._exp_from_me
 
 
 class BattlePlayer(BattleObject):
@@ -207,6 +216,7 @@ class Battle:
         self._is_battle = False
         self._is_finished_battle = False
         self._display_surf = pygame.display.get_surface()
+        self._game_player = game_player
 
         self.__event_list = []
         self._timers = {"make_move": Timer(BATTLE_MOVE_TIME)}
@@ -256,6 +266,8 @@ class Battle:
         self._battle_menu = ui.Menu((attack_btn, heal_btn, block_btn, run_btn))
 
     def _remove_enemy(self, index):
+        if self._game_player.take_exp(self._enemies[index].exp_from_me):
+            self._battle_player.healing()
         for enemy_data in self._enemies[index].new_phase_enemies_data:
             self._add_enemy(enemy_data, len(self._enemies))
         if len(self._enemies) != 1:
@@ -355,6 +367,7 @@ class Battle:
     def _end(self, is_finished):
         if self._is_battle:
             self._is_finished_battle = is_finished
+            self._game_player.set_health(self._battle_player.health)
             self._is_battle = False
             pygame.mixer.music.load(self.level_music_path)
             pygame.mixer.music.play(-1)

@@ -31,12 +31,21 @@ STANDARD_CHARACTER_ANIM_PACK = {
 # Dialog vales
 DIALOG_WINDOW_POSITION = (SCREEN_WIDTH / 2, SCREEN_HEIGHT - 128)
 
+# UI
+HEALTH_BAR_POS = (-50, 0)
+HEALTH_TEXT_POS = (15, 8)
+EXP_BAR_POS = (-50, 40)
+EXP_TEXT_POS = (25, 38)
+HEALTH_BAR_SIZE = (240, 25)
+EXP_BAR_SIZE = (240, 10)
+EXP_BAR_COLOR = (0, 10, 240)
+
 # Player values
 TIME_BETWEEN_INTERACT = 0.5
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
-    1: {'max_health': 100, 'defence': 30, 'max_damage': 20, 'heal': 25},
-    2: {'max_health': 120, 'defence': 50, 'max_damage': 30, 'heal': 30}
+    1: {'max_health': 100, 'defence': 30, 'max_damage': 20, 'heal': 25, 'exp_to_next': 10},
+    2: {'max_health': 120, 'defence': 50, 'max_damage': 30, 'heal': 30, 'exp_to_next': 15}
 }
 
 LAYERS = {
@@ -105,7 +114,8 @@ mummy = {
         "max_damage": 10,
         "defence": 20,
         "heal": 5,
-        "new_phase_enemies": []
+        "new_phase_enemies": [],
+        "exp": 5
     }
 pig = {
         "image_path": "./sprites/enemies/pig/pig_fighting.png",
@@ -113,7 +123,8 @@ pig = {
         "max_damage": 10,
         "defence": 20,
         "heal": 10,
-        "new_phase_enemies": []
+        "new_phase_enemies": [],
+        "exp": 5
     }
 keanu = {
         "image_path": "./sprites/enemies/tumbleweed/keanu.png",
@@ -121,7 +132,8 @@ keanu = {
         "max_damage": 15,
         "defence": 30,
         "heal": 15,
-        "new_phase_enemies": []
+        "new_phase_enemies": [],
+        "exp": 2
     }
 tumbleweed = {
         "image_path": "./sprites/enemies/tumbleweed/tumbleweed.png",
@@ -129,7 +141,8 @@ tumbleweed = {
         "max_damage": 5,
         "defence": 10,
         "heal": 10,
-        "new_phase_enemies": [keanu]
+        "new_phase_enemies": [keanu],
+        "exp": 1
     }
 varan = {
         "image_path": "./sprites/enemies/varan/varan_fighting.png",
@@ -137,7 +150,8 @@ varan = {
         "max_damage": 15,
         "defence": 15,
         "heal": 15,
-        "new_phase_enemies": []
+        "new_phase_enemies": [],
+        "exp": 20
     }
 
 BATTLE_ENEMIES = {

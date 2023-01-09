@@ -12,7 +12,7 @@ class Game:
         """Инициализация pygame"""
         pygame.mixer.pre_init(44100, -16, 1, 512)
         pygame.init()
-        pygame.display.set_caption("The best game ever")
+        pygame.display.set_caption("FORBIDDEN DREAM")
         self.game_over, self.pause_menu = False, False
         self.SCREEN_WIDTH, self.SCREEN_HEIGHT = SCREEN_WIDTH, SCREEN_HEIGHT
         self.display = pygame.Surface((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))

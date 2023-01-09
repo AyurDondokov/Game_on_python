@@ -34,7 +34,7 @@ level_0 = {
     "battles": {
         0: {"enemies": ["tumbleweed", "tumbleweed"],
             "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
+        1: {"enemies": ["varan", "tumbleweed"],  "music_path":
             "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
         2: {"enemies": ["mummy", "mummy"],
             "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
@@ -83,9 +83,9 @@ level_2 = {
         "cave": "./levels_data/graphics/decoration3/background/cave.png",
         "green": "./levels_data/graphics/decoration3/background/background_1.png",
         "pink": "./levels_data/graphics/decoration3/background/background_2.png",
-        'maze': 'levels_data/graphics/decoration3/background/maze.png',
+        'maze': 'levels_data/graphics/decoration3/background/maze1.png',
+        "character": 'levels_data/graphics/decoration3/character/start.png',
         'limiters': './levels_data/graphics/decoration3/limiters/limiters.png',
-        "character": 'levels_data/graphics/decoration3/character/start.png'
     },
     "TMXData": "levels_data/levels/2/level_2_object.tmx",
     "move_to": 0,
