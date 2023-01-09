@@ -29,17 +29,30 @@ class InteractComponent():
             else:
                 self._icon.remove(self._group)
 
+    def update_pos(self, point):
+        print(self._icon.pos)
+        print(self._icon.hitbox)
+        print(point)
+        self._icon.locate(point)
+        print(self._icon.pos)
+        print(self._icon.hitbox)
+
     def kill(self):
         """Делает компонент неактивным"""
         self._icon.kill()
         self.state = False
+
+    def locate(self, pos):
+        self._pos.x = pos[0]
+        self._pos.y = pos[1]
+        self.rect = self.image.get_rect(topleft=pos)
 
     def interact(self):
         self.func()
 
 
 class NPC(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name: str, dialog_replicas: tuple = None):
+    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, name: str,  level, dialog_replicas: tuple = None):
         super().__init__(position,
                          sprite_group,
                          sprite_path=f"./sprites/npc/{name}/",
@@ -50,6 +63,7 @@ class NPC(GameObject):
                          anim_speed=DEFAULT_CHARACTER_ANIM_SPEED,
                          animations_pack=STANDARD_CHARACTER_ANIM_PACK
                          )
+        self.level = level
         self.hitbox = self.rect.copy().inflate(-self.rect.width * 0.2, -self.rect.height * 0.5)
         self.name = name
         # Инициализация диалога
@@ -77,7 +91,10 @@ class NPC(GameObject):
             if command.startswith(" to_"):
                 self.switch_replica(command.split(self.name)[1][2:])
             if command.startswith("locate"):
-                self.locate(list(map(int, command[6:].split(","))))
+                position = list(map(int, command[6:].split(",")))
+                self.level.player.locate((position[0]+50, position[1]+50))
+                self.locate(position)
+                self.interact_component.update_pos((self.rect.centerx+20, self.rect.centery-80))
 
     def update(self, dt):
         super().update(dt)
@@ -130,12 +147,13 @@ class Portal(GameObject):
 
 
 class Component(GameObject):
-    def __init__(self, position: tuple, sprite_group: pygame.sprite.Group, script):
+    def __init__(self, position: tuple, image, sprite_group: pygame.sprite.Group, script):
         super().__init__(position,
                          sprite_group,
-                         sprite_path="./levels_data/graphics/decoration/ruined_portal/destroy_portal_components.png",
+                         sprite_path="",
                          z=LAYERS['ground'],
                          hitbox_offset=(0, 0.25),
+                         image_surf=image
                          )
         self.state = True
         self.__script = script

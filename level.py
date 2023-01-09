@@ -84,7 +84,6 @@ class Level:
                                 font_name=FONT_NAME
                                 )
 
-
         self.__create_map()
         self.__setup()
 
@@ -138,15 +137,16 @@ class Level:
             game_object.GameObject((obj_tmx.x, obj_tmx.y), groups, "", LAYERS["back_decor"],
                                    image_surf=obj_tmx.image)
 
-    def add_npc(self, obj_tmx):
+    def add_npc(self, obj):
         dialog = None
-        if obj_tmx.properties.get("dialog"):
-            dialog = self.reader.get_npc_replicas(obj_tmx.name)
+        if obj.properties.get("dialog"):
+            dialog = self.reader.get_npc_replicas(obj.name)
+            print(dialog)
         self.__npc_dict.update(
-            {obj_tmx.name:
-                 NPC((obj_tmx.x, obj_tmx.y),
-                     [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                     obj_tmx.name, dialog_replicas=dialog)}
+            {obj.name:
+             NPC((obj.x, obj.y),
+                 [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                 obj.name, self, dialog_replicas=dialog)}
         )
 
     def add_battle_trigger(self, obj_tmx):
@@ -186,7 +186,7 @@ class Level:
                     portal = self.add_portal(obj, groups)
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
-                    Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
+                    Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
