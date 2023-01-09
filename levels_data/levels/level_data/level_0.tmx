@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="33" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="23" nextobjectid="392">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="33" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="25" nextobjectid="479">
  <editorsettings>
-  <export target="../0/level_0_.csv" format="csv"/>
+  <export target="../0/level_objects.tmx" format="tmx"/>
  </editorsettings>
  <tileset firstgid="1" source="../tilesets/hub_grass.tsx"/>
  <tileset firstgid="17" source="../tilesets/hub_water_hole.tsx"/>
@@ -17,6 +17,7 @@
  <tileset firstgid="211" source="../tilesets/hub_portal.tsx"/>
  <tileset firstgid="213" source="../tilesets/hub_rock.tsx"/>
  <tileset firstgid="215" source="../tilesets/hub_components_of_portal.tsx"/>
+ <tileset firstgid="218" source="../tilesets/limiters.tsx"/>
  <layer id="15" name="layer_with_sky" width="33" height="32">
   <data encoding="csv">
 22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,22,
@@ -358,9 +359,9 @@
 0,0,0,0,0,0,0,0,87,87,87,0,87,0,0,0,0,0,0,0,0,87,0,87,87,87,0,94,0,0,0,0,0,
 0,0,0,0,0,0,0,0,87,0,0,87,0,0,0,0,0,0,0,0,0,0,87,0,0,87,94,94,0,0,0,0,0,
 0,0,0,0,0,0,0,0,87,87,87,87,0,0,0,0,0,0,0,0,0,0,87,87,87,87,94,94,0,0,0,0,0,
-0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,87,87,87,0,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,87,87,87,0,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,87,87,87,87,0,0,0,0,0,0,0,0,0,0,0,87,87,87,94,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,87,87,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,87,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,0,0,0,87,0,0,0,0,0,0,0,0,0,
@@ -502,9 +503,6 @@
   <object id="12" gid="213" x="576" y="896" width="256" height="152"/>
   <object id="15" gid="214" x="1344" y="896" width="256" height="152"/>
  </objectgroup>
- <objectgroup id="21" name="portal_component">
-  <object id="14" name="component" gid="215" x="1024" y="1024" width="108" height="44"/>
- </objectgroup>
  <objectgroup id="22" name="vegetashion_up">
   <object id="349" gid="209" x="1384.56" y="872.341" width="44" height="40"/>
   <object id="350" gid="209" x="1406.57" y="890.348" width="44" height="40"/>
@@ -522,10 +520,58 @@
   <object id="380" gid="209" x="542.151" y="906.792" width="44" height="40"/>
  </objectgroup>
  <objectgroup id="19" name="portal">
-  <object id="16" gid="212" x="987" y="577" width="204" height="256">
+  <object id="16" name="Portal" gid="212" x="987" y="577" width="204" height="256">
    <properties>
     <property name="collide" value="1"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="21" name="portal_component">
+  <object id="14" name="component" gid="215" x="1024" y="1024" width="108" height="44"/>
+ </objectgroup>
+ <objectgroup id="24" name="limiters2" visible="0">
+  <object id="435" gid="218" x="1152" y="960" width="64" height="64"/>
+  <object id="436" gid="218" x="1024" y="960" width="64" height="64"/>
+  <object id="437" gid="218" x="960" y="960" width="64" height="64"/>
+  <object id="438" gid="218" x="896" y="960" width="64" height="64"/>
+  <object id="439" gid="218" x="896" y="1024" width="64" height="64"/>
+  <object id="440" gid="218" x="960" y="1024" width="64" height="64"/>
+  <object id="441" gid="218" x="1024" y="1024" width="64" height="64"/>
+  <object id="442" gid="218" x="1088" y="1024" width="64" height="64"/>
+  <object id="443" gid="218" x="1152" y="1024" width="64" height="64"/>
+  <object id="444" gid="218" x="1088" y="960" width="64" height="64"/>
+  <object id="445" gid="218" x="1216" y="960" width="64" height="64"/>
+  <object id="446" gid="218" x="1216" y="1024" width="64" height="64"/>
+  <object id="447" gid="219" x="1280" y="960" width="64" height="64"/>
+  <object id="448" gid="219" x="1280" y="1024" width="64" height="64"/>
+  <object id="449" gid="223" x="1152" y="1088" width="64" height="64"/>
+  <object id="450" gid="223" x="1152" y="1088" width="64" height="64"/>
+  <object id="451" gid="223" x="1216" y="1088" width="64" height="64"/>
+  <object id="452" gid="223" x="1088" y="1088" width="64" height="64"/>
+  <object id="453" gid="223" x="1024" y="1088" width="64" height="64"/>
+  <object id="454" gid="223" x="960" y="1088" width="64" height="64"/>
+  <object id="455" gid="231" x="960" y="896" width="64" height="64"/>
+  <object id="456" gid="231" x="1024" y="896" width="64" height="64"/>
+  <object id="457" gid="231" x="1088" y="896" width="64" height="64"/>
+  <object id="458" gid="231" x="1152" y="896" width="64" height="64"/>
+  <object id="459" gid="231" x="1216" y="896" width="64" height="64"/>
+  <object id="460" gid="231" x="896" y="896" width="64" height="64"/>
+  <object id="461" gid="223" x="896" y="1088" width="64" height="64"/>
+  <object id="462" gid="227" x="832" y="960" width="64" height="64"/>
+  <object id="463" gid="227" x="832" y="1024" width="64" height="64"/>
+  <object id="464" gid="218" x="1408" y="1024" width="64" height="64"/>
+  <object id="465" gid="218" x="1408" y="1088" width="64" height="64"/>
+  <object id="466" gid="218" x="1408" y="1152" width="64" height="64"/>
+  <object id="468" gid="218" x="704" y="1024" width="64" height="64"/>
+  <object id="469" gid="218" x="704" y="1088" width="64" height="64"/>
+  <object id="470" gid="222" x="768" y="1152" width="64" height="64"/>
+  <object id="471" gid="221" x="1344" y="1152" width="64" height="64"/>
+  <object id="472" gid="223" x="832" y="832" width="64" height="64"/>
+  <object id="473" gid="223" x="896" y="832" width="64" height="64"/>
+  <object id="474" gid="223" x="960" y="832" width="64" height="64"/>
+  <object id="475" gid="223" x="1024" y="832" width="64" height="64"/>
+  <object id="476" gid="223" x="1088" y="832" width="64" height="64"/>
+  <object id="477" gid="223" x="1152" y="832" width="64" height="64"/>
+  <object id="478" gid="223" x="1280" y="832" width="64" height="64"/>
  </objectgroup>
 </map>
