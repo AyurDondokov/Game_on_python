@@ -1,5 +1,6 @@
 """информация о уровнях"""
 """Порядок в MAP важен!!"""
+
 level_0 = {
     "MAP": {
         'limiters': 'levels_data/levels/0/level_0__limiters.csv',
@@ -101,31 +102,8 @@ level_2 = {
             "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"},
     }
 }
-level_cutscene = {
-    "MAP": {
-        "limiters": "levels_data/levels/cutscene/laboratory_limiters.csv",
-        "character_scene": "levels_data/levels/cutscene/laboratory_character_scene.csv",
-    },
-
-    "TileSet": {
-        "limiters": './levels_data/graphics/decoration3/limiters/limiters.png',
-        "character_scene": './levels_data/graphics/decoration3/limiters/limiters.png',
-    },
-    "TMXData": "levels_data/levels/level_data/laboratory.tmx",
-    "move_to": 0,
-    "music": "music_and_sound/music/level/world2.mp3",
-    "battles": {
-        0: {"enemies": ["tumbleweed", "tumbleweed"],
-            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
-            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
-        2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
-    }
-}
 
 levels = {
-    -1: level_cutscene,
     0: level_0,
     1: level_1,
     2: level_2,

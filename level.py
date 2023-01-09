@@ -13,7 +13,7 @@ import game_object
 from scripts import ActivatePortalScript
 from character import Portal, Component
 from character import NPC
-from player import Player, CutscenePlayer
+from player import Player
 from properties import *
 from replicas_data import test_npc2
 from support import import_csv_layout, import_cut_graphics
@@ -170,7 +170,6 @@ class Level:
         return portal
 
     def __setup(self):
-        script = None
         """Загрузка важных объектов на уровне"""
         self.battle_manager = battle_system.BattleManager(self.battles_data, self.player, self.__music_path)
 
@@ -196,15 +195,12 @@ class Level:
                         self.add_npc(obj)
                 else:
                     self.add_game_object(obj, groups)
-        if script:
-            script.receiver = portal
+        script.receiver = portal
 
     def __create_map(self):
         for key in self.__map:
             if key != "character":
                 self.__create_tile_group(import_csv_layout(self.__map[key]), key)
-            elif key == "character_scene":
-                self.__cut_player_setup(import_csv_layout(self.__map[key]))
             else:
                 self.__player_setup(import_csv_layout(self.__map[key]))
 
@@ -237,15 +233,6 @@ class Level:
                     self.__player_y = row_index * TILE_SIZE
                     self.player = Player((self.__player_x, self.__player_y), self.__all_sprites,
                                          self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
-
-    def __cut_player_setup(self, layout):
-        for row_index, row in enumerate(layout):
-            for col_index, val in enumerate(row):
-                if val == '0':
-                    self.__player_x = col_index * TILE_SIZE
-                    self.__player_y = row_index * TILE_SIZE
-                    self.player = CutscenePlayer((self.__player_x, self.__player_y), self.__all_sprites,
-                                                 self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
     def start(self):
         pygame.mixer.music.load(self.__music_path)
