@@ -122,7 +122,7 @@ level_cutscene = {
 }
 
 levels = {
-    # -1: level_cutscene,
+    -1: level_cutscene,
     0: level_0,
     1: level_1,
     2: level_2,
