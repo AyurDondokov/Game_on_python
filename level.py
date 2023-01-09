@@ -20,18 +20,20 @@ from support import import_csv_layout, import_cut_graphics
 from tile import Tile, Trigger
 from pytmx.util_pygame import load_pygame
 
-
 log = logging.getLogger(__name__)
 
 
 class Level:
     def __init__(self, level_data, set_current_level, name):
         """Отрисовка спрайтов на уровне"""
+        log.info(f'Level class intialization')
+
         self.is_paused = None
         self.player = None
         self.window = None
         self.events_list = None
-        log.info(f'Level class intialization')
+        self.__npc_dict = {}
+
         self.name = name
         self.reader = ReadingLocations(f'dialog/{self.name}.txt')
 
@@ -45,19 +47,6 @@ class Level:
         pygame.mixer.music.load("music_and_sound/music/menu/mmF.mp3")
         pygame.mixer.music.play(-1)
 
-        # Меню паузы
-        # buttons = (
-        #     UI.Button(self.pause, None, (SCREEN_WIDTH/2, SCREEN_HEIGHT*0.2),
-        #               image_path="./sprites/pause_menu/button.png",
-        #               selected_image_path="./sprites/pause_menu/button_hover.png",
-        #               sprite_group=self.__all_sprites,
-        #               text="Продолжить",
-        #
-        #               ),
-        # )
-        # self.pause_menu = UI.Menu(buttons,
-        #                           action_bar_path="./sprites/pause_menu/menu_background.png")
-
         # отрисовка
         self.__map = level_data["MAP"]
         self.__tileset = level_data["TileSet"]
@@ -67,12 +56,39 @@ class Level:
 
         self.__music_path = level_data["music"]
 
+        # Группы спрайтов
         self.__all_sprites = CameraGroup()
         self.__collision_sprites = pygame.sprite.Group()
         self.__interactable_sprites = pygame.sprite.Group()
         self.__trigger_sprites = pygame.sprite.Group()
-        self.__npc_dict = {}
+
         # Меню паузы
+        self.pause_menu_setup()
+
+        # UI
+        self.health_bar = UI.ProgressBar(cord=HEALTH_BAR_POS,
+                                         size=HEALTH_BAR_SIZE)
+        self.exp_bar = UI.ProgressBar(cord=EXP_BAR_POS,
+                                      size=EXP_BAR_SIZE,
+                                      color=EXP_BAR_COLOR)
+        self.health_text = UI.Text(pos=HEALTH_TEXT_POS,
+                                   text="HP:",
+                                   text_color=BATTLE_PROG_BAR_COLOR,
+                                   text_size=26,
+                                   font_name=FONT_NAME
+                                   )
+        self.exp_text = UI.Text(pos=EXP_TEXT_POS,
+                                text="XP:",
+                                text_color=EXP_BAR_COLOR,
+                                text_size=20,
+                                font_name=FONT_NAME
+                                )
+
+
+        self.__create_map()
+        self.__setup()
+
+    def pause_menu_setup(self):
         buttons = (
             UI.Button(self.pause, None, (SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.2),
                       image_path="./sprites/pause_menu/button.png",
@@ -109,10 +125,49 @@ class Level:
         )
         self.pause_menu = UI.Menu(buttons,
                                   action_bar_path="./sprites/pause_menu/menu_background.png",
-                                  pos=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))
+                                  pos=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
 
-        self.__create_map()
-        self.__setup()
+    def add_game_object(self, obj_tmx, groups):
+        if hasattr(obj_tmx, "hitbox_offset_x"):
+            game_object.GameObject((obj_tmx.x, obj_tmx.y), groups, "", LAYERS["back_decor"],
+                                   image_surf=obj_tmx.image,
+                                   hitbox_offset=(
+                                       getattr(obj_tmx, "hitbox_offset_x"), getattr(obj_tmx, "hitbox_offset_y")),
+                                   hitbox_size=(getattr(obj_tmx, "hitbox_size_x"), getattr(obj_tmx, "hitbox_size_y")))
+        else:
+            game_object.GameObject((obj_tmx.x, obj_tmx.y), groups, "", LAYERS["back_decor"],
+                                   image_surf=obj_tmx.image)
+
+    def add_npc(self, obj_tmx):
+        dialog = None
+        if obj_tmx.properties.get("dialog"):
+            dialog = self.reader.get_npc_replicas(obj_tmx.name)
+        self.__npc_dict.update(
+            {obj_tmx.name:
+                 NPC((obj_tmx.x, obj_tmx.y),
+                     [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
+                     obj_tmx.name, dialog_replicas=dialog)}
+        )
+
+    def add_battle_trigger(self, obj_tmx):
+        Trigger(
+            pos=(obj_tmx.x, obj_tmx.y),
+            groups=[self.__all_sprites, self.__trigger_sprites],
+            surface=pygame.image.load("images/ground/trigger.png"),
+            script=scr.StartBattleScript(self.battle_manager, obj_tmx.properties.get("battle_index"))
+        )
+
+    def add_portal(self, obj_tmx, groups):
+        obj_image = obj_tmx.image.get_rect()
+        # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
+        pos = (obj_tmx.x + obj_image.centerx - TILE_SIZE / 2, obj_tmx.y + obj_image.bottom - TILE_SIZE)
+        portal = Portal(pos,
+                        [self.__all_sprites, self.__interactable_sprites],
+                        self.set_current_level,
+                        self.move_to)
+        # отображение портала
+        Tile((obj_tmx.x, obj_tmx.y), groups, obj_tmx.image, LAYERS["back_decor"])
+        return portal
 
     def __setup(self):
         """Загрузка важных объектов на уровне"""
@@ -128,60 +183,23 @@ class Level:
                 if obj.properties.get("collide"):
                     groups.append(self.__collision_sprites)
                 if obj.name == "Portal":
-                    obj_image = obj.image.get_rect()
-                    # невидимый для игрока объект с которым он будет взаимодейтсвовать как с порталом
-                    pos = (obj.x+obj_image.centerx - TILE_SIZE / 2, obj.y+obj_image.bottom - TILE_SIZE)
-                    portal = Portal(pos,
-                                    [self.__all_sprites, self.__interactable_sprites],
-                                    self.set_current_level,
-                                    self.move_to)
-                    # отображение портала
-                    Tile((obj.x, obj.y), groups, obj.image, LAYERS["back_decor"])
+                    portal = self.add_portal(obj, groups)
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
                     Component((obj.x, obj.y), [self.__all_sprites, self.__interactable_sprites], script)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
-                        Trigger(
-                            pos=(obj.x, obj.y),
-                            groups=[self.__all_sprites, self.__trigger_sprites],
-                            surface=pygame.image.load("images/ground/trigger.png"),
-                            script=scr.StartBattleScript(self.battle_manager, obj.properties.get("battle_index"))
-                        )
-                        print(obj.x, obj.y)
+                        self.add_battle_trigger(obj)
                     if getattr(obj, "class") == "npc":
-                        dialog = None
-                        if obj.properties.get("dialog"):
-                            dialog = self.reader.get_npc_replicas(obj.name)
-                            print(dialog)
-                        self.__npc_dict.update(
-                            {obj.name:
-                             NPC((obj.x, obj.y),
-                                 [self.__all_sprites, self.__collision_sprites, self.__interactable_sprites],
-                                 obj.name, dialog_replicas=dialog)}
-                        )
+                        self.add_npc(obj)
                 else:
-                    if hasattr(obj, "hitbox_offset_x"):
-                        game_object.GameObject(
-                            (obj.x, obj.y),
-                            groups, "", LAYERS["back_decor"],
-                            image_surf=obj.image,
-                            hitbox_offset=(getattr(obj, "hitbox_offset_x"),
-                                           getattr(obj, "hitbox_offset_y")),
-                            hitbox_size=(getattr(obj, "hitbox_size_x"),
-                                         getattr(obj, "hitbox_size_y")))
-                    else:
-                        game_object.GameObject((obj.x, obj.y), groups, "", LAYERS["back_decor"],
-                                               image_surf=obj.image)
+                    self.add_game_object(obj, groups)
         script.receiver = portal
 
     def __create_map(self):
-        print("self.__map", self.__map)
         for key in self.__map:
-
             if key != "character":
-                print("key", self.__map[key], key)
                 self.__create_tile_group(import_csv_layout(self.__map[key]), key)
             else:
                 self.__player_setup(import_csv_layout(self.__map[key]))
@@ -257,7 +275,22 @@ class Level:
             self.pause_menu.input()
             self.pause_menu.update()
 
+        self.draw_ui()
+
         pygame.display.update()
+
+    def draw_ui(self):
+        if not self.battle_manager.is_battle:
+            self.health_bar.value = self.player.health / LEVELS_PROPERTIES[self.player.level]['max_health']
+            self.exp_bar.value = self.player.exp / LEVELS_PROPERTIES[self.player.level]['exp_to_next']
+
+            pygame.draw.rect(self.__display_surface, self.health_bar.color[0], self.health_bar.rect[0])
+            pygame.draw.rect(self.__display_surface, self.health_bar.color[1], self.health_bar.rect[1])
+            pygame.draw.rect(self.__display_surface, self.exp_bar.color[0], self.exp_bar.rect[0])
+            pygame.draw.rect(self.__display_surface, self.exp_bar.color[1], self.exp_bar.rect[1])
+
+            self.health_text.draw()
+            self.exp_text.draw()
 
     def pause(self):
         self.is_paused = not self.is_paused
@@ -290,8 +323,8 @@ class CameraGroup(pygame.sprite.Group):
     def custom_draw(self, player):
         for layer in LAYERS.values():
             for sprite in self.sprites():
-                if abs(player.rect.x - sprite.rect.x) <= SCREEN_WIDTH*0.75 and \
-                        abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT*0.75:
+                if abs(player.rect.x - sprite.rect.x) <= SCREEN_WIDTH * 0.75 and \
+                        abs(player.rect.y - sprite.rect.y) <= SCREEN_HEIGHT * 0.75:
                     if 'back' in list(LAYERS.keys())[sprite.z] or 'forward' in list(LAYERS.keys())[sprite.z]:
                         # нужно для правильного накладывания гг на обьект или за обьект
                         if sprite.rect.centery > player.rect.centery:
