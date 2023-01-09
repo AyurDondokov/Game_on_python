@@ -436,7 +436,8 @@ class BattleManager:
             enemies.append(BATTLE_ENEMIES[enemy_name])
         self._enemies = enemies
         self._battles.append(Battle(self._player, enemies, level_music_path,
-                                    battle_music_path=battle_data["music_path"]))
+                                    battle_music_path=battle_data["music_path"],
+                                    bg_image_path=battle_data['bg_image_path']))
 
     def set_events_list(self, event_list):
         self._battles[self._current_battle_index].set_events_list(event_list)

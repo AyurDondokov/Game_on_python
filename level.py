@@ -84,11 +84,11 @@ class Level:
                                 font_name=FONT_NAME
                                 )
         self.level_text = UI.Text(pos=LEVEL_TEXT_POS,
-                                text="LVL: 1",
-                                text_color=(0, 220, 0),
-                                text_size=30,
-                                font_name=FONT_NAME
-                                )
+                                  text="LVL: 1",
+                                  text_color=(0, 220, 0),
+                                  text_size=30,
+                                  font_name=FONT_NAME
+                                  )
 
         self.__create_map()
         self.__setup()
@@ -193,6 +193,11 @@ class Level:
                 if obj.name == "component":
                     script = ActivatePortalScript(None)
                     Component((obj.x, obj.y), obj.image, [self.__all_sprites, self.__interactable_sprites], script)
+                if obj.name == "limiters2":
+                    image = obj.image
+                    image.set_colorkey((238, 65, 66))
+                    Tile((obj.x, obj.y), [self.__all_sprites,
+                                          ], image)
 
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
@@ -231,8 +236,10 @@ class Level:
                     y = row_index * TILE_SIZE
 
                     if tile_type == 'limiters':
+                        image = cut_tileset[int(val)]
+                        image.set_colorkey((238, 65, 65))
                         Tile((x, y), [self.__all_sprites,
-                                      self.__collision_sprites], cut_tileset[int(val)])
+                                      self.__collision_sprites], image)
                     else:
                         Tile((x, y), self.__all_sprites, cut_tileset[int(val)])
 
