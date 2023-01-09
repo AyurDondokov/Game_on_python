@@ -32,11 +32,14 @@ level_0 = {
     "music": "music_and_sound/music/level/embient.mp3",
     "battles": {
         0: {"enemies": ["tumbleweed", "tumbleweed"],
-            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
+            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"},
         1: {"enemies": ["varan", "tumbleweed"],  "music_path":
-            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
+            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"},
         2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"}
     }
 }
 level_1 = {
@@ -60,11 +63,14 @@ level_1 = {
     "music": "music_and_sound/music/level/Desert theme.mp3",
     "battles": {
         0: {"enemies": ["tumbleweed", "tumbleweed"],
-            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
-        1: {"enemies": ["varan"], "music_path":
-            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
+            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3",
+            "bg_image_path": "sprites/fight/fight_background/desert.png"},
+        1: {"enemies": ["varan"],
+            "music_path": "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3",
+            "bg_image_path": "sprites/fight/fight_background/desert_varan.png"},
         2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"},
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3",
+            "bg_image_path": "sprites/fight/fight_background/desert_mummy.png"},
     }
 }
 
@@ -91,11 +97,14 @@ level_2 = {
     "music": "music_and_sound/music/level/world2.mp3",
     "battles": {
         0: {"enemies": ["stump"],
-            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3"},
+            "music_path": "./music_and_sound/music/fighting/Nctrnm - Cactus.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"},
         1: {"enemies": ["slug"], "music_path":
-            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3"},
+            "./music_and_sound/music/fighting/Frau Holle - Sand Cave.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"},
         2: {"enemies": ["mummy", "mummy"],
-            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3"}
+            "music_path": "./music_and_sound/music/fighting/Simon Mathewson - Sand.mp3",
+            "bg_image_path": "sprites/fight/fight_background/forest.png"}
     }
 }
 level_cutscene = {
