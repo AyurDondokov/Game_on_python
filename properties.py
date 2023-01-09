@@ -46,7 +46,15 @@ TIME_BETWEEN_INTERACT = 0.5
 PLAYER_HITBOX_SIZE = (30, 30)
 LEVELS_PROPERTIES = {
     1: {'max_health': 100, 'defence': 30, 'max_damage': 20, 'heal': 25, 'exp_to_next': 10},
-    2: {'max_health': 120, 'defence': 50, 'max_damage': 30, 'heal': 30, 'exp_to_next': 15}
+    2: {'max_health': 120, 'defence': 50, 'max_damage': 30, 'heal': 30, 'exp_to_next': 10},
+    3: {'max_health': 140, 'defence': 60, 'max_damage': 50, 'heal': 35, 'exp_to_next': 15},
+    4: {'max_health': 160, 'defence': 80, 'max_damage': 60, 'heal': 45, 'exp_to_next': 15},
+    5: {'max_health': 180, 'defence': 100, 'max_damage': 70, 'heal': 50, 'exp_to_next': 20},
+    6: {'max_health': 200, 'defence': 120, 'max_damage': 80, 'heal': 55, 'exp_to_next': 20},
+    7: {'max_health': 220, 'defence': 140, 'max_damage': 90, 'heal': 60, 'exp_to_next': 25},
+    8: {'max_health': 240, 'defence': 160, 'max_damage': 100, 'heal': 65, 'exp_to_next': 25},
+    9: {'max_health': 260, 'defence': 180, 'max_damage': 110, 'heal': 70, 'exp_to_next': 30},
+    10: {'max_health': 280, 'defence': 200, 'max_damage': 120, 'heal': 80, 'exp_to_next': 30}
 }
 
 LAYERS = {
