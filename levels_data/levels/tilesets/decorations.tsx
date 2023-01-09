@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="decorations" tilewidth="192" tileheight="192" tilecount="22" columns="0">
+<tileset version="1.9" tiledversion="1.9.2" name="decorations" tilewidth="256" tileheight="256" tilecount="24" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="60" height="64" source="../../graphics/desert_tileset/bone_1.png"/>
@@ -66,5 +66,11 @@
  </tile>
  <tile id="21">
   <image width="135" height="126" source="../../graphics/desert_tileset/wagon.png"/>
+ </tile>
+ <tile id="22">
+  <image width="120" height="66" source="../../../sprites/bag.png"/>
+ </tile>
+ <tile id="23">
+  <image width="256" height="256" source="../../../sprites/enemies/varan/varan_little.png"/>
  </tile>
 </tileset>

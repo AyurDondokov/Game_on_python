@@ -13,7 +13,7 @@ import game_object
 from scripts import ActivatePortalScript
 from character import Portal, Component
 from character import NPC
-from player import Player
+from player import Player, CutscenePlayer
 from properties import *
 from replicas_data import test_npc2
 from support import import_csv_layout, import_cut_graphics
@@ -158,7 +158,7 @@ class Level:
         Trigger(
             pos=(obj_tmx.x, obj_tmx.y),
             groups=[self.__all_sprites, self.__trigger_sprites],
-            surface=pygame.image.load("images/ground/trigger.png"),
+            surface=pygame.image.load("./sprites/trigger.png"),
             script=scr.StartBattleScript(self.battle_manager, obj_tmx.properties.get("battle_index"))
         )
 

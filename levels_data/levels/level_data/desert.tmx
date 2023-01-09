@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="92" height="53" tilewidth="64" tileheight="64" infinite="0" nextlayerid="23" nextobjectid="249">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="92" height="53" tilewidth="64" tileheight="64" infinite="0" nextlayerid="23" nextobjectid="264">
  <editorsettings>
   <export target="../1/level_1__.tmx" format="csv"/>
  </editorsettings>
@@ -512,7 +512,82 @@
     <property name="battle_index" value="1"/>
    </properties>
   </object>
-  <object id="59" class="battle" x="4224" y="1792" width="64" height="64">
+  <object id="59" class="battle" x="2880" y="2304" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="258" class="battle" x="2816" y="2304" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="259" class="battle" x="2752" y="2240" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="260" class="battle" x="2688" y="2176" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="261" class="battle" x="2688" y="2112" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="262" class="battle" x="2688" y="2048" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="249" class="battle" x="2944" y="2304" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="250" class="battle" x="3008" y="2240" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="251" class="battle" x="3072" y="2176" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="252" class="battle" x="3136" y="2112" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="253" class="battle" x="3136" y="2048" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="254" class="battle" x="3136" y="1984" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="255" class="battle" x="3136" y="1920" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="256" class="battle" x="3136" y="1856" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="257" class="battle" x="3072" y="1792" width="64" height="64">
+   <properties>
+    <property name="battle_index" value="1"/>
+   </properties>
+  </object>
+  <object id="263" class="battle" x="3008" y="1792" width="64" height="64">
    <properties>
     <property name="battle_index" value="1"/>
    </properties>

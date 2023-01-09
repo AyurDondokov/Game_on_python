@@ -42,7 +42,7 @@ class BattleObject(pygame.sprite.Sprite):
         self._heal = heal
         self._is_defencing = False
 
-        self._health_bar = ui.ProgressBar(self.rect.topleft)
+        self._health_bar = ui.ProgressBar((self.rect.left, self.rect.top-15))
 
         self._start_pos = self.pos.copy()
         self._x_direction = 1
