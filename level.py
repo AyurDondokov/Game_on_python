@@ -200,7 +200,6 @@ class Level:
                     Tile((obj.x, obj.y), [self.__all_sprites,
                                           self.__collision_sprites], image)
 
-
                 elif hasattr(obj, "class"):
                     if getattr(obj, "class") == "battle":
                         self.add_battle_trigger(obj)
@@ -214,10 +213,8 @@ class Level:
         for key in self.__map:
 
             if key == "character":
-                print("FUCk")
                 self.__player_setup(import_csv_layout(self.__map[key]))
             elif key == "character_scene":
-                print("char")
                 self.__cut_player_setup(import_csv_layout(self.__map[key]))
             else:
                 self.__create_tile_group(import_csv_layout(self.__map[key]), key)
@@ -262,7 +259,6 @@ class Level:
             self.player = Player((self.__player_x, self.__player_y), self.__all_sprites,
                                  self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
         else:
-            print("GFDGDGSDGSDGSDGSDGSDGSDG")
             self.player = CutscenePlayer((self.__player_x, self.__player_y), self.__all_sprites,
                                          self.__collision_sprites, self.__interactable_sprites, self.__trigger_sprites)
 
@@ -327,7 +323,6 @@ class Level:
 
     def pause(self):
         self.is_paused = not self.is_paused
-        print(self.is_paused)
 
     def save(self):
         pass

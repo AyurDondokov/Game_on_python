@@ -116,7 +116,6 @@ class Dialog(pygame.sprite.Group):
                 self.text_replica.text = replica.split('->')[0]
                 self.replica_index = 0
                 self.is_open = False
-                print(replica.split('->')[1])
                 self.notify_func(replica.split('->')[1])
 
             # print(self.selection)

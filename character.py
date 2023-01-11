@@ -30,12 +30,7 @@ class InteractComponent():
                 self._icon.remove(self._group)
 
     def update_pos(self, point):
-        print(self._icon.pos)
-        print(self._icon.hitbox)
-        print(point)
         self._icon.locate(point)
-        print(self._icon.pos)
-        print(self._icon.hitbox)
 
     def kill(self):
         """Делает компонент неактивным"""
@@ -83,11 +78,9 @@ class NPC(GameObject):
 
     def switch_replica(self, loc):
         self.dialog.replicas = self.dialog_replicas[loc]
-        print(self.dialog_replicas)
 
     def notify_script(self, values: str):
         for command in values.split("|"):
-            print(command)
             if command.startswith(" to_"):
                 self.switch_replica(command.split(self.name)[1][2:])
             if command.startswith("locate"):
@@ -137,7 +130,7 @@ class Portal(GameObject):
         )
 
         self._active = False
-        dialog_replicas = ["Ната:Он разрушен", "Ната:Что же мне делать..."]
+        dialog_replicas = ["Шура:Он разрушен", "Шура:Что же мне делать..."]
         self.dialog = Dialog(dialog_replicas)
 
     def activate(self):

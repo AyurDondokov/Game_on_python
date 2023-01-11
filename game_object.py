@@ -34,7 +34,6 @@ class GameObject(pygame.sprite.Sprite):
             self._import_assets(sprite_path)
         else:
             self.image = image_surf
-            print(self.image)
 
         # Основные настройки
         self.rect = self.image.get_rect(topleft=position)
